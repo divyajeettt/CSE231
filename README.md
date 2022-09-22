@@ -7,7 +7,7 @@
 - understand the fundamental principles and approaches behind process synchronizations, deadlock avoidance, memory management, etc.
 - write a shell with complete clarity about process creation and execution
 - write multi-threaded applications with synchronization primitives and to analyze effects of concurrency on process execution and correctness
-- analyze the impact of OS concepts like virtual memory, concurrency, etc. on program execution and to fine-tune the program to run efficiently on anu OS
+- analyze the impact of OS concepts like virtual memory, concurrency, etc. on program execution and to fine-tune the program to run efficiently on any OS
 
 ## About this repository
 
