@@ -2,7 +2,7 @@
 
 ## About CSE231
 
-[<b>CSE231: *Operating Systems*](http://techtree.iiitd.edu.in/viewDescription/filename?=CSE231)</b> is a 2xx-level course offered to undergrads pursuing the CSE and CS+X disciplines at IIIT-Delhi. The course centers around exposing students to the underlying concepts and principles of operating systems. It aims to enable students to:
+<b>[CSE231: *Operating Systems*](http://techtree.iiitd.edu.in/viewDescription/filename?=CSE231)</b> is a 2xx-level course offered to undergrads pursuing the CSE and CS+X disciplines at IIIT-Delhi. The course centers around exposing students to the underlying concepts and principles of operating systems. It aims to enable students to:
 
 - understand the fundamental principles and approaches behind process [Synchronizations](https://en.wikipedia.org/wiki/Synchronization_(computer_science)), [Deadlock Avoidance](https://en.wikipedia.org/wiki/Deadlock#:~:text=Deadlock%20avoidance%20algorithm%20analyzes%20each,be%20requested%20in%20the%20future.), [Memory Management](https://en.wikipedia.org/wiki/Memory_management), etc.
 - write a [Shell](https://en.wikipedia.org/wiki/Shell_(computing)) with complete clarity about process creation and execution
