@@ -120,6 +120,7 @@ int main() {
         }
 
         else {
+            // Invalid Command
             printf("-bash: %s: command not found \n", token);
         }
     }
