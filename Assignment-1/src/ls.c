@@ -62,22 +62,21 @@ int main(int argc, char *argv[]) {
     }
 
     int retSum = 0;
-    for (int i=0; i < argc; i++) {
+    for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
             if (args > 1) {
                 printf("%s: \n", argv[i]);
             }
             retSum += ls(argv[i], options['a'], options['1']);
-            if (args > 1) {
+            if (args > 1 && i != argc-1) {
                 printf("\n", argv[i]);
             }
         }
     }
 
-    // if (argc == 1) {
-    //     printf("argc=1");
-    //     retSum = ls("", options['a'], options['1']);
-    // }
+    if (argc == 1) {
+        retSum = ls("", options['a'], options['1']);
+    }
 
     return retSum;
 }
