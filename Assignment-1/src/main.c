@@ -108,7 +108,9 @@ int main() {
             if (countArgs == n*maxSize) {
                 args = (char **) realloc(args, (++n)*maxSize);
             }
-            args[countArgs++] = token;
+            if (strcmp(token, "") != 0) {
+                args[countArgs++] = token;
+            }
             token = strip(strtok(NULL, " "));
         }
 
