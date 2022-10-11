@@ -51,7 +51,7 @@ int isBuiltin(char *command) {
 }
 
 
-char *binPath(char *command) {
+int binPath(char *command) {
     if (strcmp(command, "ls") == 0) {
         return 1;
     }
@@ -234,7 +234,7 @@ int main() {
                 printf("%s is a shell builtin \n", args[1]);
             }
             else if (type == -1) {
-                printf("%s is %s \n", arSgs[1], binPath(args[1]));
+                printf("%s is %s \n", args[1], external[binPath(args[1])]);
             }
             else {
                 printf("-bash: type: %s: not found \n", args[1]);
