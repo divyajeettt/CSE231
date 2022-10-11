@@ -65,6 +65,7 @@ int main(int argc, char *argv[]) {
     int retSum = 0;
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
+            printf("in here, '%s' \n", argv[i]);
             retSum += ls(argv[i], options['a'], options['1']);
         }
     }
