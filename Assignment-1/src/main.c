@@ -50,6 +50,25 @@ int isBuiltin(char *command) {
     return 0;
 }
 
+
+char *binPath(char *command) {
+    if (strcmp(command, "ls") == 0) {
+        return 1;
+    }
+    else if (strcmp(command, "cat") == 0) {
+        return 2;
+    }
+    else if (strcmp(command, "date") == 0) {
+        return 3;
+    }
+    else if (strcmp(command, "rm") == 0) {
+        return 4;
+    }
+    else if (strcmp(command, "mkdir") == 0) {
+        return 5;
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main() {
@@ -62,7 +81,7 @@ int main() {
     char *cwd = (char *) malloc(maxSize*sizeof(char));
     getcwd(cwd, maxSize);
     cwd = strrchr(cwd, '/') + 1;
-    
+
     char *external[6] = {
         realpath("./bin/main", NULL),
         realpath("./bin/ls", NULL),
@@ -74,7 +93,6 @@ int main() {
 
     while (1) {
         printf("[%s@oshell %s] $ ", username, cwd);
-        /* printf("[dvgt@oshell %s] $ ", cwd); */
 
         char *command = (char *) malloc(maxSize*sizeof(char));
         fgets(command, maxSize, stdin);
@@ -172,10 +190,11 @@ int main() {
 
             if (pid > 0) {
                 // Code to be executed by Parent
-                // id_t waitStatus = wait(&waitStatus);
+                // Wait
             }
             else if (pid == 0) {
                 // Code to be executed by Child
+                // Exec
             }
             else {
                 perror("fork-ls");
@@ -215,8 +234,7 @@ int main() {
                 printf("%s is a shell builtin \n", args[1]);
             }
             else if (type == -1) {
-                // printf("%s is %s \n", args[1], "");
-                printf("%s is an external command \n", args[1]);
+                printf("%s is %s \n", arSgs[1], binPath(args[1]));
             }
             else {
                 printf("-bash: type: %s: not found \n", args[1]);
