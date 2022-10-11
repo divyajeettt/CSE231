@@ -98,8 +98,7 @@ int main() {
         char *command = (char *) malloc(maxSize*sizeof(char));
         fgets(command, maxSize, stdin);
 
-        char **args = (char **) calloc(maxSize*sizeof(char *));
-        // memset(args, 0, maxSize*sizeof(char *));
+        char **args = (char **) calloc(maxSize, sizeof(char *));
 
         int countArgs = 0;
         int n = 1;
