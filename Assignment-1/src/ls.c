@@ -71,6 +71,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (argc == 1) {
+        printf("ab toh yaha hu");
         retSum = ls("", options['a'], options['1']);
     }
 
