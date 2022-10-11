@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
     }
 
     int retSum = 0;
-    for (int i=1; i < argc; i++) {
+    for (int i=0; i < argc; i++) {
         if (argv[i][0] != '-') {
             if (args > 1) {
                 printf("%s: \n", argv[i]);
