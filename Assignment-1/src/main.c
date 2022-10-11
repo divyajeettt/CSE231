@@ -128,7 +128,7 @@ int main() {
                 printf("-bash: exit: %s: numeric argument required \n", args[1]);
             }
             printf("logout (tty1) \n");
-            exit(atio(args[1]));
+            exit(atoi(args[1]));
         }
 
         else if (strcmp(args[0], "cd") == 0) {
@@ -214,7 +214,7 @@ int main() {
             else if (pid == 0) {
                 // Code to be executed by Child
                 // Exec
-                if (execv(binPath(args[0]), args) == -1) {
+                if (execv(external[binPath(args[0])], args) == -1) {
                     perror("execv");
                 }
             }
