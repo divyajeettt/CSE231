@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int ls(char *dirName, int option_a, int option_1) {
-    if (dirName == NULL) {
+    if (dirName == "") {
         char *dirName = (char *) malloc(256*sizeof(char));
         getcwd(dirName, 256);
     }
