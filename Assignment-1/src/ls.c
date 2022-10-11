@@ -9,7 +9,6 @@
 
 int ls(char *dirName, int option_a, int option_1) {
     if (dirName == NULL || strcmp(dirName, "") == 0) {
-        printf("ab toh yaha hu");
         dirName = (char *) malloc(256*sizeof(char));
         getcwd(dirName, 256);
     }
@@ -21,7 +20,6 @@ int ls(char *dirName, int option_a, int option_1) {
             printf("ls: cannot access '%s': No such file or directory \n", dirName);
 		}
         return 1;
-		// exit(EXIT_FAILURE);
 	}
 
     struct dirent *dir;
@@ -45,12 +43,12 @@ int ls(char *dirName, int option_a, int option_1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[]) {
-    // printf("OH MA G INSIDE %s \n", argv[0]);
-
     int *options = (int *) malloc(256*sizeof(int));
+    int args = 0;
 
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
+            args++;
             continue;
         }
         for (int j=1; j < strlen(argv[i]); j++) {
@@ -66,12 +64,18 @@ int main(int argc, char *argv[]) {
     int retSum = 0;
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
-            printf("in here, '%s' \n", argv[i]);
+            if (args > 1) {
+                print("%s: \n", argv[i]);
+            }
             retSum += ls(argv[i], options['a'], options['1']);
+            if (args > 1) {
+                print("\n", argv[i]);
+            }
         }
     }
 
     if (argc == 1) {
+        printf("argc=1");
         retSum = ls("", options['a'], options['1']);
     }
 
