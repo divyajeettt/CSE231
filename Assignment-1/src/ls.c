@@ -9,6 +9,7 @@
 
 int ls(char *dirName, int option_a, int option_1) {
     if (dirName == NULL || strcmp(dirName, "") == 0) {
+        printf("ab toh yaha hu");
         char *dirName = (char *) malloc(256*sizeof(char));
         getcwd(dirName, 256);
     }
@@ -71,7 +72,6 @@ int main(int argc, char *argv[]) {
     }
 
     if (argc == 1) {
-        printf("ab toh yaha hu");
         retSum = ls("", options['a'], options['1']);
     }
 
