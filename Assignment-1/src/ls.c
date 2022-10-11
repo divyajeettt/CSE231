@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (args == 1) {
+    if (argc == 1 || (argc != 1 && args == 1)) {
         retSum = ls("", options['a'], options['1']);
     }
 
