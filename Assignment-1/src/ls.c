@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
@@ -6,14 +7,20 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-int ls(int option_a, int option_1) {
-    char *cwd = (char *) malloc(256*sizeof(char));
-    getcwd(cwd, 256);
+int ls(char *dirName, int option_a, int option_1) {
+    if (dirName == NULL) {
+        char *dirName = (char *) malloc(256*sizeof(char));
+        getcwd(dirName, 256);
+    }
 
-    DIR *dirHandler = opendir(cwd);
+    DIR *dirHandler = opendir(dirName);
 
     if (dirHandler == NULL) {
-		exit(EXIT_FAILURE);
+        if (errno = ENOENT) {
+            printf("ls: cannot access '%s': No such file or directory \n", dirName);
+		}
+        return 1;
+		// exit(EXIT_FAILURE);
 	}
 
     struct dirent *dir;
@@ -30,6 +37,8 @@ int ls(int option_a, int option_1) {
     if (option_1 == 0) {
         printf("\n");
     }
+
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +62,12 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    ls(options['a'], options['1']);
+    int retSum = 0;
+    for (int i=1; i < argc; i++) {
+        if (argv[i][0] != '-') {
+            retSum += ls(argv[i], options['a'], options['1']);
+        }
+    }
 
-    return 0;
+    return retSum;
 }
