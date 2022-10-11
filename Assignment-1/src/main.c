@@ -1,0 +1,198 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdint.h>
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+char *strip(char *string) {
+    if (string == NULL) {
+        return NULL;
+    }
+
+    int length = strlen(string);
+    char *strippedString = (char *) malloc(length*sizeof(char));
+
+    int x = 0;
+    for (int i=0; i < length; i++) {
+        if (isspace(string[i]) == 0) {
+            strippedString[x++] = string[i];
+        }
+    }
+    strippedString[x] = '\0';
+
+    return strippedString;
+}
+
+
+char *getParent(char *path) {
+    return strrev(strtok(strrev(strip(path)), "\\"));
+}
+
+int isNumeric(char *string) {
+    for (int i=0; i < strlen(string); i++) {
+        if (isdigit(string[i]) == 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+int main() {
+    int maxSize = 256;
+    char *username = (char *) getlogin();
+
+    printf("oshell-2.3.1 \n");
+    printf("login as %s \n", username);
+
+    char *cwd = (char *) malloc(maxSize*sizeof(char));
+    getcwd(cwd, maxSize);
+    cwd = getParent(cwd);
+
+    while (1) {
+        // printf("[%s@oshell %s] $ ", username, cwd);
+        printf("[dvgt@oshell %s] $ ", cwd);
+
+        char *command = (char *) malloc(maxSize*sizeof(char));
+        fgets(command, maxSize, stdin);
+
+        char **args = (char **) malloc(maxSize*sizeof(char *));
+        memset(args, 0, maxSize*sizeof(char *));
+
+        int countArgs = 0;
+        int n = 1;
+
+        char *token = strip(strtok(command, " "));
+        while (token != NULL) {
+            if (countArgs == n*maxSize) {
+                args = (char **) realloc(args, (++n)*maxSize);
+            }
+            args[countArgs++] = token;
+            token = strip(strtok(NULL, " "));
+        }
+
+        if (strcmp(args[0], "") == 0) {
+            continue;
+        }
+
+        else if (strcmp(args[0], "exit") == 0) {
+            // Internal Command (EXTRA)
+            if ((strcmp(args[1], "") != 0) && !isNumeric(args[1])) {
+                printf("-bash: exit: %s: numeric argument required \n");
+            }
+            printf("logout (tty1) \n");
+            exit(EXIT_SUCCESS);
+        }
+
+        else if (strcmp(args[0], "cd") == 0) {
+            // Internal Command
+
+            if (args[1] == NULL || strcmp(args[1], "") == 0)
+                continue;
+            if (chdir(args[1]) == 0)
+                cwd = getParent(getcwd(cwd, maxSize));
+            else
+                printf("-bash: cd: %s: No such file or directory \n", args[1]);
+        }
+
+        else if (strcmp(args[0], "echo") == 0) {
+            // Internal Command
+
+            if (args[1] == NULL || strcmp(args[1], "") == 0) {
+                continue;
+            }
+
+            int flag = 1;
+            if (strcmp(args[1], "-n") == 0) {
+                flag = 0;
+            }
+
+            for (int i=2-flag; i < countArgs; i++) {
+                printf("%s", args[i]);
+                if (i != countArgs-1) {
+                    printf(" ");
+                }
+            }
+
+            if (flag) {
+                printf("\n");
+            }
+        }
+
+        else if (strcmp(args[0], "pwd") == 0) {
+            // Internal Command
+
+            if (args[1] != NULL && args[1][0] == '-') {
+                printf("-bash: pwd: %s: invalid option \n", args[1]);
+                continue;
+            }
+
+            char *currentDirectory = (char *) malloc(maxSize*sizeof(char));
+            if (getcwd(currentDirectory, maxSize) != NULL) {
+                printf("%s \n", currentDirectory);
+            }
+            else {
+                perror("pwd");
+                exit(EXIT_FAILURE);
+            }
+        }
+
+        else if (strcmp(args[0], "ls") == 0) {
+            // External Command
+            printf("Detected command: ls \n");
+        }
+
+        else if (strcmp(args[0], "cat") == 0) {
+            // External Command
+            printf("Detected command: cat \n");
+        }
+
+        else if (strcmp(args[0], "date") == 0) {
+            // External Command
+            printf("Detected command: date \n");
+        }
+
+        else if (strcmp(args[0], "rm") == 0) {
+            // External Command
+            printf("Detected command: rm \n");
+        }
+
+        else if (strcmp(args[0], "mkdir") == 0) {
+            // External Command
+            printf("Detected command: mkdir \n");
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // EXTRAS
+
+        else if (strcmp(args[0], "type") == 0) {
+            // Internal Command
+            printf("Detected command: type \n");
+        }
+
+        else if (strcmp(args[0], "help") == 0) {
+            // External Command
+            printf("Detected command: help \n");
+        }
+
+        else if (strcmp(args[0], "crimge") == 0) {
+            // Easter-Egg
+            if (args[1] != NULL && args[1][0] == '-') {
+                printf("-bash: crimge: %s: invalid option \n", args[1]);
+                continue;
+            }
+            printf("OS will be the death of me. O, Shell. OS, Hell. \n");
+        }
+
+        else {
+            // Invalid Command
+            printf("-bash: %s: command not found \n", args[0]);
+        }
+    }
+
+    return 0;
+}
