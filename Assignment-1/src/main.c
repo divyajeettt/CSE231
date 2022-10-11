@@ -67,6 +67,7 @@ int binPath(char *command) {
     else if (strcmp(command, "mkdir") == 0) {
         return 5;
     }
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,53 +198,6 @@ int main() {
             }
         }
 
-        else if (strcmp(args[0], "ls") == 0) {
-            // External Command
-            printf("Detected command: ls \n");
-
-            pid_t pid = fork();
-
-            if (pid > 0) {
-                // Code to be executed by Parent
-                // Wait
-                int status;
-                if (waitpid(pid, &status, 0) <= 0) {
-                    perror("waitpid");
-                }
-            }
-            else if (pid == 0) {
-                // Code to be executed by Child
-                // Exec
-                if (execv(external[binPath(args[0])], args) == -1) {
-                    perror("execv");
-                }
-            }
-            else {
-                perror("fork");
-                exit(EXIT_FAILURE);
-            }
-        }
-
-        else if (strcmp(args[0], "cat") == 0) {
-            // External Command
-            printf("Detected command: cat \n");
-        }
-
-        else if (strcmp(args[0], "date") == 0) {
-            // External Command
-            printf("Detected command: date \n");
-        }
-
-        else if (strcmp(args[0], "rm") == 0) {
-            // External Command
-            printf("Detected command: rm \n");
-        }
-
-        else if (strcmp(args[0], "mkdir") == 0) {
-            // External Command
-            printf("Detected command: mkdir \n");
-        }
-
         else if (strcmp(args[0], "type") == 0) {
             // Internal Command
 
@@ -283,8 +237,37 @@ int main() {
         }
 
         else {
-            // Invalid Command
-            printf("-bash: %s: command not found \n", args[0]);
+            // External Commands
+            printf("Detected command: %s \n", args[0]);
+
+            int bin = binPath(args[0]);
+            if (bin == 0) {
+                // Invalid Command
+                printf("-bash: %s: command not found \n", args[0]);
+                continue;
+            }
+
+            pid_t pid = fork();
+
+            if (pid > 0) {
+                // Code to be executed by Parent
+                // Wait
+                int status;
+                if (waitpid(pid, &status, 0) <= 0) {
+                    perror("waitpid");
+                }
+            }
+            else if (pid == 0) {
+                // Code to be executed by Child
+                // Exec
+                if (execv(external[bin], args) == -1) {
+                    perror("execv");
+                }
+            }
+            else {
+                perror("fork");
+                exit(EXIT_FAILURE);
+            }
         }
     }
 
