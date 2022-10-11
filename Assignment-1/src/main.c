@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <sys/wait.h>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -38,7 +39,6 @@ int isNumeric(char *string) {
 int isBuiltin(char *command) {
     char *internal[7] = {"exit", "cd", "echo", "pwd", "type", "help", "crimge"};
     char *external[5] = {"ls", "cat", "date", "rm", "mkdir"};
-
     for (int i=0; i < 7; i++) {
         if (strcmp(command, internal[i]) == 0) {
             return 1;
@@ -47,7 +47,6 @@ int isBuiltin(char *command) {
             return -1;
         }
     }
-
     return 0;
 }
 
@@ -63,6 +62,17 @@ int main() {
     char *cwd = (char *) malloc(maxSize*sizeof(char));
     getcwd(cwd, maxSize);
     cwd = strrchr(cwd, '\\') + 1;
+
+    // char *external[10] = {
+    //     realpath("./bin/main.exe", NULL),
+    //     realpath("./bin/main.exe", NULL),
+    //     realpath("./bin/main.exe", NULL),
+    //     realpath("./bin/main.exe", NULL),
+    //     realpath("./bin/main.exe", NULL),
+    //     realpath("./bin/main.exe", NULL),
+    //     realpath("./bin/main.exe", NULL),
+    //     realpath("./bin/main.exe", NULL),
+    // };
 
     while (1) {
         // printf("[%s@oshell %s] $ ", username, cwd);
@@ -92,8 +102,8 @@ int main() {
 
         else if (strcmp(args[0], "exit") == 0) {
             // Internal Command (EXTRA)
-            if ((strcmp(args[1], "") != 0) && !isNumeric(args[1])) {
-                printf("-bash: exit: %s: numeric argument required \n");
+            if (args[1] != NULL && !isNumeric(args[1])) {
+                printf("-bash: exit: %s: numeric argument required \n", args[1]);
             }
             printf("logout (tty1) \n");
             exit(EXIT_SUCCESS);
@@ -159,6 +169,20 @@ int main() {
         else if (strcmp(args[0], "ls") == 0) {
             // External Command
             printf("Detected command: ls \n");
+
+            pid_t pid = fork();
+
+            if (pid > 0) {
+                // Code to be executed by Parent
+                pid_t waitStatus = wait(&waitStatus);
+            }
+            else if (pid == 0) {
+                // Code to be executed by Child
+            }
+            else {
+                perror("fork-ls");
+                exit(EXIT_FAILURE);
+            }
         }
 
         else if (strcmp(args[0], "cat") == 0) {
@@ -184,7 +208,7 @@ int main() {
         else if (strcmp(args[0], "type") == 0) {
             // Internal Command
 
-            if (strcmp(args[1], "") == 0) {
+            if (args[1] == NULL || strcmp(args[1], "") == 0) {
                 continue;
             }
 
@@ -193,14 +217,15 @@ int main() {
                 printf("%s is a shell builtin \n", args[1]);
             }
             else if (type == -1) {
-                printf("%s is %s \n", args[1], "");
+                // printf("%s is %s \n", args[1], "");
+                printf("%s is an external command \n", args[1]);
             }
             else {
                 printf("-bash: type: %s: not found \n", args[1]);
                 continue;
             }
 
-            if (strcmp(args[2], "") != 0) {
+            if (args[2] != NULL) {
                 printf("-bash: type: %s: not found \n", args[2]);
             }
         }
