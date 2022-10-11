@@ -3,10 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdint.h>
+// #include <sys/wait.h>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 char *strip(char *string) {
+    if (string == NULL)
+        return NULL;
+
     int length = strlen(string);
     char *strippedString = (char *) malloc(length*sizeof(char));
 
@@ -20,17 +25,29 @@ char *strip(char *string) {
     return strippedString;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+char *getParent(char *path) {
+    return strrev(strtok(strrev(strip(path)), "\\"));
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main() {
     // Starting the Shell
     int maxSize = 256;
+    char *username = (char *) getlogin();
 
-    char *username = (char *) malloc(maxSize*sizeof(char));
-    username = (char *) getlogin();
+    char *cwd = (char *) malloc(maxSize*sizeof(char));
+    getcwd(cwd, maxSize);
+    cwd = getParent(cwd);
 
     while (1) {
-        printf("[dvgt@oshell] $ ", username);
+        // printf("[%s@oshell %s] $ ", username, cwd);
+        printf("[dvgt@oshell %s] $ ", cwd);
 
         char *command = (char *) malloc(maxSize*sizeof(char));
         fgets(command, maxSize, stdin);
@@ -43,37 +60,61 @@ int main() {
 
         else if (strcmp(token, "exit") == 0) {
             // Internal Command (EXTRA)
-            exit(0);
+            exit(EXIT_SUCCESS);
         }
 
         else if (strcmp(token, "cd") == 0) {
             // Internal Command
-            printf("Detected command: cd \n");
+
+            token = strip(strtok(NULL, " "));
+            if (chdir(token) == 0)
+                cwd = getParent(getcwd(cwd, maxSize));
+            else
+                printf("-bash: cd: %s: No such file or directory \n", token);
         }
 
         else if (strcmp(token, "echo") == 0) {
             // Internal Command
 
             int flag = 1;
-
             token = strtok(NULL, " ");
 
-            if (strcmp(token, "-n") == 0)
+            if (strcmp(token, "-n") == 0) {
                 flag = 0;
+                token = strtok(NULL, " ");
+            }
 
             while (token != NULL) {
                 printf("%s ", strip(token));
                 token = strtok(NULL, " ");
             }
 
-            if (flag) {
+            if (flag)
                 printf("\n");
-            }
         }
 
         else if (strcmp(token, "pwd") == 0) {
             // Internal Command
-            printf("Detected command: pwd \n");
+
+            int invalid = 0;
+            while ((token = strip(strtok(NULL, " "))) != NULL) {
+                if (strcmp(token, "") == 0)
+                    break;
+                printf("-bash: pwd: %s: invlaid option \n", token);
+                invalid = 1;
+                break;
+            }
+
+            if (invalid == 1)
+                continue;
+
+            char *cwd = (char *) malloc(maxSize*sizeof(char));
+            if (getcwd(cwd, maxSize) != NULL)
+                printf("%s \n", cwd);
+            else {
+                perror("pwd");
+                exit(EXIT_FAILURE);
+            }
         }
 
         else if (strcmp(token, "ls") == 0) {
