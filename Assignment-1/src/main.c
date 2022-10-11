@@ -74,7 +74,7 @@ int binPath(char *command) {
 
 int checkInvalidOptions(char *command, int *options, char *valid) {
     for (int i=0; i < 256; i++) {
-        if (options[i] > 0 && strstr(valid, {(char *) i}) != 0) {
+        if (options[i] > 0 && strchr(valid, i) != NULL) {
             printf("-bash: %s: -%c: invlaid option \n", command, i);
             return 0;
         }
