@@ -10,18 +10,18 @@ int ls(int option_a, int option_1) {
     char *cwd = (char *) malloc(256*sizeof(char));
     getcwd(cwd, 256);
 
-    struct dirent *dir;
     DIR *dirHandler = opendir(cwd);
 
     if (dirHandler == NULL) {
 		exit(EXIT_FAILURE);
 	}
 
+    struct dirent *dir;
     while ((dir = readdir(dirHandler)) != NULL) {
         if (option_a == 0 && dir->d_name[0] == '.') {
 			continue;
         }
-        printf("%s ", dir->d_name);
+        printf("%s  ", dir->d_name);
         if (option_1 > 0) {
             printf("\n");
         }
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
         for (int j=1; j < strlen(argv[i]); j++) {
             char option = argv[i][j];
             if (option != 'a' && option != '1') {
-                printf("ls: invalid option -- %c \n", option);
+                printf("ls: invalid option -- '%c' \n", option);
                 return 1;
             }
             options[option]++;
