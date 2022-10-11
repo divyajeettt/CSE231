@@ -118,17 +118,31 @@ int main() {
 
         else if (strcmp(args[0], "exit") == 0) {
             // Internal Command (EXTRA)
+
+            if (args[2] != NULL) {
+                printf("-bash: exit: too many arguments \n");
+                continue;
+            }
+
             if (args[1] != NULL && !isNumeric(args[1])) {
                 printf("-bash: exit: %s: numeric argument required \n", args[1]);
             }
             printf("logout (tty1) \n");
-            exit(EXIT_SUCCESS);
+            exit(atio(args[1]));
         }
 
         else if (strcmp(args[0], "cd") == 0) {
             // Internal Command
 
             if (args[1] == NULL || strcmp(args[1], "") == 0) {
+                continue;
+            }
+            if (args[1] != NULL && args[1][0] == '-') {
+                printf("-bash: cd: %s: invalid option \n", args[1]);
+                continue;
+            }
+            if (args[2] != NULL) {
+                printf("-bash: cd: too many arguments /n");
                 continue;
             }
 
@@ -144,6 +158,7 @@ int main() {
             // Internal Command
 
             if (args[1] == NULL || strcmp(args[1], "") == 0) {
+                printf("\n");
                 continue;
             }
 
@@ -191,13 +206,20 @@ int main() {
             if (pid > 0) {
                 // Code to be executed by Parent
                 // Wait
+                int status;
+                if (waitpid(pid, &status, 0) <= 0) {
+                    perror("waitpid");
+                }
             }
             else if (pid == 0) {
                 // Code to be executed by Child
                 // Exec
+                if (execv(binPath(args[0]), args) == -1) {
+                    perror("execv");
+                }
             }
             else {
-                perror("fork-ls");
+                perror("fork");
                 exit(EXIT_FAILURE);
             }
         }
