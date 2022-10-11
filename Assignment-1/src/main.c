@@ -27,6 +27,7 @@ char *strip(char *string) {
     return strippedString;
 }
 
+
 int isNumeric(char *string) {
     for (int i=0; i < strlen(string); i++) {
         if (isdigit(string[i]) == 0) {
@@ -35,6 +36,7 @@ int isNumeric(char *string) {
     }
     return 1;
 }
+
 
 int isBuiltin(char *command) {
     char *internal[7] = {"exit", "cd", "echo", "pwd", "type", "help", "crimge"};
@@ -67,6 +69,17 @@ int binPath(char *command) {
     else if (strcmp(command, "mkdir") == 0) {
         return 5;
     }
+}
+
+
+int checkInvalidOptions(char *command, int *options, char *valid) {
+    for (int i=0; i < 256; i++) {
+        if (options[i] > 0 && strstr(valid, {(char *) i}) != 0) {
+            printf("-bash: %s: -%c: invlaid option \n", command, i);
+            return 0;
+        }
+    }
+    return 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,12 +116,22 @@ int main() {
         int countArgs = 0;
         int n = 1;
 
+        int *options = (int *) malloc(256*sizeof(int));
+        memset(options, 0, 256*sizeof(int));
+
         char *token = strip(strtok(command, " "));
         while (token != NULL) {
             if (countArgs == n*maxSize) {
                 args = (char **) realloc(args, (++n)*maxSize);
             }
-            args[countArgs++] = token;
+            if (token[0] == '-') {
+                for (int i=1; i < strlen(token); i++) {
+                    options[token[i]]++;
+                }
+            }
+            else {
+                args[countArgs++] = token;
+            }
             token = strip(strtok(NULL, " "));
         }
 
@@ -131,9 +154,12 @@ int main() {
             if (args[1] == NULL || strcmp(args[1], "") == 0) {
                 continue;
             }
+            if (checkInvalidOptions("cd", options, "") == 0) {
+                continue;
+            }
 
             if (chdir(args[1]) == 0) {
-                cwd = strrchr(getcwd(cwd, maxSize), '\\') + 1;
+                cwd = strrchr(getcwd(cwd, maxSize), '/') + 1;
             }
             else {
                 printf("-bash: cd: %s: No such file or directory \n", args[1]);
@@ -144,6 +170,10 @@ int main() {
             // Internal Command
 
             if (args[1] == NULL || strcmp(args[1], "") == 0) {
+                continue;
+            }
+
+            if (checkInvalidOptions("echo", options, "-n") == 0) {
                 continue;
             }
 
@@ -167,8 +197,7 @@ int main() {
         else if (strcmp(args[0], "pwd") == 0) {
             // Internal Command
 
-            if (args[1] != NULL && args[1][0] == '-') {
-                printf("-bash: pwd: %s: invalid option \n", args[1]);
+            if (checkInvalidOptions("pwd", options, "") == 0) {
                 continue;
             }
 
