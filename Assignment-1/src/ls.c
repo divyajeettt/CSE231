@@ -65,11 +65,11 @@ int main(int argc, char *argv[]) {
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
             if (args > 1) {
-                print("%s: \n", argv[i]);
+                printf("%s: \n", argv[i]);
             }
             retSum += ls(argv[i], options['a'], options['1']);
             if (args > 1) {
-                print("\n", argv[i]);
+                printf("\n", argv[i]);
             }
         }
     }
