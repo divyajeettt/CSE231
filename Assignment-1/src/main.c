@@ -61,22 +61,20 @@ int main() {
 
     char *cwd = (char *) malloc(maxSize*sizeof(char));
     getcwd(cwd, maxSize);
-    cwd = strrchr(cwd, '\\') + 1;
-
-    // char *external[10] = {
-    //     realpath("./bin/main.exe", NULL),
-    //     realpath("./bin/main.exe", NULL),
-    //     realpath("./bin/main.exe", NULL),
-    //     realpath("./bin/main.exe", NULL),
-    //     realpath("./bin/main.exe", NULL),
-    //     realpath("./bin/main.exe", NULL),
-    //     realpath("./bin/main.exe", NULL),
-    //     realpath("./bin/main.exe", NULL),
-    // };
+    cwd = strrchr(cwd, '/') + 1;
+    
+    char *external[6] = {
+        realpath("./bin/main", NULL),
+        realpath("./bin/ls", NULL),
+        realpath("./bin/cat", NULL),
+        realpath("./bin/date", NULL),
+        realpath("./bin/rm", NULL),
+        realpath("./bin/mkdir", NULL),
+    };
 
     while (1) {
-        // printf("[%s@oshell %s] $ ", username, cwd);
-        printf("[dvgt@oshell %s] $ ", cwd);
+        printf("[%s@oshell %s] $ ", username, cwd);
+        /* printf("[dvgt@oshell %s] $ ", cwd); */
 
         char *command = (char *) malloc(maxSize*sizeof(char));
         fgets(command, maxSize, stdin);
@@ -174,7 +172,7 @@ int main() {
 
             if (pid > 0) {
                 // Code to be executed by Parent
-                pid_t waitStatus = wait(&waitStatus);
+                // id_t waitStatus = wait(&waitStatus);
             }
             else if (pid == 0) {
                 // Code to be executed by Child

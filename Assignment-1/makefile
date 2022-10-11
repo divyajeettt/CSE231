@@ -8,8 +8,5 @@ compile:
 	gcc ./src/mkdir.c -o ./bin/mkdir
 	gcc ./src/rm.c -o ./bin/rm
 
-run:
-	./bin/main
-
 clean:
 	rm -rf ./bin
