@@ -26,11 +26,6 @@ char *strip(char *string) {
     return strippedString;
 }
 
-
-char *getParent(char *path) {
-    return strrev(strtok(strrev(strip(path)), "\\"));
-}
-
 int isNumeric(char *string) {
     for (int i=0; i < strlen(string); i++) {
         if (isdigit(string[i]) == 0) {
@@ -38,6 +33,22 @@ int isNumeric(char *string) {
         }
     }
     return 1;
+}
+
+int isBuiltin(char *command) {
+    char *internal[7] = {"exit", "cd", "echo", "pwd", "type", "help", "crimge"};
+    char *external[5] = {"ls", "cat", "date", "rm", "mkdir"};
+
+    for (int i=0; i < 7; i++) {
+        if (strcmp(command, internal[i]) == 0) {
+            return 1;
+        }
+        if (i < 5 && strcmp(command, external[i]) == 0) {
+            return -1;
+        }
+    }
+
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +62,7 @@ int main() {
 
     char *cwd = (char *) malloc(maxSize*sizeof(char));
     getcwd(cwd, maxSize);
-    cwd = getParent(cwd);
+    cwd = strrchr(cwd, '\\') + 1;
 
     while (1) {
         // printf("[%s@oshell %s] $ ", username, cwd);
@@ -91,12 +102,16 @@ int main() {
         else if (strcmp(args[0], "cd") == 0) {
             // Internal Command
 
-            if (args[1] == NULL || strcmp(args[1], "") == 0)
+            if (args[1] == NULL || strcmp(args[1], "") == 0) {
                 continue;
-            if (chdir(args[1]) == 0)
-                cwd = getParent(getcwd(cwd, maxSize));
-            else
+            }
+
+            if (chdir(args[1]) == 0) {
+                cwd = strrchr(getcwd(cwd, maxSize), '\\') + 1;
+            }
+            else {
                 printf("-bash: cd: %s: No such file or directory \n", args[1]);
+            }
         }
 
         else if (strcmp(args[0], "echo") == 0) {
@@ -166,12 +181,28 @@ int main() {
             printf("Detected command: mkdir \n");
         }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        // EXTRAS
-
         else if (strcmp(args[0], "type") == 0) {
             // Internal Command
-            printf("Detected command: type \n");
+
+            if (strcmp(args[1], "") == 0) {
+                continue;
+            }
+
+            int type = isBuiltin(args[1]);
+            if (type == 1) {
+                printf("%s is a shell builtin \n", args[1]);
+            }
+            else if (type == -1) {
+                printf("%s is %s \n", args[1], "");
+            }
+            else {
+                printf("-bash: type: %s: not found \n", args[1]);
+                continue;
+            }
+
+            if (strcmp(args[2], "") != 0) {
+                printf("-bash: type: %s: not found \n", args[2]);
+            }
         }
 
         else if (strcmp(args[0], "help") == 0) {
