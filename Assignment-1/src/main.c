@@ -129,7 +129,13 @@ int main() {
                 printf("-bash: exit: %s: numeric argument required \n", args[1]);
             }
             printf("logout (tty1) \n");
-            exit(atoi(args[1]));
+
+            if (args[1] != NULL) {
+                exit(atoi(args[1]));
+            }
+            else {
+                exit(EXIT_SUCCESS);
+            }
         }
 
         else if (strcmp(args[0], "cd") == 0) {
@@ -238,7 +244,6 @@ int main() {
 
         else {
             // External Commands
-            printf("Detected command: %s \n", args[0]);
 
             int bin = binPath(args[0]);
             if (bin == 0) {
