@@ -22,9 +22,13 @@ int ls(int option_a, int option_1) {
 			continue;
         }
         printf("%s ", dir->d_name);
-        if (option_1 == 1) {
+        if (option_1 > 0) {
             printf("\n");
         }
+    }
+
+    if (option_1 == 0) {
+        printf("\n");
     }
 }
 
