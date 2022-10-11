@@ -74,10 +74,10 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (argc == 1) {
-        printf("argc=1");
-        retSum = ls("", options['a'], options['1']);
-    }
+    // if (argc == 1) {
+    //     printf("argc=1");
+    //     retSum = ls("", options['a'], options['1']);
+    // }
 
     return retSum;
 }
