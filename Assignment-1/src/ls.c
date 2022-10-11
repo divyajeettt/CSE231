@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int ls(char *dirName, int option_a, int option_1) {
-    if (dirName == NULL || strcmp(dirName, "") == 0) {
+    if (dirName == NULL) {
         dirName = (char *) malloc(256*sizeof(char));
         getcwd(dirName, 256);
     }
@@ -43,10 +43,10 @@ int ls(char *dirName, int option_a, int option_1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[]) {
-    int *options = (int *) malloc(256*sizeof(int));
+    int *options = (int *) calloc(256, sizeof(int));
     int args = 0;
 
-    for (int i=1; i < argc; i++) {
+    for (int i=0; i < argc; i++) {
         if (argv[i][0] != '-') {
             args++;
             continue;
@@ -61,6 +61,10 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    if (args == 1) {
+        return ls(NULL, options['a'], options['1']);
+    }
+
     int retSum = 0;
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
@@ -69,13 +73,9 @@ int main(int argc, char *argv[]) {
             }
             retSum += ls(argv[i], options['a'], options['1']);
             if (args > 1 && i != argc-1) {
-                printf("\n", argv[i]);
+                printf("\n");
             }
         }
-    }
-
-    if (argc == 1 || (argc != 1 && args == 1)) {
-        retSum = ls("", options['a'], options['1']);
     }
 
     return retSum;
