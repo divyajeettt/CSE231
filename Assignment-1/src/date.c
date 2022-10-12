@@ -35,7 +35,7 @@ int getDate(int option_I, int option_R) {
 int main(int argc, char *argv[]) {
     int *options = (int *) calloc(256, sizeof(int));
 
-    for (int i=0; i < argc; i++) {
+    for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
             printf("date: invalid date -- '%s' \n", argv[i]);
             return 1;
