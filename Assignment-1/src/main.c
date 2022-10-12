@@ -114,7 +114,7 @@ int main() {
             token = strip(strtok(NULL, " "));
         }
 
-        if (strcmp(args[0], "") == 0) {
+        if (countArgs == 0) {
             continue;
         }
 
