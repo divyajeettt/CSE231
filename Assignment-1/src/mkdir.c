@@ -45,6 +45,7 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
                 index--;
             }
             copy[index] = '\0';
+
             makeDir(copy, 0, 1, 0);
             mkdir(dirName, S_IRWXU);
         }
@@ -53,6 +54,8 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
             printf("mkdir: created directory '%s' \n", dirName);
         }
     }
+
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
