@@ -80,6 +80,7 @@ int main(int argc, char *argv[]) {
         printf("mkdir: missing operand \n");
         return 1;
     }
+
     int retSum = 0;
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
