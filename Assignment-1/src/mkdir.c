@@ -59,9 +59,11 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
 
 int main(int argc, char *argv[]) {
     int *options = (int *) calloc(256, sizeof(int));
+    int args = 0;
 
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
+            args++;
             continue;
         }
         for (int j=1; j < strlen(argv[i]); j++) {
@@ -74,7 +76,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (argc == 1) {
+    if (args == 0) {
         printf("mkdir: missing operand \n");
         return 1;
     }
