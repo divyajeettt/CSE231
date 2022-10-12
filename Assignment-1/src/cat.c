@@ -70,11 +70,12 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    int counter = 1;
+
     if (args == 0) {
-        return cat("stdin", options['n'], options['E']);
+        return cat("stdin", options['n'], options['E'], &counter);
     }
 
-    int counter = 1;
     int retSum = 0;
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
