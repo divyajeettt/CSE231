@@ -7,6 +7,7 @@ compile:
 	gcc ./src/ls.c -o ./bin/ls
 	gcc ./src/mkdir.c -o ./bin/mkdir
 	gcc ./src/rm.c -o ./bin/rm
+	gcc ./src/clear.c -o ./bin/clear
 
 clean:
 	rm -rf ./bin
