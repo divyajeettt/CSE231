@@ -1,10 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dirent.h>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+int exists(char *dirName) {
+    return (opendir(dirName) != NULL);
+}
+
+
 int cat(char *filename, int option_n, int option_E) {
+    if (exists(filename)) {
+        printf("cat: %s: Is a directory \n", filename);
+        return 1;
+    }
+
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("cat: %s: No such file or directory \n", filename);
@@ -79,5 +90,5 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    return 0;
+    return retSum;
 }
