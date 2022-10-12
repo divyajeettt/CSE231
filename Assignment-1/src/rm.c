@@ -19,7 +19,7 @@ int dirExists(char *dirName) {
 int rm(char *name, int option_v, int option_r, int showResult) {
     char *cwd = (char *) malloc(256*sizeof(char));
     getcwd(cwd, 256);
-    printf("cwd=%s \n", cwd);
+    printf("input=%s \n", name);
 
     if (!(fileExists(name) || dirExists(name))) {
         printf("1. rm: cannot remove '%s': No such file or directory \n", name);
@@ -48,11 +48,11 @@ int rm(char *name, int option_v, int option_r, int showResult) {
             struct dirent *dir;
 
             while ((dir = readdir(dirHandler)) != NULL) {
-                printf("%s \n", dir->d_name);
                 if (fileExists(dir->d_name)) {
                     remove(dir->d_name);
                 }
                 else {
+                    printf("%s \n", dir->d_name);
                     rm(realpath(dir->d_name, NULL), 0, 1, 0);
                 }
             }
