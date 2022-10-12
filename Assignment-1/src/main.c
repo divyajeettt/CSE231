@@ -277,7 +277,7 @@ int main() {
             else if (pid == 0) {
                 // Code to be executed by Child
                 // Exec
-                if (execv(external[bin], args) == -1) {
+                if (execv(binaries[bin], args) == -1) {
                     perror("execv");
                 }
             }
