@@ -24,11 +24,11 @@ int main(int argc, char *argv[]) {
     }
 
     if (args == 0) {
-        int maxSize = 256;
+        size_t maxSize = 256;
         char *input = (char *) malloc(maxSize*sizeof(char));
 
-        getline(&input, &maxSize, stdin);
-        while (&input != EOF) {
+        size_t read = getline(&input, &maxSize, stdin);
+        while (read != -1) {
             puts(input);
             getline(&input, &maxSize, stdin);
         }
