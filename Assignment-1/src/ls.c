@@ -27,18 +27,21 @@ int ls(char *dirName, int option_a, int option_1) {
         return 1;
 	}
 
+    int count = 0;
     struct dirent *dir;
+
     while ((dir = readdir(dirHandler)) != NULL) {
         if (option_a == 0 && dir->d_name[0] == '.') {
 			continue;
         }
         printf("%s  ", dir->d_name);
+        count++;
         if (option_1 > 0) {
             printf("\n");
         }
     }
 
-    if (option_1 == 0) {
+    if (option_1 == 0 && count > 0) {
         printf("\n");
     }
 
