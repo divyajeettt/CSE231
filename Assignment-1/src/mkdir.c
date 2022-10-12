@@ -36,6 +36,7 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
             }
             return 0;
         }
+
         else {
             char *copy = (char *) malloc(256*sizeof(char));
             strcpy(copy, dirName);
