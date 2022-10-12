@@ -18,7 +18,7 @@ int cat(char *filename, int option_n, int option_E) {
 
     while ((read = getline(&line, &maxSize, file)) != -1) {
         if (option_n > 0) {
-            printf("\t%d  ", counter++);
+            printf("%-5d  ", counter++);
         }
 
         line[read-1] = ((line[read-1] == '\n') ? '\0' : line[read-1]);
