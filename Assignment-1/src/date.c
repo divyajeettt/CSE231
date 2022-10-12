@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int getDate(int option_I, int option_R) {
-    time_t now;
+    time_t now = time(0);
     struct tm *ts = localtime(&now);
 
     char *buffer = (char *) malloc(256*sizeof(char));
@@ -46,11 +46,15 @@ int main(int argc, char *argv[]) {
                 printf("date: invalid option -- '%c' \n", option);
                 return 1;
             }
+            if (options[option] == 1) {
+                printf("date: multiple output formats specified \n");
+                return 1;
+            }
             options[option]++;
         }
     }
 
-    if (options['I']*options['R'] > 0) {
+    if ((options['I'] > 0 && options['R'] > 0)) {
         printf("date: multiple output formats specified \n");
         return 1;
     }
