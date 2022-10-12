@@ -24,13 +24,13 @@ int main(int argc, char *argv[]) {
     }
 
     if (args == 0) {
-        size_t maxSize = 256;
+        int maxSize = 256;
         char *input = (char *) malloc(maxSize*sizeof(char));
 
-        size_t read = getline(&input, &maxSize, stdin);
-        while (read != -1) {
+        void *end = fgets(input, maxSize, stdin);
+        while (end != EOF) {
             puts(input);
-            getline(&input, &maxSize, stdin);
+            end = fgets(input, maxSize, stdin);
         }
 
         return 0;
