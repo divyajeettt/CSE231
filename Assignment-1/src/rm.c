@@ -98,11 +98,11 @@ int main(int argc, char *argv[]) {
             }
             options[option]++;
         }
+    }
 
-        if (args == 0) {
-            printf("rm: missing operand \n");
-            return 1;
-        }
+    if (args == 0) {
+        printf("rm: missing operand \n");
+        return 1;
     }
 
     int retSum = 0;
