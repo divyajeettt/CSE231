@@ -70,6 +70,9 @@ int rm(char *name, int option_v, int option_r, int showResult) {
             }
             rmdir(name);
         }
+        else {
+            remove(name);
+        }
 
         if (option_v) {
             printf("removed '%s' \n", name);
