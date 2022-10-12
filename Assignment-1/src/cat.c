@@ -12,7 +12,8 @@ int exists(char *dirName) {
 
 int cat(char *filename, int option_n, int option_E) {
     FILE *file;
-    if (strcmp(filename, "stdin")) {
+    if (strcmp(filename, "stdin") == 0) {
+        printf("here");
         file = stdin;
     }
     else {
