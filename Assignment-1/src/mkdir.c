@@ -18,7 +18,7 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
     }
 
     if (option_p == 0) {
-        if (mkdir(dirName) == -1) {
+        if (mkdir(dirName, S_IRWXU) == -1) {
             if (showResult == 1) {
                 printf("mkdir: cannot create directory '%s': No such file or directory \n", dirName);
             }
@@ -30,7 +30,7 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
     }
 
     else {
-        if (mkdir(dirName) != -1) {
+        if (mkdir(dirName, S_IRWXU) != -1) {
             if (option_v) {
                 printf("mkdir: created directory '%s' \n", dirName);
             }
@@ -46,7 +46,7 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
             }
             copy[index] = '\0';
             makeDir(copy, 0, 1, 0);
-            mkdir(dirName);
+            mkdir(dirName, S_IRWXU);
         }
 
         if (option_v) {
