@@ -7,6 +7,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+int exists(char *dirName) {
+    return (opendir(dirName) != NULL);
+}
+
+
 int ls(char *dirName, int option_a, int option_1) {
     if (dirName == NULL) {
         dirName = (char *) malloc(256*sizeof(char));
@@ -68,7 +73,7 @@ int main(int argc, char *argv[]) {
     int retSum = 0;
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-' && strcmp(argv[i], "") != 0) {
-            if (args > 1) {
+            if (args > 1 && exists(argv[i])) {
                 printf("%s: \n", argv[i]);
             }
             retSum += ls(argv[i], options['a'], options['1']);
