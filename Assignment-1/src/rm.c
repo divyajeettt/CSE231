@@ -16,9 +16,13 @@ int dirExists(char *dirName) {
 }
 
 
-int rm(char *name, int option_r, int option_v, int showResult) {
+int rm(char *name, int option_v, int option_r, int showResult) {
+    char *cwd = (char *) malloc(256*sizeof(char));
+    getcwd(cwd, 256);
+    printf("cwd=%s \n", cwd);
+
     if (!(fileExists(name) || dirExists(name))) {
-        printf("rm: cannot remove '%s': No such file or directory \n", name);
+        printf("1. rm: cannot remove '%s': No such file or directory \n", name);
         return 1;
     }
 
@@ -29,7 +33,7 @@ int rm(char *name, int option_r, int option_v, int showResult) {
         }
         if (remove(name) != 0) {
             if (showResult == 1) {
-                printf("rm: cannot remove directory '%s': No such file or directory \n", name);
+                printf("2. rm: cannot remove directory '%s': No such file or directory \n", name);
             }
             return 1;
         }
@@ -39,11 +43,23 @@ int rm(char *name, int option_r, int option_v, int showResult) {
     }
 
     else {
-        if (remove(name) == 0) {
-            if (option_v) {
-                printf("removed '%s' \n", name);
+        if (remove(name) != 0 && dirExists(name)) {
+            DIR *dirHandler = opendir(name);
+            struct dirent *dir;
+
+            while ((dir = readdir(dirHandler)) != NULL) {
+                printf("%s \n", dir->d_name);
+                if (fileExists(dir->d_name)) {
+                    remove(dir->d_name);
+                }
+                else {
+                    rm(realpath(dir->d_name, NULL), 0, 1, 0);
+                }
             }
-            return 1;
+        }
+
+        if (option_v) {
+            printf("removed '%s' \n", name);
         }
     }
 
@@ -52,9 +68,13 @@ int rm(char *name, int option_r, int option_v, int showResult) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-int main(int argc, char *argv[]) {
+// int main(int argc, char *argv[]) {
+int main() {
     int *options = (int *) calloc(256, sizeof(int));
     int args = 0;
+
+    int argc = 3;
+    char *argv[] = {"rm", "crimge", "-r"};
 
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
@@ -79,7 +99,7 @@ int main(int argc, char *argv[]) {
     int retSum = 0;
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
-            retSum += rm(argv[i], options['r']+options['R'], options['v'], 1);
+            retSum += rm(argv[i], options['v'], options['r']+options['R'], 1);
         }
     }
 
