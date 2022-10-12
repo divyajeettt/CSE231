@@ -284,4 +284,3 @@ int main() {
 // ls -f -r => -f: jo mera default order hai
 //          => -r: reverse sorting
 //          => no options: ascending order
-// clear
