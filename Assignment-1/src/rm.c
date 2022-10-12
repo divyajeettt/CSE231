@@ -81,13 +81,9 @@ int rm(char *name, int option_v, int option_r, int showResult) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// int main(int argc, char *argv[]) {
-int main() {
+int main(int argc, char *argv[]) {
     int *options = (int *) calloc(256, sizeof(int));
     int args = 0;
-
-    int argc = 3;
-    char *argv[] = {"rm", "crimge", "-r"};
 
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
