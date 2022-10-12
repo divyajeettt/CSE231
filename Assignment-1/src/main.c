@@ -103,15 +103,10 @@ int main() {
         fgets(command, maxSize, stdin);
 
         char **args = (char **) calloc(maxSize, sizeof(char *));
-
         int countArgs = 0;
-        int n = 1;
 
         char *token = strip(strtok(command, " "));
         while (token != NULL) {
-            if (countArgs == n*maxSize) {
-                args = (char **) realloc(args, (++n)*maxSize);
-            }
             if (strcmp(token, "") != 0) {
                 args[countArgs++] = token;
             }
@@ -156,7 +151,7 @@ int main() {
                 continue;
             }
             if (args[2] != NULL) {
-                printf("-bash: cd: too many arguments /n");
+                printf("-bash: cd: too many arguments \n");
                 continue;
             }
 
