@@ -13,7 +13,7 @@ int exists(char *dirName) {
 
 
 int ls(char *dirName, int option_a, int option_1) {
-    if (dirName == NULL) {
+    if (dirName == NULL || strcmp(dirName, "") == 0) {
         dirName = (char *) malloc(256*sizeof(char));
         getcwd(dirName, 256);
     }
