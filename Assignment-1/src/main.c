@@ -47,11 +47,11 @@ int isBuiltin(char *command) {
         if (strcmp(command, internal[i]) == 0) {
             return 1;
         }
-        if (i < 4 && strcmp(command, external[i]) == 0) {
-            return 3;
-        }
-        if (i < 2 && strcmp(command, external[i]) == 0) {
+        else if (i < 2 && strcmp(command, external[i]) == 0) {
             return 2;
+        }
+        else if (i < 4 && strcmp(command, external[i]) == 0) {
+            return 3;
         }
     }
     return 0;
