@@ -61,14 +61,14 @@ int rm(char *name, int option_v, int option_r, int showResult) {
                 strcpy(childPath, name);
                 strcat(childPath, "/");
                 strcat(childPath, dir->d_name);
-                if (fileExists(childPath)) {
-                    printf("REMOVING: %s \n", childPath);
-                    remove(childPath);
-                }
-                else {
+                if (dirExists(childPath)) {
                     printf("RECURSING TO: %s \n", childPath);
                     rm(childPath, 0, 1, 0);
                     rmdir(childPath);
+                }
+                else {
+                    printf("REMOVING: %s \n", childPath);
+                    remove(childPath);
                 }
             }
             rmdir(name);
