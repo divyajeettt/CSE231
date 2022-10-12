@@ -1,10 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-int rm(char *name, int option_r, int option_i, int option_v, int showResult) {
+int fileExists(char *fName) {
+    return (access(fName, F_OK) == 0);
+}
 
+
+int dirExists(char *dirName) {
+    return (opendir(dirName) != NULL);
+}
+
+
+int rm(char *name, int option_r, int option_v, int showResult) {
+    if (!(fileExists(name) || dirExists(name))) {
+        printf("rm: cannot remove '%s': No such file or directory \n", name);
+        return 1;
+    }
+
+    if (option_r == 0) {
+        if (dirExists(name)) {
+            printf("rm: cannot remove '%s': Is a directory \n", name);
+            return 1;
+        }
+        if (remove(name) != 0) {
+            if (showResult == 1) {
+                printf("rm: cannot remove directory '%s': No such file or directory \n", name);
+            }
+            return 1;
+        }
+        if (option_v) {
+            printf("removed '%s' \n", name);
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +50,7 @@ int main(int argc, char *argv[]) {
         }
         for (int j=1; j < strlen(argv[i]); j++) {
             char option = argv[i][j];
-            if (option != 'r' && option != 'R' && option != 'i' && option != 'v') {
+            if (option != 'r' && option != 'R' && option != 'v') {
                 printf("rm: invalid option -- '%c' \n", option);
                 return 1;
             }
@@ -36,11 +66,9 @@ int main(int argc, char *argv[]) {
     int retSum = 0;
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
-            retSum += rm(argv[i], options['r']+options['R'], options['i'], options['v'], 1);
+            retSum += rm(argv[i], options['r']+options['R'], options['v'], 1);
         }
     }
 
     return retSum;
 }
-
-// rm -rR -i -v
