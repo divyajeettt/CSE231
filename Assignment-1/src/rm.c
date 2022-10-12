@@ -7,7 +7,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int fileExists(char *fName) {
-    return (access(fName, F_OK) == 0);
+    FILE *f = fopen(fName, "r");
+    if (f != NULL) {
+        fclose(f);
+        return 1;
+    }
+    else {
+        return 0;
+    }
 }
 
 
@@ -17,11 +24,7 @@ int dirExists(char *dirName) {
 
 
 int rm(char *name, int option_v, int option_r, int showResult) {
-    char *cwd = (char *) malloc(256*sizeof(char));
-    getcwd(cwd, 256);
-    printf("input=%s \n", name);
-
-    if (!(fileExists(name) || dirExists(name))) {
+    if (!fileExists(name) && !dirExists(name)) {
         printf("1. rm: cannot remove '%s': No such file or directory \n", name);
         return 1;
     }
@@ -43,19 +46,29 @@ int rm(char *name, int option_v, int option_r, int showResult) {
     }
 
     else {
-        if (remove(name) != 0 && dirExists(name)) {
+        if (dirExists(name)) {
             DIR *dirHandler = opendir(name);
             struct dirent *dir;
 
             while ((dir = readdir(dirHandler)) != NULL) {
-                if (fileExists(dir->d_name)) {
-                    remove(dir->d_name);
+                if (dir->d_name[0] == '.') {
+                    continue;
+                }
+
+                char *childPath = (char *) malloc(256*sizeof(char));
+                strcpy(childPath, name);
+                strcat(childPath, "/");
+                strcat(childPath, dir->d_name);
+
+                if (fileExists(childPath)) {
+                    remove(childPath);
                 }
                 else {
-                    printf("%s \n", dir->d_name);
-                    rm(realpath(dir->d_name, NULL), 0, 1, 0);
+                    rm(childPath, 0, 1, 0);
+                    rmdir(childPath);
                 }
             }
+            rmdir(name);
         }
 
         if (option_v) {
