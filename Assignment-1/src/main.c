@@ -280,6 +280,3 @@ int main() {
 
     return 0;
 }
-// ls -f -r => -f: jo mera default order hai
-//          => -r: reverse sorting
-//          => no options: ascending order
