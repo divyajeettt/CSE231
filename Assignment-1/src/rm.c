@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include <unistd.h>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +37,17 @@ int rm(char *name, int option_r, int option_v, int showResult) {
             printf("removed '%s' \n", name);
         }
     }
+
+    else {
+        if (remove(name) == 0) {
+            if (option_v) {
+                printf("removed '%s' \n", name);
+            }
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
