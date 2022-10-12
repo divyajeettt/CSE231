@@ -38,12 +38,12 @@ int isNumeric(char *string) {
 
 int isBuiltin(char *command) {
     char *internal[7] = {"exit", "cd", "echo", "pwd", "type", "help", "crimge"};
-    char *external[5] = {"ls", "cat", "date", "rm", "mkdir"};
+    char *external[6] = {"ls", "cat", "date", "rm", "mkdir", "clear"};
     for (int i=0; i < 7; i++) {
         if (strcmp(command, internal[i]) == 0) {
             return 1;
         }
-        if (i < 5 && strcmp(command, external[i]) == 0) {
+        if (i < 6 && strcmp(command, external[i]) == 0) {
             return -1;
         }
     }
@@ -66,6 +66,9 @@ int binPath(char *command) {
     }
     else if (strcmp(command, "mkdir") == 0) {
         return 5;
+    }
+    else if (strcmp(command, "clear") == 0) {
+        return 6;
     }
     return 0;
 }
@@ -90,6 +93,7 @@ int main() {
         realpath("./bin/date", NULL),
         realpath("./bin/rm", NULL),
         realpath("./bin/mkdir", NULL),
+        realpath("./bin/clear", NULL),
     };
 
     while (1) {
