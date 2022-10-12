@@ -13,7 +13,6 @@ int exists(char *dirName) {
 int cat(char *filename, int option_n, int option_E) {
     FILE *file;
     if (strcmp(filename, "stdin") == 0) {
-        printf("here");
         file = stdin;
     }
     else {
@@ -35,7 +34,7 @@ int cat(char *filename, int option_n, int option_E) {
 
     while ((read = getline(&line, &maxSize, file)) != -1) {
         if (option_n > 0) {
-            printf("%5d  ", counter++);
+            printf("%6d  ", counter++);
         }
 
         line[read-1] = ((line[read-1] == '\n') ? '\0' : line[read-1]);
