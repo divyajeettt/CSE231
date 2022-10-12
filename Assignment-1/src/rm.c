@@ -25,7 +25,7 @@ int dirExists(char *dirName) {
 
 int rm(char *name, int option_v, int option_r, int showResult) {
     if (!fileExists(name) && !dirExists(name)) {
-        printf("1. rm: cannot remove '%s': No such file or directory \n", name);
+        printf("1rm: cannot remove '%s': No such file or directory \n", name);
         return 1;
     }
 
@@ -36,7 +36,7 @@ int rm(char *name, int option_v, int option_r, int showResult) {
         }
         if (remove(name) != 0) {
             if (showResult == 1) {
-                printf("2. rm: cannot remove directory '%s': No such file or directory \n", name);
+                printf("rm: cannot remove directory '%s': No such file or directory \n", name);
             }
             return 1;
         }
@@ -47,8 +47,6 @@ int rm(char *name, int option_v, int option_r, int showResult) {
 
     else {
         if (dirExists(name)) {
-            printf("REACHED: %s \n", name);
-
             DIR *dirHandler = opendir(name);
             struct dirent *dir;
 
@@ -61,13 +59,12 @@ int rm(char *name, int option_v, int option_r, int showResult) {
                 strcpy(childPath, name);
                 strcat(childPath, "/");
                 strcat(childPath, dir->d_name);
+
                 if (dirExists(childPath)) {
-                    printf("RECURSING TO: %s \n", childPath);
                     rm(childPath, 0, 1, 0);
                     rmdir(childPath);
                 }
                 else {
-                    printf("REMOVING: %s \n", childPath);
                     remove(childPath);
                 }
             }
