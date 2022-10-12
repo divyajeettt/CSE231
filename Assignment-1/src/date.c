@@ -12,7 +12,7 @@ void getDate() {
     char *buffer = (char *) malloc(256*sizeof(char));
 
     struct tm *ts = localtime(&now);
-    strftime(buffer, sizeof(buffer), "%a %Y-%m-%d %H:%M:%S %Z", ts);
+    strftime(buffer, 256, "%a %Y-%m-%d %H:%M:%S %Z", ts);
     printf("%s\n", buffer);
 }
 
