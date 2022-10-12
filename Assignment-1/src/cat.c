@@ -10,7 +10,7 @@ int exists(char *dirName) {
 }
 
 
-int cat(char *filename, int option_n, int option_E) {
+int cat(char *filename, int option_n, int option_E, int *counter) {
     FILE *file;
     if (strcmp(filename, "stdin") == 0) {
         file = stdin;
@@ -28,13 +28,12 @@ int cat(char *filename, int option_n, int option_E) {
     }
 
     int read;
-    int counter = 1;
     size_t maxSize = 256;
     char *line = (char *) malloc(maxSize*sizeof(char));
 
     while ((read = getline(&line, &maxSize, file)) != -1) {
         if (option_n > 0) {
-            printf("%6d  ", counter++);
+            printf("%6d  ", (*counter)++);
         }
 
         line[read-1] = ((line[read-1] == '\n') ? '\0' : line[read-1]);
@@ -75,10 +74,11 @@ int main(int argc, char *argv[]) {
         return cat("stdin", options['n'], options['E']);
     }
 
+    int counter = 1;
     int retSum = 0;
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
-            retSum += cat(argv[i], options['n'], options['E']);
+            retSum += cat(argv[i], options['n'], options['E'], &counter);
         }
     }
 
