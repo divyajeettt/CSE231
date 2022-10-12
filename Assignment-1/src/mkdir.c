@@ -30,14 +30,7 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
     }
 
     else {
-        if (mkdir(dirName, S_IRWXU) == 0) {
-            if (option_v) {
-                printf("mkdir: created directory '%s' \n", dirName);
-            }
-            return 0;
-        }
-
-        else {
+        if (mkdir(dirName, S_IRWXU) != 0) {
             char *copy = (char *) malloc(256*sizeof(char));
             strcpy(copy, dirName);
 
