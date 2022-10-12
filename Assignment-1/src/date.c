@@ -3,7 +3,16 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+void getDate() {
+    time_t datetime;
+    time(&datetime);
+    printf("%s \n", ctime(&datetime));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
 int main(int argc, char *argv[]) {
-    printf("OH MA G INSIDE %s \n", argv[0]);
+    getDate();
+    // printf("OH MA G INSIDE %s \n", argv[0]);
     return 0;
 }
