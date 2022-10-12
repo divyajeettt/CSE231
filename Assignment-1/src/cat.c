@@ -11,15 +11,20 @@ int exists(char *dirName) {
 
 
 int cat(char *filename, int option_n, int option_E) {
-    if (exists(filename)) {
-        printf("cat: %s: Is a directory \n", filename);
-        return 1;
+    FILE *file;
+    if (strcmp(filename, "stdin")) {
+        file = stdin;
     }
-
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("cat: %s: No such file or directory \n", filename);
-        return 1;
+    else {
+        if (exists(filename)) {
+            printf("cat: %s: Is a directory \n", filename);
+            return 1;
+        }
+        file = fopen(filename, "r");
+        if (file == NULL) {
+            printf("cat: %s: No such file or directory \n", filename);
+            return 1;
+        }
     }
 
     int read;
@@ -29,7 +34,7 @@ int cat(char *filename, int option_n, int option_E) {
 
     while ((read = getline(&line, &maxSize, file)) != -1) {
         if (option_n > 0) {
-            printf("%-5d  ", counter++);
+            printf("%5d  ", counter++);
         }
 
         line[read-1] = ((line[read-1] == '\n') ? '\0' : line[read-1]);
@@ -67,20 +72,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (args == 0) {
-        int maxSize = 256;
-        char *input = (char *) malloc(maxSize*sizeof(char));
-
-        char *end = fgets(input, maxSize, stdin);
-        while (end != NULL) {
-            int length = strlen(input) - 1;
-            if (input[length] == '\n') {
-                input[length] = '\0';
-            }
-            puts(input);
-            end = fgets(input, maxSize, stdin);
-        }
-
-        return 0;
+        return cat("stdin", options['n'], options['E']);
     }
 
     int retSum = 0;
