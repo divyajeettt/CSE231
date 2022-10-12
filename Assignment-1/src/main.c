@@ -129,7 +129,9 @@ int main() {
             if (args[1] != NULL && !isNumeric(args[1])) {
                 printf("-bash: exit: %s: numeric argument required \n", args[1]);
             }
-            printf("logout (tty1) \n");
+
+            printf("logout \n");
+            printf("oshelll-2.3.1 (tty1) \n")
 
             if (args[1] != NULL) {
                 exit(atoi(args[1]));
@@ -279,3 +281,7 @@ int main() {
 
     return 0;
 }
+// ls -f -r => -f: jo mera default order hai
+//          => -r: reverse sorting
+//          => no options: ascending order
+// clear
