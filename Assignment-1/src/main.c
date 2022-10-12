@@ -27,6 +27,7 @@ char *strip(char *string) {
     return strippedString;
 }
 
+
 int isNumeric(char *string) {
     for (int i=0; i < strlen(string); i++) {
         if (isdigit(string[i]) == 0) {
@@ -36,15 +37,21 @@ int isNumeric(char *string) {
     return 1;
 }
 
+
 int isBuiltin(char *command) {
     char *internal[7] = {"exit", "cd", "echo", "pwd", "type", "help", "crimge"};
-    char *external[6] = {"ls", "cat", "date", "rm", "mkdir", "clear"};
+    char *external[2] = {"ls", "date"};
+    char *hashed[4] = {"cat", "rm", "mkdir", "clear"};
+
     for (int i=0; i < 7; i++) {
         if (strcmp(command, internal[i]) == 0) {
             return 1;
         }
-        if (i < 6 && strcmp(command, external[i]) == 0) {
-            return -1;
+        if (i < 2 && strcmp(command, external[i]) == 0) {
+            return 2;
+        }
+        if (i < 4 && strcmp(command, external[i]) == 0) {
+            return 3;
         }
     }
     return 0;
@@ -86,7 +93,7 @@ int main() {
     getcwd(cwd, maxSize);
     cwd = strrchr(cwd, '/') + 1;
 
-    char *external[7] = {
+    char *binaries[7] = {
         realpath("./bin/main", NULL),
         realpath("./bin/ls", NULL),
         realpath("./bin/cat", NULL),
@@ -217,8 +224,11 @@ int main() {
             if (type == 1) {
                 printf("%s is a shell builtin \n", args[1]);
             }
-            else if (type == -1) {
-                printf("%s is %s \n", args[1], external[binPath(args[1])]);
+            else if (type == 2) {
+                printf("%s is %s \n", args[1], binaries[binPath(args[1])]);
+            }
+            else if (type == 3) {
+                printf("%s is hashed (%s) \n", args[1], binaries[binPath(args[1])]);
             }
             else {
                 printf("-bash: type: %s: not found \n", args[1]);
