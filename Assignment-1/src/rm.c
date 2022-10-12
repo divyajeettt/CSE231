@@ -25,7 +25,7 @@ int dirExists(char *dirName) {
 
 int rm(char *name, int option_v, int option_r, int showResult) {
     if (!fileExists(name) && !dirExists(name)) {
-        printf("1rm: cannot remove '%s': No such file or directory \n", name);
+        printf("rm: cannot remove '%s': No such file or directory \n", name);
         return 1;
     }
 
