@@ -135,7 +135,7 @@ int main() {
             }
 
             printf("logout \n");
-            printf("oshelll-2.3.1 (tty1) \n")
+            printf("oshelll-2.3.1 (tty1) \n");
 
             if (args[1] != NULL) {
                 exit(atoi(args[1]));
