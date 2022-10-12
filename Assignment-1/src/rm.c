@@ -47,6 +47,8 @@ int rm(char *name, int option_v, int option_r, int showResult) {
 
     else {
         if (dirExists(name)) {
+            printf("REACHED: %s \n", name);
+
             DIR *dirHandler = opendir(name);
             struct dirent *dir;
 
@@ -59,11 +61,12 @@ int rm(char *name, int option_v, int option_r, int showResult) {
                 strcpy(childPath, name);
                 strcat(childPath, "/");
                 strcat(childPath, dir->d_name);
-
                 if (fileExists(childPath)) {
+                    printf("REMOVING: %s \n", childPath);
                     remove(childPath);
                 }
                 else {
+                    printf("RECURSING TO: %s \n", childPath);
                     rm(childPath, 0, 1, 0);
                     rmdir(childPath);
                 }
