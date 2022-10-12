@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
         char *input = (char *) malloc(maxSize*sizeof(char));
 
         void *end = fgets(input, maxSize, stdin);
-        while (end != EOF) {
+        while (end != NULL) {
             puts(input);
             end = fgets(input, maxSize, stdin);
         }
