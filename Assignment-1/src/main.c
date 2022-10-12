@@ -86,7 +86,7 @@ int main() {
     getcwd(cwd, maxSize);
     cwd = strrchr(cwd, '/') + 1;
 
-    char *external[6] = {
+    char *external[7] = {
         realpath("./bin/main", NULL),
         realpath("./bin/ls", NULL),
         realpath("./bin/cat", NULL),
