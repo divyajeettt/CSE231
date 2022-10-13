@@ -278,7 +278,7 @@ int main() {
 
                 pthread_t thread_id;
                 if (pthread_create(&thread_id, NULL, (void *) &system, copy) == 0) {
-                    pthread_join(thread_id, (NULL);
+                    pthread_join(thread_id, NULL);
                 }
                 else {
                     perror("pthread");
