@@ -81,6 +81,18 @@ int binPath(char *command) {
     return 0;
 }
 
+
+char *join(char *argv[], int argc) {
+    char *joined = (char *) malloc(256*sizeof(char));
+    for (int i=0; i < argc; i++) {
+        if (i != argc-1) {
+            strcat(joined, argv[i]);
+            strcat(joined, " ");
+        }
+    }
+    return joined;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main() {
@@ -267,15 +279,7 @@ int main() {
             if (strcmp(args[countArgs-1], "&t") == 0) {
                 // pthread_create() and system()
 
-                char *copy = (char *) malloc(maxSize*sizeof(char));
-                strcpy(copy, command);
-
-                int len = strlen(copy) - 1;
-                while (copy[len] != '&') {
-                    len--;
-                }
-                printf("copy='%s', command='%s' \n", copy, command);
-                copy[len] = '\0';
+                char *copy = join(args, countArgs);
                 printf("copy='%s', command='%s' \n", copy, command);
                 pthread_t thread_id;
                 printf("create nahi hua abhi: %s \n", copy);
