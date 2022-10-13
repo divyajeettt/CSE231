@@ -213,15 +213,11 @@ int main() {
         else if (strcmp(args[0], "pwd") == 0) {
             // Internal Command
 
-            // if (args[1] != NULL && args[1][0] == '-') {
-            //     printf("-bash: pwd: %s: invalid option \n", args[1]);
-            //     continue;
-            // }
             int *options = (int *) calloc(256, sizeof(int));
             int broken = 0;
             int option;
             while ((option = getopt(countArgs, args, "LP") != -1)) {
-                if (option != 'L' && option != 'P') {
+                if (option != 'L' && option != 'P' && option != '-') {
                     printf("-bash: pwd: -%c: invalid option \n", option);
                     broken = 1;
                     break;
