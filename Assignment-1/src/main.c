@@ -275,7 +275,7 @@ int main() {
                     len--;
                 }
                 copy[len] = '\0';
-
+                printf("copy='%s', command='%s' \n", copy, command);
                 pthread_t thread_id;
                 printf("create nahi hua abhi: %s \n", copy);
                 if (pthread_create(&thread_id, NULL, (void *) &system, copy) == 0) {
