@@ -277,8 +277,7 @@ int main() {
                 copy[len] = '\0';
 
                 pthread_t thread_id;
-                if (pthread_create(&thread_id, NULL, (void *) &system, (void *) copy) == 0) {
-                    printf("%s \n", copy);
+                if (pthread_create(&thread_id, NULL, (void *) &system, copy) == 0) {
                     pthread_join(thread_id, (NULL);
                 }
                 else {
