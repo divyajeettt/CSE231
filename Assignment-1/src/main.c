@@ -277,10 +277,14 @@ int main() {
                 copy[len] = '\0';
 
                 pthread_t thread_id;
+                printf("create nahi hua abhi: %s \n", copy);
                 if (pthread_create(&thread_id, NULL, (void *) &system, copy) == 0) {
+                    printf("create ho gaya join nahi: %s \n", copy);
                     pthread_join(thread_id, NULL);
+                    printf("join ho gaya: %s \n", copy);
                 }
                 else {
+                    printf("error aya: %s \n", copy);
                     perror("pthread");
                     exit(EXIT_FAILURE);
                 }
