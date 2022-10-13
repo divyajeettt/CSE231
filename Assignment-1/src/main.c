@@ -216,7 +216,7 @@ int main() {
             int *options = (int *) calloc(256, sizeof(int));
             int broken = 0;
             int option;
-            while ((option = getopt(countArgs, args, "LP") != -1)) {
+            while ((option = getopt(countArgs, args, "LP-") != -1)) {
                 if (option != 'L' && option != 'P' && option != '-') {
                     printf("-bash: pwd: -%c: invalid option \n", option);
                     broken = 1;
