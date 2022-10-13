@@ -275,29 +275,33 @@ int main() {
                     len--;
                 }
                 copy[len] = '\0';
-                printf("%s \n",  copy);
 
-                // NEW
-                // pthread_t thread_id;
-                // pthread_create(&thread_id, NULL, system, copy);
+                pthread_t thread_id;
+                if (pthread_create(&thread_id, NULL, system, copy) == 0) {
+                    pthread_join(thread_id, NULL);
+                }
+                else {
+                    perror("pthread");
+                    exit(EXIT_FAILURE);
+                }
             }
 
             else {
                 // fork() and exec()
                 pid_t process_id = fork();
                 if (process_id > 0) {
-                    // Code to be executed by Parent
-                    // Wait
+                    // Code to be executed by Parent (wait())
                     int status;
                     if (waitpid(process_id, &status, 0) <= 0) {
                         perror("waitpid");
+                        exit(EXIT_FAILURE);
                     }
                 }
                 else if (process_id == 0) {
-                    // Code to be executed by Child
-                    // Exec
+                    // Code to be executed by Child (exec())
                     if (execv(binaries[bin], args) == -1) {
                         perror("execv");
+                        exit(EXIT_FAILURE);
                     }
                 }
                 else {
