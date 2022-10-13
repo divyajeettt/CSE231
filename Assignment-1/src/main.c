@@ -188,7 +188,7 @@ int main() {
         else if (strcmp(args[0], "echo") == 0) {
             // Internal Command
 
-            if (args[1] == NULL || strcmp(args[1], "") == 0) {
+            if (args[1] == NULL) {
                 printf("\n");
                 continue;
             }
