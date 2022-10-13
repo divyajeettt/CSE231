@@ -119,7 +119,7 @@ int main() {
     };
 
     while (1) {
-        printf("[%s@oshell %s] $ ", username, cwd);
+        printf("[%s@oshell %s]$ ", username, cwd);
 
         char *command = (char *) malloc(maxSize*sizeof(char));
         fgets(command, maxSize, stdin);
