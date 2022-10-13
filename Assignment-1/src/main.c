@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdint.h>
+#include <pthread.h>
 #include <sys/wait.h>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -256,7 +257,6 @@ int main() {
 
         else {
             // External Commands
-
             int bin = binPath(args[0]);
             if (bin == 0) {
                 // Invalid Command
@@ -264,26 +264,45 @@ int main() {
                 continue;
             }
 
-            pid_t pid = fork();
+            if (strcmp(args[countArgs-1], "&t") == 0) {
+                // pthread_create() and system()
 
-            if (pid > 0) {
-                // Code to be executed by Parent
-                // Wait
-                int status;
-                if (waitpid(pid, &status, 0) <= 0) {
-                    perror("waitpid");
+                char *copy = (char *) malloc(maxSize*sizeof(char));
+                strcpy(copy, command);
+
+                int len = strlen(copy) - 1;
+                while (copy[len] != '&') {
+                    len--;
                 }
+                copy[len] = '\0';
+                printf("%s \n",  copy);
+
+                pthread_t thread_id;
+                pthread_create(&thread_id, NULL, system, copy);
             }
-            else if (pid == 0) {
-                // Code to be executed by Child
-                // Exec
-                if (execv(binaries[bin], args) == -1) {
-                    perror("execv");
-                }
-            }
+
             else {
-                perror("fork");
-                exit(EXIT_FAILURE);
+                // fork() and exec()
+                pid_t process_id = fork();
+                if (process_id > 0) {
+                    // Code to be executed by Parent
+                    // Wait
+                    int status;
+                    if (waitpid(process_id, &status, 0) <= 0) {
+                        perror("waitpid");
+                    }
+                }
+                else if (process_id == 0) {
+                    // Code to be executed by Child
+                    // Exec
+                    if (execv(binaries[bin], args) == -1) {
+                        perror("execv");
+                    }
+                }
+                else {
+                    perror("fork");
+                    exit(EXIT_FAILURE);
+                }
             }
         }
     }
