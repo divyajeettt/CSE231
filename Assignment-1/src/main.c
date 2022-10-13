@@ -280,6 +280,7 @@ int main() {
             if (strcmp(args[countArgs-1], "&t") == 0) {
                 // pthread_create() and system()
                 char *copy = join(args, countArgs, binaries[bin]);
+                printf("%s \n", copy);
                 pthread_t thread_id;
                 if (pthread_create(&thread_id, NULL, (void *) &system, copy) == 0) {
                     pthread_join(thread_id, NULL);
