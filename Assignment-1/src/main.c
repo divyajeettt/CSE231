@@ -82,9 +82,11 @@ int binPath(char *command) {
 }
 
 
-char *join(char *argv[], int argc) {
+char *join(char *argv[], int argc, char *bin) {
     char *joined = (char *) malloc(256*sizeof(char));
-    for (int i=0; i < argc; i++) {
+    strcpy(joined, bin);
+    strcpy(joined, " ");
+    for (int i=1; i < argc; i++) {
         if (i != argc-1) {
             strcat(joined, argv[i]);
             strcat(joined, " ");
@@ -275,26 +277,18 @@ int main() {
                 printf("-bash: %s: command not found \n", args[0]);
                 continue;
             }
-
             if (strcmp(args[countArgs-1], "&t") == 0) {
                 // pthread_create() and system()
-
-                char *copy = join(args, countArgs);
-                printf("copy='%s', command='%s' \n", copy, command);
+                char *copy = join(args, countArgs, binaries[bin]);
                 pthread_t thread_id;
-                printf("create nahi hua abhi: %s \n", copy);
                 if (pthread_create(&thread_id, NULL, (void *) &system, copy) == 0) {
-                    printf("create ho gaya join nahi: %s \n", copy);
                     pthread_join(thread_id, NULL);
-                    printf("join ho gaya: %s \n", copy);
                 }
                 else {
-                    printf("error aya: %s \n", copy);
                     perror("pthread");
                     exit(EXIT_FAILURE);
                 }
             }
-
             else {
                 // fork() and exec()
                 pid_t process_id = fork();
