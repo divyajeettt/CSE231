@@ -274,6 +274,7 @@ int main() {
                 while (copy[len] != '&') {
                     len--;
                 }
+                printf("copy='%s', command='%s' \n", copy, command);
                 copy[len] = '\0';
                 printf("copy='%s', command='%s' \n", copy, command);
                 pthread_t thread_id;
