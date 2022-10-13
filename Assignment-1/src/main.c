@@ -217,7 +217,7 @@ int main() {
                 int broken = 0;
                 for (int i=1; i < strlen(args[1]); i++) {
                     if (args[1][i] != 'L' && args[1][i] != 'P') {
-                        printf("-bash: pwd: %s: invalid option \n", args[1]);
+                        printf("-bash: pwd: %c: invalid option \n", args[1][i]);
                         broken = 1;
                         break;
                     }

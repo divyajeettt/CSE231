@@ -5,17 +5,20 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-int getDate(int option_I, int option_R) {
+int getDate(int option_I, int option_R, int option_u) {
     time_t now = time(0);
     struct tm *ts = localtime(&now);
 
     char *buffer = (char *) malloc(256*sizeof(char));
 
-    if (option_I > 0) {
+    if (option_I) {
         strftime(buffer, 256, "%Y-%m-%d", ts);
     }
-    else if (option_R > 0) {
+    else if (option_R) {
         strftime(buffer, 256, "%a, %d %b %Y %H:%M:%S %z", ts);
+    }
+    else if (option_u) {
+        strftime(buffer, 256, "%a %b %d %I:%M:%S %p UTC %Y", gmtime(&now));
     }
     else {
         strftime(buffer, 256, "%a %b %d %I:%M:%S %p %Z %Y", ts);
@@ -42,7 +45,7 @@ int main(int argc, char *argv[]) {
         }
         for (int j=1; j < strlen(argv[i]); j++) {
             char option = argv[i][j];
-            if (option != 'I' && option != 'R') {
+            if (option != 'I' && option != 'R' && option != 'u') {
                 printf("date: invalid option -- '%c' \n", option);
                 return 1;
             }
@@ -54,10 +57,13 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if ((options['I'] > 0 && options['R'] > 0)) {
+    int I = options['I'];
+    int R = options['R'];
+    int u = options['u'];
+    if ((I && R) || (R && u) || (u && I) || (I && R && u)) {
         printf("date: multiple output formats specified \n");
         return 1;
     }
 
-    return getDate(options['I'], options['R']);
+    return getDate(options['I'], options['R'], options['u']);
 }
