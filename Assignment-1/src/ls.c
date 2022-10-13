@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     int *options = (int *) calloc(256, sizeof(int));
     int args = 0;
 
-    for (int i=0; i < argc; i++) {
+    for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {
             args++;
             continue;
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (args == 1) {
+    if (args == 0) {
         return ls(NULL, options['a'], options['1']);
     }
 
