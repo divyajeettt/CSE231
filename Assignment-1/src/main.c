@@ -177,7 +177,9 @@ int main() {
         printf("[%s@oshell %s]$ ", username, cwd);
 
         char *command = (char *) malloc(MAX_SIZE*sizeof(char));
-        fgets(command, MAX_SIZE, stdin);
+        if (fgets(command, MAX_SIZE, stdin) == NULL) {
+            command = "exit";
+        }
 
         char **args = (char **) calloc(MAX_SIZE, sizeof(char *));
         int countArgs = 0;
