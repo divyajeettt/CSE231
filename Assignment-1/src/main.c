@@ -166,7 +166,6 @@ int main() {
             // Internal Command
 
             if (args[1] == NULL || (args[1][0] == '-' && args[2] == NULL)) {
-                printf("here \n");
                 if (chdir(getenv("HOME")) == 0) {
                     strcpy(cwd, "~");
                 }
@@ -227,19 +226,19 @@ int main() {
                 continue;
             }
 
-            int flag = 1;
+            int option_n = 0;
             if (strcmp(args[1], "-n") == 0) {
-                flag = 0;
+                option_n = 1;
             }
 
-            for (int i=2-flag; i < countArgs; i++) {
+            for (int i=1+option_n; i < countArgs; i++) {
                 printf("%s", args[i]);
                 if (i != countArgs-1) {
                     printf(" ");
                 }
             }
 
-            if (flag) {
+            if (option_n == 0) {
                 printf("\n");
             }
         }
