@@ -219,7 +219,7 @@ int main() {
         else if (strcmp(args[0], "pwd") == 0) {
             // Internal Command
 
-            int option_P = 0;
+            int option_L = 0;
             if (args[1] != NULL && args[1][0] == '-') {
                 int broken = 0;
                 for (int i=1; i < strlen(args[1]); i++) {
@@ -228,8 +228,8 @@ int main() {
                         broken = 1;
                         break;
                     }
-                    else if (args[1][i] == 'P') {
-                        option_P = 1;
+                    else if (args[1][i] == 'L') {
+                        option_L = 1;
                     }
                 }
                 if (broken) {
