@@ -273,7 +273,7 @@ oshell-2.3.1 (tty1)
 
 #### help
 
-The `help` command displays some help text for the specified command, along with the options it supports. (NOT IMPLEMENTED YET).
+The `help` command displays some help text for the specified command, along with the options it supports.
 
 ### Hidden command
 
