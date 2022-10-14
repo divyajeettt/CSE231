@@ -221,7 +221,7 @@ int main() {
         realpath("./docs/cat.txt", NULL),
         realpath("./docs/cd.txt", NULL),
         realpath("./docs/clear.txt", NULL),
-        realpath("./docs/crime.txt", NULL),
+        realpath("./docs/crimge.txt", NULL),
         realpath("./docs/date.txt", NULL),
         realpath("./docs/echo.txt", NULL),
         realpath("./docs/exit.txt", NULL),
