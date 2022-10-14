@@ -59,7 +59,7 @@ The `cd` command allows the user to change the current working directory of the 
 
 #### echo
 
-The `echo` command is used to write all its arguments to standard output. It supports the following options:
+The `echo` command is used to write all its arguments to standard output followed by newline. It supports the following options:
 
 - `-n`: Trims the trailing newline and writes the arguments to stdout without it
 
@@ -72,8 +72,9 @@ oh my god, oshell works
 all hail oshell[dvgt@oshell Assignment-1]$
 ```
 
-#### 
+Assumption: The options given to the `echo` command (if any) will ONLY be given as the first argument. All subsequent options will be treated as text literals.
 
+#### pwd
 
 The `pwd` command simply displays the current working directory of the Shell. It (mimics to) supports the following options:
 
@@ -225,7 +226,7 @@ The `clear` command clears the Shell screen. It does not support any options.
 
 #### type
 
-The `type` command is used to check whether a command is an internal or external command. To more accurately mimic the Linux Shell's behaviour, some external commands are displayed as 'hashed' (while in reality, they are just binaries). Examples:
+The `type` command is used to check whether a command is an internal or external command. Examples:
 
 ```console
 [dvgt@oshell Assignment-1]$ type cd
@@ -236,15 +237,17 @@ date is /home/dvgt/CSE231/Assignment-1/bin/date
 mkdir is hashed (/home/dvgt/CSE231/Assignment-1/bin/mkdir)
 ```
 
+Assumption: Some external commands like `mkdir` and `rm` are displayed as 'hashed' to more accurately "mimic" the Linux Shell's behaviour. In reality, these files are simple executables located in the `./bin` directory.
+
 #### exit
 
 The `exit` command simply stops the execution of the Shell, i.e., exits it. Example:
 
-```
+```console
 [dvgt@oshell Assignment-1]$ exit
 logout
 oshell-2.3.1 (tty1)
-[dvgt@artix Assignment-1]$ 
+[dvgt@artix Assignment-1]$
 ```
 
 #### help
