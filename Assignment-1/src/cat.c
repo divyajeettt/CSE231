@@ -32,7 +32,7 @@ int cat(char *filename, int option_n, int option_E, int *counter) {
     int read;
     char *line = (char *) malloc(MAX_SIZE*sizeof(char));
 
-    int size;
+    size_t size;
     while ((read = getline(&line, &size, file)) != -1) {
         if (option_n > 0) {
             printf("%6d  ", (*counter)++);
