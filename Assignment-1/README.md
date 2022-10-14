@@ -299,6 +299,13 @@ Finally, to start the Shell, execute:
 ./bin/main
 ```
 
+## Future Plans
+
+Implement the following interesting command-options (among others):
+
+- `ls -R`
+- `cd -`
+
 ## References
 
 - [<b>CSE231</b> Lecture Slides: *Dr Sambuddho Chakravarty*](https://drive.google.com/file/d/15927VKp8q1xwLvs28I4lgDyLF0XGcrXk/view)
