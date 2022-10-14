@@ -14,8 +14,17 @@ oshell completely mirrors the functionality of the implemented commands on the L
 
 ### Flexibility
 
-Options (aka flags) can be passed anywhere in the command (according to the syntax allowed by the Linux Shell). For example, \
-`rm -rv ./dir1/dir2` is equivalent to `rm -v ./dir1/dir2 -r`.
+Options (aka flags) can be passed anywhere in the command (according to the syntax allowed by the Linux Shell). For example,
+
+```console
+[dvgt@oshell Assignment-1]$ rm -rv ./dir1/dir2
+``` 
+
+is equivalent to 
+
+```console
+[dvgt@oshell Assignment-1]$ rm -v ./dir1/dir2 -r
+```
 
 ### Errors handled
 
@@ -41,7 +50,7 @@ These commands are written and handled in the `main.c` file itself. These includ
 
 The `cd` command allows the user to change the current working directory of the Shell. It supports no options as of yet. Examples:
 
-``` 
+```console
 [dvgt@oshell Assignment-1]$ cd ..
 [dvgt@oshell CSE231]$ cd
 [dvgt@oshell CSE231]$ cd ./../CSE201/Refresher-Module
@@ -56,9 +65,9 @@ The `echo` command is used to write all its arguments to standard output. It sup
 
 Examples:
 
-```
+```console
 [dvgt@oshell Assignment-1]$ echo oh my god, oshell works
-oh my god, oshell works
+oh my god, oshell works 
 [dvgt@oshell Assignment-1]$ echo -n all hail oshell
 all hail oshell[dvgt@oshell Assignment-1]$ 
 ```
@@ -66,12 +75,13 @@ all hail oshell[dvgt@oshell Assignment-1]$
 #### pwd
 
 The `pwd` command simply displays the current working directory of the Shell. It (mimics to) supports the following options:
+
 - `-L`: Print the value of `$PWD` if it names the current working directory
 - `-P`: Print the physical directory without any symbolic links
 
 Examples:
 
-```
+```console
 [dvgt@oshell Assignment-1]$ pwd
 /home/dvgt/CSE231/Assignment-1
 [dvgt@oshell Assignment-1]$ cd ..
@@ -92,7 +102,7 @@ The `ls` command displays a space-separated list of files and directories in the
 
 Examples:
 
-```
+```console
 [dvgt@oshell Assignment-1]$ ls
 Assignment-1.pdf  bin  makefile  README.md  src
 [dvgt@oshell Assignment-1]$ ls ./bin ./src -1
@@ -127,7 +137,7 @@ The `cat` command can be used in two ways. It can be used to read the contents o
 
 Examples:
 
-```
+```console
 [dvgt@oshell Assignment-1]$ cat -n
 oh my god, oshell works
      1  oh my god, oshell works
@@ -150,7 +160,7 @@ The `date` command is used to display the current system date and time. By defua
 
 Examples:
 
-```
+```console
 [dvgt@oshell Assignment-1]$ date
 Fri Oct 14 12:05:48 PM IST 2022
 [dvgt@oshell Assignment-1]$ date -I &t
@@ -170,7 +180,7 @@ The `rm` command is used to remove files from the system. Mentioning multiple it
 
 Examples:
 
-```
+```console
 [dvgt@oshell Assignment-1]$ rm makefile
 [dvgt@oshell Assignment-1]$ ls
 Assignment-1.pdf  bin  README.md  src
@@ -194,7 +204,7 @@ The `mdkir` command is used to create directories. Mentioning multiple items wit
 
 Examples:
 
-```
+```console
 [dvgt@oshell Assignment-1]$ mkdir /src -p
 [dvgt@oshell Assignment-1]$ mkdir -p new/new/new -v &t
 mkdir: created directory 'new'
