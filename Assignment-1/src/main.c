@@ -218,19 +218,19 @@ int main() {
     };
 
     char *docs[13] = {
-        realpath("./bin/cat.txt", NULL),
-        realpath("./bin/cd.txt", NULL),
-        realpath("./bin/clear.txt", NULL),
-        realpath("./bin/crime.txt", NULL),
-        realpath("./bin/date.txt", NULL),
-        realpath("./bin/echo.txt", NULL),
-        realpath("./bin/exit.txt", NULL),
-        realpath("./bin/help.txt", NULL),
-        realpath("./bin/ls.txt", NULL),
-        realpath("./bin/mkdir.txt", NULL),
-        realpath("./bin/pwd.txt", NULL),
-        realpath("./bin/rm.txt", NULL),
-        realpath("./bin/type.txt", NULL),
+        realpath("./docs/cat.txt", NULL),
+        realpath("./docs/cd.txt", NULL),
+        realpath("./docs/clear.txt", NULL),
+        realpath("./docs/crime.txt", NULL),
+        realpath("./docs/date.txt", NULL),
+        realpath("./docs/echo.txt", NULL),
+        realpath("./docs/exit.txt", NULL),
+        realpath("./docs/help.txt", NULL),
+        realpath("./docs/ls.txt", NULL),
+        realpath("./docs/mkdir.txt", NULL),
+        realpath("./docs/pwd.txt", NULL),
+        realpath("./docs/rm.txt", NULL),
+        realpath("./docs/type.txt", NULL),
     };
 
     while (1) {
@@ -450,12 +450,8 @@ int main() {
         else if (strcmp(args[0], "help") == 0) {
             // Internal Command
 
-            char *command = (char *) malloc(MAX_SIZE*sizeof(char));
             if (args[1] == NULL || strcmp(args[1], "") == 0) {
-                command = "help";
-            }
-            else {
-                command = args[1];
+                args[1] = "help";
             }
 
             if (args[2] != NULL) {
@@ -463,7 +459,7 @@ int main() {
                 continue;
             }
 
-            int doc = docPath(command);
+            int doc = docPath(args[1]);
             if (doc == -1) {
                 printf("-bash: help: no help topics match '%s' \n", args[1]);
             }
