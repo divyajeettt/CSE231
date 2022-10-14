@@ -104,37 +104,38 @@ char *escape(char *string) {
     for (int i=0; i < len; i++) {
         if (i < len-1 && string[i] == '\\') {
             if (string[i+1] == 'a') {
-                escaped[i++] = '\a';
+                escaped[i] = '\a';
             }
             else if (string[i+1] == 'b') {
-                escaped[i++] = '\b';
+                escaped[i] = '\b';
             }
             else if (string[i+1] == 'c') {
+                escaped[i] = '\0';
                 return escaped;
             }
             else if (string[i+1] == 'e') {
-                escaped[i++] = '\e';
+                escaped[i] = '\e';
             }
             else if (string[i+1] == 'f') {
-                escaped[i++] = '\f';
+                escaped[i] = '\f';
             }
             else if (string[i+1] == 'n') {
-                escaped[i++] = '\n';
+                escaped[i] = '\n';
             }
             else if (string[i+1] == 'r') {
-                escaped[i++] = '\r';
+                escaped[i] = '\r';
             }
             else if (string[i+1] == 't') {
-                escaped[i++] = '\t';
+                escaped[i] = '\t';
             }
             else if (string[i+1] == 'v') {
-                escaped[i++] = '\v';
+                escaped[i] = '\v';
             }
             else if (string[i+1] == '\\') {
-                escaped[i++] = '\\';
+                escaped[i] = '\\';
             }
         }
-        else {
+        else if (string[i-1] != '\\') {
             escaped[i] = string[i];
         }
     }
@@ -294,14 +295,8 @@ int main() {
 
             char *output = (char *) malloc(maxSize*sizeof(char));
             for (int i=start; i < countArgs; i++) {
-                char *new = escape(args[i]);
                 if (option_e) {
-                    if (new == NULL) {
-                        break;
-                    }
-                    else {
-                        strcat(output, new);
-                    }
+                    strcat(output, escape(args[i]));
                 }
                 else {
                     strcat(output, args[i]);
