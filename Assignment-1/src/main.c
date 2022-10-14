@@ -167,7 +167,9 @@ int main() {
 
             if (args[1] == NULL) {
                 if (chdir(getenv("HOME")) == 0) {
-                    cwd = "~";
+                    // cwd = "~";
+                cwd = strrchr(getcwd(cwd, maxSize), '/') + 1;
+
                 }
                 else {
                     perror("cd");
