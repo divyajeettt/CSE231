@@ -104,38 +104,38 @@ char *escape(char *string) {
     for (int i=0; i < len; i++) {
         if (i < len-1 && string[i] == '\\') {
             if (string[i+1] == 'a') {
-                strncat(escaped, &'\a', 1);
+                escaped[i++] = '\a';
             }
             else if (string[i+1] == 'b') {
-                strncat(escaped, &'\b', 1);
+                escaped[i++] = '\b';
             }
             else if (string[i+1] == 'c') {
                 return escaped;
             }
             else if (string[i+1] == 'e') {
-                strncat(escaped, &'\e', 1);
+                escaped[i++] = '\e';
             }
             else if (string[i+1] == 'f') {
-                strncat(escaped, &'\f', 1);
+                escaped[i++] = '\f';
             }
             else if (string[i+1] == 'n') {
-                strncat(escaped, &'\n', 1);
+                escaped[i++] = '\n';
             }
             else if (string[i+1] == 'r') {
-                strncat(escaped, &'\r', 1);
+                escaped[i++] = '\r';
             }
             else if (string[i+1] == 't') {
-                strncat(escaped, &'\t', 1);
+                escaped[i++] = '\t';
             }
             else if (string[i+1] == 'v') {
-                strncat(escaped, &'\v', 1);
+                escaped[i++] = '\v';
             }
             else if (string[i+1] == '\\') {
-                strncat(escaped, &'\\', 1);
+                escaped[i++] = '\\';
             }
         }
         else {
-            strncat(escaped, &string[i], 1);
+            escaped[i] = string[i];
         }
     }
     return escaped;
@@ -294,9 +294,9 @@ int main() {
 
             char *output = (char *) malloc(maxSize*sizeof(char));
             for (int i=start; i < countArgs; i++) {
-                char *string = args[i];
+                char *new = escape(args[i]);
                 if (option_e) {
-                    if ((char *new = escape(args[i])) == NULL) {
+                    if (new == NULL) {
                         break;
                     }
                     else {
