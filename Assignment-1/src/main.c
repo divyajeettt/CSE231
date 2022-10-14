@@ -7,6 +7,8 @@
 #include <pthread.h>
 #include <sys/wait.h>
 
+#define MAX_SIZE 256;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 char *strip(char *string) {
@@ -83,7 +85,7 @@ int binPath(char *command) {
 
 
 char *join(char *argv[], int argc, char *bin) {
-    char *joined = (char *) malloc(256*sizeof(char));
+    char *joined = (char *) malloc(MAX_SIZE*sizeof(char));
     strcpy(joined, bin);
     strcat(joined, " ");
     for (int i=1; i < argc; i++) {
@@ -97,7 +99,7 @@ char *join(char *argv[], int argc, char *bin) {
 
 
 char *escape(char *string, int *forceStop) {
-    char *escaped = (char *) malloc(256*sizeof(char));
+    char *escaped = (char *) malloc(MAX_SIZE*sizeof(char));
     int processedLast = 0;
     int len = strlen(string) - 1;
     int index = 0;
@@ -152,14 +154,13 @@ char *escape(char *string, int *forceStop) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main() {
-    int maxSize = 256;
     char *username = (char *) getlogin();
 
     printf("oshell-2.3.1 \n");
     printf("login as %s \n", username);
 
-    char *cwd = (char *) malloc(maxSize*sizeof(char));
-    getcwd(cwd, maxSize);
+    char *cwd = (char *) malloc(MAX_SIZE*sizeof(char));
+    getcwd(cwd, MAX_SIZE);
     cwd = strrchr(cwd, '/') + 1;
 
     char *binaries[7] = {
@@ -175,10 +176,10 @@ int main() {
     while (1) {
         printf("[%s@oshell %s]$ ", username, cwd);
 
-        char *command = (char *) malloc(maxSize*sizeof(char));
-        fgets(command, maxSize, stdin);
+        char *command = (char *) malloc(MAX_SIZE*sizeof(char));
+        fgets(command, MAX_SIZE, stdin);
 
-        char **args = (char **) calloc(maxSize, sizeof(char *));
+        char **args = (char **) calloc(MAX_SIZE, sizeof(char *));
         int countArgs = 0;
 
         char *token = strip(strtok(command, " "));
@@ -265,7 +266,7 @@ int main() {
             }
 
             if (chdir(changeTo) == 0) {
-                strcpy(cwd, strrchr(getcwd(cwd, maxSize), '/') + 1);
+                strcpy(cwd, strrchr(getcwd(cwd, MAX_SIZE), '/') + 1);
             }
             else {
                 printf("-bash: cd: %s: No such file or directory \n", args[1]);
@@ -300,7 +301,7 @@ int main() {
                 }
             }
 
-            char *output = (char *) malloc(maxSize*sizeof(char));
+            char *output = (char *) malloc(MAX_SIZE*sizeof(char));
             int killOutput = 0;
             for (int i=start; i < countArgs; i++) {
                 if (option_e) {
@@ -346,11 +347,11 @@ int main() {
                 }
             }
 
-            char *currentDirectory = (char *) malloc(maxSize*sizeof(char));
+            char *currentDirectory = (char *) malloc(MAX_SIZE*sizeof(char));
             if (option_L) {
                 printf("%s \n", getenv("PWD"));
             }
-            else if (getcwd(currentDirectory, maxSize) != NULL) {
+            else if (getcwd(currentDirectory, MAX_SIZE) != NULL) {
                 printf("%s \n", realpath(currentDirectory, NULL));
             }
             else {
