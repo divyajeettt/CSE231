@@ -132,14 +132,14 @@ char *escape(char *string) {
                 escaped[index++] = '\t';
             }
             else if (string[i+1] == 'v') {
-                escaped[index] = '\v';
+                escaped[index++] = '\v';
             }
             else if (string[i+1] == '\\') {
-                escaped[index] = '\\';
+                escaped[index++] = '\\';
             }
         }
         else if (string[i-1] != '\\') {
-            escaped[index] = string[i];
+            escaped[index++] = string[i];
         }
     }
 
