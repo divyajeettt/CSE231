@@ -48,7 +48,12 @@ These commands are written and handled in the `main.c` file itself. These includ
 
 #### cd
 
-The `cd` command allows the user to change the current working directory of the Shell. It does not support any options as of yet. Examples:
+The `cd` command allows the user to change the current working directory of the Shell. It supports the following options:
+
+- `-L`: Forces symbolic links to be followed (default)
+- `-P`: Use the physical directory structure without following symbolic links
+
+Examples:
 
 ```console
 [dvgt@oshell Assignment-1]$ cd ..
@@ -62,6 +67,7 @@ The `cd` command allows the user to change the current working directory of the 
 The `echo` command is used to write all its arguments to standard output followed by newline. It supports the following options:
 
 - `-n`: Trims the trailing newline and writes the arguments to stdout without it
+- `-e`: Enables interpretation of backslash-escapes
 
 Examples:
 
@@ -69,7 +75,10 @@ Examples:
 [dvgt@oshell Assignment-1]$ echo oh my god, oshell works
 oh my god, oshell works
 [dvgt@oshell Assignment-1]$ echo -n all hail oshell
-all hail oshell[dvgt@oshell Assignment-1]$
+all hail oshell[dvgt@oshell Assignment-1]$ echo
+
+[dvgt@oshell Assignment-1]$ echo -e ABC\tXYZ
+ABC    XYZ
 ```
 
 Assumption: The options given to the `echo` command (if any) will ONLY be given as the first argument. All subsequent options will be treated as text literals.
@@ -78,8 +87,8 @@ Assumption: The options given to the `echo` command (if any) will ONLY be given 
 
 The `pwd` command simply displays the current working directory of the Shell. It (mimics to) supports the following options:
 
-- `-L`: Print the value of `$PWD` if it names the current working directory
-- `-P`: Print the physical directory without any symbolic links (default)
+- `-L`: Print the value of `$PWD` if it names the current working directory (default)
+- `-P`: Print the physical directory without any symbolic links
 
 Examples:
 
