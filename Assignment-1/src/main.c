@@ -165,7 +165,7 @@ int main() {
         else if (strcmp(args[0], "cd") == 0) {
             // Internal Command
 
-            if (args[1] == NULL || (args[1][0] == '-' && args[2] != NULL)) {
+            if (args[1] == NULL || (args[1][0] == '-' && args[2] == NULL)) {
                 printf("here \n");
                 if (chdir(getenv("HOME")) == 0) {
                     strcpy(cwd, "~");
@@ -199,7 +199,7 @@ int main() {
                 continue;
             }
 
-            char *changeTo = (option_P) ? realpath(args[2], NULL) : args[1];
+            char *changeTo = ((option_P) ? realpath(args[2], NULL) : args[1]);
             if (chdir(changeTo) == 0) {
                 strcpy(cwd, strrchr(getcwd(cwd, maxSize), '/') + 1);
             }
