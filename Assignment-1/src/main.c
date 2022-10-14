@@ -165,7 +165,13 @@ int main() {
         else if (strcmp(args[0], "cd") == 0) {
             // Internal Command
 
-            if (args[1] == NULL || strcmp(args[1], "") == 0) {
+            if (args[1] == NULL) {
+                if (chdir(getenv("HOME")) == 0) {
+                    cwd = "~";
+                }
+                else {
+                    perror("cd");
+                }
                 continue;
             }
             if (args[1] != NULL && args[1][0] == '-') {
