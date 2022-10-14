@@ -180,7 +180,7 @@ int main() {
                 printf("-bash: cd: %s: invalid option \n", args[1]);
                 continue;
             }
-            if (args[2] != NULL) {[]
+            if (args[2] != NULL) {
                 printf("-bash: cd: too many arguments \n");
                 continue;
             }
