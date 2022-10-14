@@ -166,7 +166,7 @@ int main() {
             // Internal Command
 
             if (args[1] == NULL || (args[1][0] == '-' && args[2] != NULL)) {
-                printf("here");
+                printf("here \n");
                 if (chdir(getenv("HOME")) == 0) {
                     strcpy(cwd, "~");
                 }
@@ -201,6 +201,7 @@ int main() {
 
             if (option_P) {
                 args[1] = realpath(args[1], NULL);
+                printf("? here %s \n", args[1]);
             }
 
             if (chdir(args[1]) == 0) {
