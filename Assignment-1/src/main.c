@@ -151,6 +151,50 @@ char *escape(char *string, int *forceStop) {
     return escaped;
 }
 
+
+int docPath(char *command) {
+    if (strcmp(command, "cat") == 0) {
+        return 0;
+    }
+    else if (strcmp(command, "cd") == 0) {
+        return 1;
+    }
+    else if (strcmp(command, "clear") == 0) {
+        return 2;
+    }
+    else if (strcmp(command, "crimge") == 0) {
+        return 3;
+    }
+    else if (strcmp(command, "date") == 0) {
+        return 4;
+    }
+    else if (strcmp(command, "echo") == 0) {
+        return 5;
+    }
+    else if (strcmp(command, "exit") == 0) {
+        return 6;
+    }
+    else if (strcmp(command, "help") == 0) {
+        return 7;
+    }
+    else if (strcmp(command, "ls") == 0) {
+        return 8;
+    }
+    else if (strcmp(command, "mkdir") == 0) {
+        return 9;
+    }
+    else if (strcmp(command, "pwd") == 0) {
+        return 10;
+    }
+    else if (strcmp(command, "rm") == 0) {
+        return 11;
+    }
+    else if (strcmp(command, "type") == 0) {
+        return 12;
+    }
+    return -1;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main() {
@@ -171,6 +215,22 @@ int main() {
         realpath("./bin/rm", NULL),
         realpath("./bin/mkdir", NULL),
         realpath("./bin/clear", NULL),
+    };
+
+    char *docs[13] = {
+        realpath("./bin/cat.txt", NULL),
+        realpath("./bin/cd.txt", NULL),
+        realpath("./bin/clear.txt", NULL),
+        realpath("./bin/crime.txt", NULL),
+        realpath("./bin/date.txt", NULL),
+        realpath("./bin/echo.txt", NULL),
+        realpath("./bin/exit.txt", NULL),
+        realpath("./bin/help.txt", NULL),
+        realpath("./bin/ls.txt", NULL),
+        realpath("./bin/mkdir.txt", NULL),
+        realpath("./bin/pwd.txt", NULL),
+        realpath("./bin/rm.txt", NULL),
+        realpath("./bin/type.txt", NULL),
     };
 
     while (1) {
@@ -369,29 +429,48 @@ int main() {
                 continue;
             }
 
-            int type = isBuiltin(args[1]);
-            if (type == 1) {
-                printf("%s is a shell builtin \n", args[1]);
-            }
-            else if (type == 2) {
-                printf("%s is %s \n", args[1], binaries[binPath(args[1])]);
-            }
-            else if (type == 3) {
-                printf("%s is hashed (%s) \n", args[1], binaries[binPath(args[1])]);
-            }
-            else {
-                printf("-bash: type: %s: not found \n", args[1]);
-                continue;
-            }
-
-            if (args[2] != NULL) {
-                printf("-bash: type: %s: not found \n", args[2]);
+            for (int i=1; i < countArgs; i++) {
+                int type = isBuiltin(args[i]);
+                if (type == 1) {
+                    printf("%s is a shell builtin \n", args[i]);
+                }
+                else if (type == 2) {
+                    printf("%s is %s \n", args[i], binaries[binPath(args[i])]);
+                }
+                else if (type == 3) {
+                    printf("%s is hashed (%s) \n", args[i], binaries[binPath(args[i])]);
+                }
+                else {
+                    printf("-bash: type: %s: not found \n", args[i]);
+                    continue;
+                }
             }
         }
 
         else if (strcmp(args[0], "help") == 0) {
-            // External Command
-            printf("Detected command: help \n");
+            // Internal Command
+
+            if (args[1] == NULL || strcmp(args[1], "") == 0) {
+                args[1] = "help";
+            }
+
+            if (args[2] != NULL) {
+                printf("-bash: help: too many arguments \n");
+                continue;
+            }
+
+            int doc = docPath(args[1]);
+            if (doc == -1) {
+                printf("-bash: help: no help topics match '%s' \n", args[1]);
+            }
+            else {
+                FILE *doc_file = fopen(docs[doc], "r");
+                char character;
+                while ((character = fgetc(doc_file)) != EOF) {
+                    printf("%c", c);
+                }
+                fclose(doc_file);
+            }
         }
 
         else if (strcmp(args[0], "crimge") == 0) {
