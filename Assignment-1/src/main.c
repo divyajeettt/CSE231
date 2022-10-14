@@ -186,7 +186,7 @@ int main() {
             }
 
             if (chdir(args[1]) == 0) {
-                cwd = (char *) realloc(cwd, maxSize);
+                // cwd = (char *) realloc(cwd, maxSize);
                 cwd = strrchr(getcwd(cwd, maxSize), '/') + 1;
             }
             else {
