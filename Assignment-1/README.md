@@ -40,7 +40,7 @@ The following cases of errors are handled by oshell:
 
 The shell is also protected against input [buffer overflows](https://en.wikipedia.org/wiki/Buffer_overflow). Only the mentioned list of commands can be executed through the `system()` API call, to protect oshell against related vulnerabilities.
 
-The shell is also protected against End-Of-File Errors, i.e. when the input stream is forcefully shut down (for example, CTRL+D). In that case, oshell logs out just like a 
+oshell is also protected against End-Of-File Errors, i.e. when the input stream is forcefully shut down (for example, CTRL+D). In that case, oshell logs out just like the Artix Linux Terminal.
 
 ## Supported commands
 
