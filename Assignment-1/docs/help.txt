@@ -11,3 +11,4 @@ SYNOPSIS
 DESCRIPTION
         Displays the documentation of the given command on the screen. By default, the command is help. Only one command is accepted as an argument.
 
+
