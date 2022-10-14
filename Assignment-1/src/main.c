@@ -203,7 +203,14 @@ int main() {
                 continue;
             }
 
-            char *changeTo = ((option_P) ? realpath(args[2], NULL) : args[1]);
+            char *changeTo;
+            if (option_P) {
+                changeTo = realpath(args[2], NULL);
+            }
+            else {
+                changeTo = ((option_L) ? args[2] : args[1]);
+            }
+
             if (chdir(changeTo) == 0) {
                 strcpy(cwd, strrchr(getcwd(cwd, maxSize), '/') + 1);
             }
