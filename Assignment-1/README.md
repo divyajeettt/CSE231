@@ -2,7 +2,7 @@
 
 ## About oshell
 
-oshell is an interactive [Shell](https://en.wikipedia.org/wiki/Shell_(computing)) created to mimic some functionalities of the [Linux](https://en.wikipedia.org/wiki/Linux) Shell. It aims to deepen the understanding of the use of [System Calls](https://en.wikipedia.org/wiki/System_call) like `fork()`, `execl()`, and `wait()` and the use of API function calls like `pthread_create()` and `system()`.
+oshell is an interactive [Shell](https://en.wikipedia.org/wiki/Shell_(computing)) created to mimic some functionalities of the Artix [Linux](https://en.wikipedia.org/wiki/Linux) Shell. It aims to deepen the understanding of the use of [System Calls](https://en.wikipedia.org/wiki/System_call) like `fork()`, `execl()`, and `wait()` and the use of API function calls like `pthread_create()` and `system()`.
 
 *<b>Note:</b> oshell can only run on Linux-based systems (developed on [Artix Linux](https://artixlinux.org/))*
 
@@ -72,12 +72,13 @@ oh my god, oshell works
 all hail oshell[dvgt@oshell Assignment-1]$
 ```
 
-#### pwd
+#### 
+
 
 The `pwd` command simply displays the current working directory of the Shell. It (mimics to) supports the following options:
 
 - `-L`: Print the value of `$PWD` if it names the current working directory
-- `-P`: Print the physical directory without any symbolic links
+- `-P`: Print the physical directory without any symbolic links (default)
 
 Examples:
 
@@ -85,7 +86,7 @@ Examples:
 [dvgt@oshell Assignment-1]$ pwd
 /home/dvgt/CSE231/Assignment-1
 [dvgt@oshell Assignment-1]$ cd ..
-[dvgt@oshell CSE231]$ pwd
+[dvgt@oshell CSE231]$ pwd -L
 /home/dvgt/CSE231/
 ```
 
@@ -220,20 +221,42 @@ To make this a better project, some extra commands have also been added to oshel
 
 #### clear
 
-The `clear` command clears the Shell screen. It does not support any options as of yet.
+The `clear` command clears the Shell screen. It does not support any options.
 
 #### type
 
-The `type` command is used to check whether a file 
+The `type` command is used to check whether a command is an internal or external command. To more accurately mimic the Linux Shell's behaviour, some external commands are displayed as 'hashed' (while in reality, they are just binaries). Examples:
+
+```console
+[dvgt@oshell Assignment-1]$ type cd
+cd is a shell builtin
+[dvgt@oshell Assignment-1]$ type date
+date is /home/dvgt/CSE231/Assignment-1/bin/date
+[dvgt@oshell Assignment-1]$ type mkdir
+mkdir is hashed (/home/dvgt/CSE231/Assignment-1/bin/mkdir)
+```
 
 #### exit
 
+The `exit` command simply stops the execution of the Shell, i.e., exits it. Example:
+
+```
+[dvgt@oshell Assignment-1]$ exit
+logout
+oshell-2.3.1 (tty1)
+[dvgt@artix Assignment-1]$ 
+```
+
 #### help
+
+The `help` command displays some help text for the specified command, along with the options it supports. (NOT IMPLEMENTED YET).
 
 ### Hidden command
 
 A (hidden) easter-egg command has also been coded into oshell. *For the keen minds, it is a word that I use very often!*
 
-## References
-
 ## Run
+
+To run, clone this re
+
+## References
