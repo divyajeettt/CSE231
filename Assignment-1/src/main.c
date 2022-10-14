@@ -226,12 +226,37 @@ int main() {
                 continue;
             }
 
-            int option_n = 0;
-            if (strcmp(args[1], "-n") == 0) {
-                option_n = 1;
+            char *check = (char *) malloc(maxSize*sizeof(char));
+            int start = 1;
+            if (args[1][0] == '-') {
+                start = 2;
+                strcpy(check, args[1])
+                if (args[2][0] == '-') {
+                    start = 3;
+                    strcat(check, args[2]);
+                }
+            }
+            else {
+                strcpy(check, "");
             }
 
-            for (int i=1+option_n; i < countArgs; i++) {
+            int option_n = 0;
+            int option_e = 0;
+
+            for (int i=0; i < strlen(check); i++) {
+                if (args[1][i] != 'n' && args[1][i] != 'e') {
+                    option_e = option_n = 0;
+                    break;
+                }
+                else if (args[1][i] == 'n') {
+                    option_n = 1;
+                }
+                else {
+                    option_e = 1;
+                }
+            }
+
+            for (int i=start; i < countArgs; i++) {
                 printf("%s", args[i]);
                 if (i != countArgs-1) {
                     printf(" ");
