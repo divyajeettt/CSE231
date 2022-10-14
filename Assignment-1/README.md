@@ -155,8 +155,8 @@ This is demo.txt speaking$
 
 The `date` command is used to display the current system date and time. By defualt, it displays the localtime. It supports the following options:
 
-- `-I`: Output date in ISO 8601 format
-- `-R`: Output date in RFC 5322 format
+- `-I`: Output date in ISO-8601 format
+- `-R`: Output date in RFC-5322 format
 - `-u`: Output the Coordinated Universal Time (UTC)
 
 Examples:
@@ -257,6 +257,30 @@ A (hidden) easter-egg command has also been coded into oshell. *For the keen min
 
 ## Run
 
-To run, clone this re
+To run the shell, navigate to the directory Assignment-1:
+
+```console
+cd Assignment-1
+```
+
+To build the binary files, run:
+
+```console
+make
+```
+
+Finally, to start the Shell, execute:
+
+```console
+./bin/main
+```
 
 ## References
+
+- [<b>CSE231</b> Lecture Slides: *Dr Sambuddho Chakravarty*](https://drive.google.com/file/d/15927VKp8q1xwLvs28I4lgDyLF0XGcrXk/view)
+- [Manual Page: `fork()`](https://man7.org/linux/man-pages/man2/fork.2.html)
+- [Manual Page: `exec()`](https://man7.org/linux/man-pages/man3/exec.3.html)
+- [Manual Page: `wait()`](https://man7.org/linux/man-pages/man2/waitpid.2.html)
+- [Manual Page: `pthread_create()`](https://man7.org/linux/man-pages/man3/pthread_create.3.html)
+- [Manual Page: `pthread_join()`](https://man7.org/linux/man-pages/man3/pthread_join.3.html)
+- [Manual Page: `system()`](https://man7.org/linux/man-pages/man3/system.3.html)
