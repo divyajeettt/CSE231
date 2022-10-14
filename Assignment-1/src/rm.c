@@ -61,7 +61,7 @@ int rm(char *name, int option_v, int option_r, int showResult) {
                 strcat(childPath, dir->d_name);
 
                 if (dirExists(childPath)) {
-                    rm(childPath, 0, 1, 0);
+                    rm(childPath, option_v, 1, 0);
                     rmdir(childPath);
                 }
                 else {
