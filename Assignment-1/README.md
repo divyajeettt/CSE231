@@ -48,7 +48,7 @@ These commands are written and handled in the `main.c` file itself. These includ
 
 #### cd
 
-The `cd` command allows the user to change the current working directory of the Shell. It supports no options as of yet. Examples:
+The `cd` command allows the user to change the current working directory of the Shell. It does not support any options as of yet. Examples:
 
 ```console
 [dvgt@oshell Assignment-1]$ cd ..
@@ -220,7 +220,11 @@ To make this a better project, some extra commands have also been added to oshel
 
 #### clear
 
+The `clear` command clears the Shell screen. It does not support any options as of yet.
+
 #### type
+
+The `type` command is used to check whether a file 
 
 #### exit
 
