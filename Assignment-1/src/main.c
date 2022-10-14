@@ -166,6 +166,7 @@ int main() {
             // Internal Command
 
             if (args[1] == NULL || (args[1][0] == '-' && args[2] != NULL)) {
+                printf("here");
                 if (chdir(getenv("HOME")) == 0) {
                     strcpy(cwd, "~");
                 }
