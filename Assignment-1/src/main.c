@@ -95,6 +95,52 @@ char *join(char *argv[], int argc, char *bin) {
     return joined;
 }
 
+
+char *escape(char *string) {
+    char *escaped = (char *) malloc(256*sizeof(char));
+    int processedLast = 0;
+    int len = strlen(string) - 1;
+
+    for (int i=0; i < len; i++) {
+        if (i < len-1 && string[i] == '\\') {
+            if (string[i+1] == 'a') {
+                strncat(escaped, &'\a', 1);
+            }
+            else if (string[i+1] == 'b') {
+                strncat(escaped, &'\b', 1);
+            }
+            else if (string[i+1] == 'c') {
+                return escaped;
+            }
+            else if (string[i+1] == 'e') {
+                strncat(escaped, &'\e', 1);
+            }
+            else if (string[i+1] == 'f') {
+                strncat(escaped, &'\f', 1);
+            }
+            else if (string[i+1] == 'n') {
+                strncat(escaped, &'\n', 1);
+            }
+            else if (string[i+1] == 'r') {
+                strncat(escaped, &'\r', 1);
+            }
+            else if (string[i+1] == 't') {
+                strncat(escaped, &'\t', 1);
+            }
+            else if (string[i+1] == 'v') {
+                strncat(escaped, &'\v', 1);
+            }
+            else if (string[i+1] == '\\') {
+                strncat(escaped, &'\\', 1);
+            }
+        }
+        else {
+            strncat(escaped, &string[i], 1);
+        }
+    }
+    return escaped;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main() {
@@ -248,16 +294,16 @@ int main() {
 
             char *output = (char *) malloc(maxSize*sizeof(char));
             for (int i=start; i < countArgs; i++) {
+                char *string = args[i];
                 if (option_e) {
-                    for (int j=0; j < strlen(args[i]); j++) {
-                        strncat(output, &args[i][j], 1);
+                    if ((char *new = escape(args[i])) == NULL) {
+                        break;
+                    }
+                    else {
+                        strcat(output, new);
                     }
                 }
                 else {
-                    // printf("%s", args[i]);
-                    // if (i != countArgs-1) {
-                    //     printf(" ");
-                    // }
                     strcat(output, args[i]);
                 }
                 if (i != countArgs-1) {
@@ -265,7 +311,9 @@ int main() {
                 }
             }
 
-            printf("%s", output);
+            if (output != NULL) {
+                printf("%s", output);
+            }
             if (option_n == 0) {
                 printf("\n");
             }
