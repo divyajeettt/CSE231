@@ -127,6 +127,7 @@ char *escape(char *string) {
                 escaped[i] = '\r';
             }
             else if (string[i+1] == 't') {
+                printf("setting escaped[%d] = bakcslash t \n", i);
                 escaped[i] = '\t';
             }
             else if (string[i+1] == 'v') {
