@@ -81,7 +81,7 @@ all hail oshell[dvgt@oshell Assignment-1]$ echo
 ABC    XYZ
 ```
 
-Assumption: The options given to the `echo` command (if any) will ONLY be given as the first argument. All subsequent options will be treated as text literals.
+*<b>Assumption:</b> The options given to the `echo` command (if any) will ONLY be given as the first argument. All subsequent options will be treated as text literals.*
 
 #### pwd
 
@@ -102,7 +102,7 @@ Examples:
 
 ### External commands
 
-These commands are written and handled in separate executables (named according to the respective command). If a `&t` follows the command and its arguments/options, the command is executed using the `pthread_create()` and `system()` API calls. Otheriwse, the same command is executed using the `fork()` and `execv()` system calls.
+These commands are written and handled in separate executables (named according to the respective command). If an `&t` follows the command and its arguments/options, the command is executed using the POSIX Pthread family of functions, i.e. `pthread_create()` and `pthread_join()`, and `system()` API calls. Otheriwse, the same command is executed using the `fork()` and `execv()` syscalls.
 
 #### ls
 
