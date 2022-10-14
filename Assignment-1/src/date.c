@@ -3,25 +3,27 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_SIZE 256
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int getDate(int option_I, int option_R, int option_u) {
     time_t now = time(0);
     struct tm *ts = localtime(&now);
 
-    char *buffer = (char *) malloc(256*sizeof(char));
+    char *buffer = (char *) malloc(MAX_SIZE*sizeof(char));
 
     if (option_I) {
-        strftime(buffer, 256, "%Y-%m-%d", ts);
+        strftime(buffer, MAX_SIZE, "%Y-%m-%d", ts);
     }
     else if (option_R) {
-        strftime(buffer, 256, "%a, %d %b %Y %H:%M:%S %z", ts);
+        strftime(buffer, MAX_SIZE, "%a, %d %b %Y %H:%M:%S %z", ts);
     }
     else if (option_u) {
-        strftime(buffer, 256, "%a %b %d %I:%M:%S %p UTC %Y", gmtime(&now));
+        strftime(buffer, MAX_SIZE, "%a %b %d %I:%M:%S %p UTC %Y", gmtime(&now));
     }
     else {
-        strftime(buffer, 256, "%a %b %d %I:%M:%S %p %Z %Y", ts);
+        strftime(buffer, MAX_SIZE, "%a %b %d %I:%M:%S %p %Z %Y", ts);
     }
 
     if (buffer != NULL) {
@@ -36,7 +38,7 @@ int getDate(int option_I, int option_R, int option_u) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[]) {
-    int *options = (int *) calloc(256, sizeof(int));
+    int *options = (int *) calloc(MAX_SIZE, sizeof(int));
 
     for (int i=1; i < argc; i++) {
         if (argv[i][0] != '-') {

@@ -5,6 +5,8 @@
 #include <dirent.h>
 #include <unistd.h>
 
+#define MAX_SIZE 256
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int exists(char *dirName) {
@@ -14,8 +16,8 @@ int exists(char *dirName) {
 
 int ls(char *dirName, int option_a, int option_1) {
     if (dirName == NULL || strcmp(dirName, "") == 0) {
-        dirName = (char *) malloc(256*sizeof(char));
-        getcwd(dirName, 256);
+        dirName = (char *) malloc(MAX_SIZE*sizeof(char));
+        getcwd(dirName, MAX_SIZE);
     }
 
     DIR *dirHandler = opendir(dirName);
@@ -51,7 +53,7 @@ int ls(char *dirName, int option_a, int option_1) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[]) {
-    int *options = (int *) calloc(256, sizeof(int));
+    int *options = (int *) calloc(MAX_SIZE, sizeof(int));
     int args = 0;
 
     for (int i=1; i < argc; i++) {

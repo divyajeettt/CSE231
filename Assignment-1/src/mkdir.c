@@ -4,6 +4,8 @@
 #include <dirent.h>
 #include <sys/stat.h>
 
+#define MAX_SIZE 256
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int exists(char *dirName) {
@@ -31,7 +33,7 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
 
     else {
         if (mkdir(dirName, S_IRWXU) != 0) {
-            char *copy = (char *) malloc(256*sizeof(char));
+            char *copy = (char *) malloc(MAX_SIZE*sizeof(char));
             strcpy(copy, dirName);
 
             int index = strlen(copy) - 1;
@@ -55,7 +57,7 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[]) {
-    int *options = (int *) calloc(256, sizeof(int));
+    int *options = (int *) calloc(MAX_SIZE, sizeof(int));
     int args = 0;
 
     for (int i=1; i < argc; i++) {

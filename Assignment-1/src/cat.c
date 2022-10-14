@@ -3,6 +3,8 @@
 #include <string.h>
 #include <dirent.h>
 
+#define MAX_SIZE 256
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int exists(char *dirName) {
@@ -28,10 +30,10 @@ int cat(char *filename, int option_n, int option_E, int *counter) {
     }
 
     int read;
-    size_t maxSize = 256;
-    char *line = (char *) malloc(maxSize*sizeof(char));
+    char *line = (char *) malloc(MAX_SIZE*sizeof(char));
 
-    while ((read = getline(&line, &maxSize, file)) != -1) {
+    int size;
+    while ((read = getline(&line, &size, file)) != -1) {
         if (option_n > 0) {
             printf("%6d  ", (*counter)++);
         }
@@ -52,7 +54,7 @@ int cat(char *filename, int option_n, int option_E, int *counter) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[]) {
-    int *options = (int *) calloc(256, sizeof(int));
+    int *options = (int *) calloc(MAX_SIZE, sizeof(int));
     int args = 0;
 
     for (int i=1; i < argc; i++) {

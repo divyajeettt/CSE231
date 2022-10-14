@@ -4,6 +4,8 @@
 #include <dirent.h>
 #include <unistd.h>
 
+#define MAX_SIZE 256
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int fileExists(char *fName) {
@@ -55,7 +57,7 @@ int rm(char *name, int option_v, int option_r, int showResult) {
                     continue;
                 }
 
-                char *childPath = (char *) malloc(256*sizeof(char));
+                char *childPath = (char *) malloc(MAX_SIZE*sizeof(char));
                 strcpy(childPath, name);
                 strcat(childPath, "/");
                 strcat(childPath, dir->d_name);
@@ -85,7 +87,7 @@ int rm(char *name, int option_v, int option_r, int showResult) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char *argv[]) {
-    int *options = (int *) calloc(256, sizeof(int));
+    int *options = (int *) calloc(MAX_SIZE, sizeof(int));
     int args = 0;
 
     for (int i=1; i < argc; i++) {
