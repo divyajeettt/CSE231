@@ -178,7 +178,7 @@ int main() {
 
         char *command = (char *) malloc(MAX_SIZE*sizeof(char));
         if (fgets(command, MAX_SIZE, stdin) == NULL) {
-            command = "exit";
+            command = "exit\n";
         }
 
         char **args = (char **) calloc(MAX_SIZE, sizeof(char *));
