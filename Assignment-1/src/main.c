@@ -177,6 +177,7 @@ int main() {
             }
 
             int option_P = 0;
+            int option_L = 0;
             if (args[1] != NULL && args[1][0] == '-') {
                 int broken = 0;
                 for (int i=1; i < strlen(args[1]); i++) {
@@ -188,13 +189,16 @@ int main() {
                     else if (args[1][i] == 'P') {
                         option_P = 1;
                     }
+                    else {
+                        option_L = 1;
+                    }
                 }
                 if (broken) {
                     continue;
                 }
             }
 
-            if (args[2] != NULL) {
+            if (args[2] != NULL && !(option_P || option_L)) {
                 printf("-bash: cd: too many arguments \n");
                 continue;
             }
