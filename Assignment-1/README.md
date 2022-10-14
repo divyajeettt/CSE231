@@ -28,7 +28,7 @@ is equivalent to
 
 ### Errors handled
 
-The following cases of errors are handled by oshell:
+The following errors and edge cases are handled by oshell:
 
 - Invalid command passed to the shell
 - Invalid option passed to ANY command
@@ -38,9 +38,11 @@ The following cases of errors are handled by oshell:
 - File-Not-Found/Directory-Not-Found or File-Exisits/Directory-Exists types of errors
 - Errors arising at run-time due to `fork()`, `execv()`, and/or `pthread_create()` are reported through `perror()`
 
-The shell is also protected against input [buffer overflows](https://en.wikipedia.org/wiki/Buffer_overflow). Only the mentioned list of commands can be executed through the `system()` API call, to protect oshell against related vulnerabilities.
+The following possibilities of vulnerabilities are also handled:
 
-oshell is also protected against End-Of-File Errors, i.e. when the input stream is forcefully shut down (for example, CTRL+D). In that case, oshell logs out just like the Artix Linux Terminal.
+- Protected against input [buffer overflows](https://en.wikipedia.org/wiki/Buffer_overflow). 
+- Only the mentioned list of commands can be executed through the `system()` API call, to protect the system against injection-related vulnerabilities.
+- Protected against EOF Errors, i.e. when the input stream is forcefully shut down (for example, CTRL+D). In that case, oshell logs out just like the Artix Linux Terminal.
 
 ## Supported commands
 
