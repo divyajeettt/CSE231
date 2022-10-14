@@ -167,26 +167,38 @@ int main() {
 
             if (args[1] == NULL) {
                 if (chdir(getenv("HOME")) == 0) {
-                    // cwd = (char *) realloc(cwd, maxSize);
                     strcpy(cwd, "~");
-                // cwd = strrchr(getcwd(cwd, maxSize), '/') + 1;
                 }
                 else {
                     perror("cd");
                 }
                 continue;
             }
+
+            int option_P = 0;
             if (args[1] != NULL && args[1][0] == '-') {
-                printf("-bash: cd: %s: invalid option \n", args[1]);
-                continue;
+                int broken = 0;
+                for (int i=1; i < strlen(args[1]); i++) {
+                    if (args[1][i] != 'L' && args[1][i] != 'P') {
+                        printf("-bash: pwd: %c: invalid option \n", args[1][i]);
+                        broken = 1;
+                        break;
+                    }
+                    else if (args[1][i] == 'P') {
+                        option_P = 1;
+                    }
+                }
+                if (broken) {
+                    continue;
+                }
             }
+
             if (args[2] != NULL) {
                 printf("-bash: cd: too many arguments \n");
                 continue;
             }
 
             if (chdir(args[1]) == 0) {
-                // cwd = (char *) realloc(cwd, maxSize);
                 strcpy(cwd, strrchr(getcwd(cwd, maxSize), '/') + 1);
             }
             else {
@@ -245,7 +257,7 @@ int main() {
                 printf("%s \n", getenv("PWD"));
             }
             else if (getcwd(currentDirectory, maxSize) != NULL) {
-                printf("%s \n", currentDirectory);
+                printf("%s \n", realpath(currentDirectory, NULL));
             }
             else {
                 perror("pwd");
