@@ -100,9 +100,10 @@ char *escape(char *string) {
     char *escaped = (char *) malloc(256*sizeof(char));
     int processedLast = 0;
     int len = strlen(string) - 1;
-
+    printf("received stirngn = %s \n", string);
     for (int i=0; i < len; i++) {
         if (i < len-1 && string[i] == '\\') {
+            printf("string[i] = %c, trying to Matcg character: %c \n", string[i], string[i+1]);
             if (string[i+1] == 'a') {
                 escaped[i] = '\a';
             }
