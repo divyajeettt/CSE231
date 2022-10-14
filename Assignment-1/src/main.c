@@ -450,8 +450,12 @@ int main() {
         else if (strcmp(args[0], "help") == 0) {
             // Internal Command
 
+            char *command = (char *) malloc(MAX_SIZE*sizeof(char));
             if (args[1] == NULL || strcmp(args[1], "") == 0) {
-                args[1] = "help";
+                command = "help";
+            }
+            else {
+                command = args[1];
             }
 
             if (args[2] != NULL) {
@@ -459,7 +463,7 @@ int main() {
                 continue;
             }
 
-            int doc = docPath(args[1]);
+            int doc = docPath(command);
             if (doc == -1) {
                 printf("-bash: help: no help topics match '%s' \n", args[1]);
             }
