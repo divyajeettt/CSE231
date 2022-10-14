@@ -1,4 +1,7 @@
-all: compile
+all: makedir compile
+
+makedir:
+	mkdir -p ./bin
 
 compile:
 	gcc ./src/main.c -o ./bin/main
