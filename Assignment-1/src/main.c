@@ -232,7 +232,7 @@ int main() {
             }
 
             char *currentDirectory = (char *) malloc(maxSize*sizeof(char));
-            if (option_P) {
+            if (option_L) {
                 printf("%s \n", getenv("PWD"));
             }
             else if (getcwd(currentDirectory, maxSize) != NULL) {
