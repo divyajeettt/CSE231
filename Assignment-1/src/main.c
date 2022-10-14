@@ -167,9 +167,9 @@ int main() {
 
             if (args[1] == NULL) {
                 if (chdir(getenv("HOME")) == 0) {
-                    // cwd = "~";
-                cwd = strrchr(getcwd(cwd, maxSize), '/') + 1;
-
+                    cwd = (char *) realloc(cwd, maxSize);
+                    cwd = "~";
+                // cwd = strrchr(getcwd(cwd, maxSize), '/') + 1;
                 }
                 else {
                     perror("cd");
@@ -186,7 +186,7 @@ int main() {
             }
 
             if (chdir(args[1]) == 0) {
-                // cwd = (char *) realloc(cwd, maxSize);
+                cwd = (char *) realloc(cwd, maxSize);
                 cwd = strrchr(getcwd(cwd, maxSize), '/') + 1;
             }
             else {
