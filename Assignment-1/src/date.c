@@ -24,12 +24,12 @@ int getDate(int option_I, int option_R, int option_u) {
         strftime(buffer, 256, "%a %b %d %I:%M:%S %p %Z %Y", ts);
     }
 
-    if (buffer == NULL) {
-        return 1;
-    }
-    else {
+    if (buffer != NULL) {
         printf("%s\n", buffer);
         return 0;
+    }
+    else {
+        return 1;
     }
 }
 
