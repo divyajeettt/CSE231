@@ -180,7 +180,7 @@ int main() {
                 int broken = 0;
                 for (int i=1; i < strlen(args[1]); i++) {
                     if (args[1][i] != 'L' && args[1][i] != 'P') {
-                        printf("-bash: pwd: %c: invalid option \n", args[1][i]);
+                        printf("-bash: cd: %c: invalid option \n", args[1][i]);
                         broken = 1;
                         break;
                     }
@@ -196,6 +196,10 @@ int main() {
             if (args[2] != NULL) {
                 printf("-bash: cd: too many arguments \n");
                 continue;
+            }
+
+            if (option_P) {
+                args[1] = realpath(args[1], NULL);
             }
 
             if (chdir(args[1]) == 0) {
