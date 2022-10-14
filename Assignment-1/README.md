@@ -2,7 +2,7 @@
 
 ## About oshell
 
-oshell is an interactive [Shell](https://en.wikipedia.org/wiki/Shell_(computing)) created to mimic some functionalities of the Artix [Linux](https://en.wikipedia.org/wiki/Linux) Shell. It aims to deepen the understanding of the use of [System Calls](https://en.wikipedia.org/wiki/System_call) like `fork()`, `execl()`, and `wait()` and the use of API function calls like `pthread_create()` and `system()`.
+oshell is an interactive [Shell](https://en.wikipedia.org/wiki/Shell_(computing)) created to mimic some functionalities of the Artix [Linux](https://en.wikipedia.org/wiki/Linux) Shell.
 
 *<b>Note:</b> oshell can only run on Linux-based systems (developed on [Artix Linux](https://artixlinux.org/))*
 
@@ -31,12 +31,16 @@ is equivalent to
 The following cases of errors are handled by oshell:
 
 - Invalid command passed to the shell
-- Invalid option passed to a command
-- Extra options passed to a command
-- Extra arguments passed to a command
-- Missing required arguments by a command
+- Invalid option passed to ANY command
+- Extra options passed to ANY command
+- Extra arguments passed to ANY command
+- Missing required arguments by ANY command
 - File-Not-Found/Directory-Not-Found or File-Exisits/Directory-Exists types of errors
 - Errors arising at run-time due to `fork()`, `execv()`, and/or `pthread_create()` are reported through `perror()`
+
+The shell is also protected against input [buffer overflows](https://en.wikipedia.org/wiki/Buffer_overflow). Only the mentioned list of commands can be executed through the `system()` API call, to protect oshell against related vulnerabilities.
+
+The shell is also protected against End-Of-File Errors, i.e. when the input stream is forcefully shut down (for example, CTRL+D). In that case, oshell logs out just like a 
 
 ## Supported commands
 
@@ -64,9 +68,9 @@ Examples:
 
 #### echo
 
-The `echo` command is used to write all its arguments to standard output followed by newline. It supports the following options:
+The `echo` command writes its arguments to standard output followed by a newline. It supports the following options:
 
-- `-n`: Trims the trailing newline and writes the arguments to stdout without it
+- `-n`: Does not append a trailing newline
 - `-e`: Enables interpretation of backslash-escapes
 
 Examples:
@@ -85,7 +89,7 @@ ABC    XYZ
 
 #### pwd
 
-The `pwd` command simply displays the current working directory of the Shell. It (mimics to) supports the following options:
+The `pwd` command simply displays the current working directory of the Shell. It supports the following options:
 
 - `-L`: Print the value of `$PWD` if it names the current working directory (default)
 - `-P`: Print the physical directory without any symbolic links
@@ -231,7 +235,11 @@ To make this a better project, some extra commands have also been added to oshel
 
 #### clear
 
-The `clear` command clears the Shell screen. It does not support any options.
+The `clear` command clears the Shell screen. It does not support any options. It is an external command, and can be executed with or without the `&t` syntax defined in the Assignment. It's simple usage is:
+
+```console
+[dvgt@oshell Assignment-1]$ clear
+```
 
 #### type
 
@@ -246,7 +254,7 @@ date is /home/dvgt/CSE231/Assignment-1/bin/date
 mkdir is hashed (/home/dvgt/CSE231/Assignment-1/bin/mkdir)
 ```
 
-Assumption: Some external commands like `mkdir` and `rm` are displayed as 'hashed' to more accurately "mimic" the Linux Shell's behaviour. In reality, these files are simple executables located in the `./bin` directory.
+*<b>Assumption:</b> Some external commands like `mkdir` and `rm` are displayed as 'hashed' to more accurately "mimic" the Linux Shell's behaviour. In reality, these files are simple executables located in the `./bin` directory.*
 
 #### exit
 
