@@ -199,12 +199,8 @@ int main() {
                 continue;
             }
 
-            if (option_P) {
-                args[1] = realpath(args[1], NULL);
-                printf("? here %s \n", args[1]);
-            }
-
-            if (chdir(args[1]) == 0) {
+            char *changeTo = (option_P) ? realpath(args[2], NULL) : args[1];
+            if (chdir(changeTo) == 0) {
                 strcpy(cwd, strrchr(getcwd(cwd, maxSize), '/') + 1);
             }
             else {
