@@ -6,7 +6,7 @@ oshell is an interactive [Shell](https://en.wikipedia.org/wiki/Shell_(computing)
 
 *<b>Note:</b> oshell can only run on Linux-based systems (developed on [Artix Linux](https://artixlinux.org/))*
 
-## Some Key Features 
+## Some Key Features
 
 ### Functionalities
 
@@ -18,9 +18,9 @@ Options (aka flags) can be passed anywhere in the command (according to the synt
 
 ```console
 [dvgt@oshell Assignment-1]$ rm -rv ./dir1/dir2
-``` 
+```
 
-is equivalent to 
+is equivalent to
 
 ```console
 [dvgt@oshell Assignment-1]$ rm -v ./dir1/dir2 -r
@@ -67,9 +67,9 @@ Examples:
 
 ```console
 [dvgt@oshell Assignment-1]$ echo oh my god, oshell works
-oh my god, oshell works 
+oh my god, oshell works
 [dvgt@oshell Assignment-1]$ echo -n all hail oshell
-all hail oshell[dvgt@oshell Assignment-1]$ 
+all hail oshell[dvgt@oshell Assignment-1]$
 ```
 
 #### pwd
