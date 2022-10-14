@@ -40,7 +40,7 @@ int makeDir(char *dirName, int option_v, int option_p, int showResult) {
             }
             copy[index] = '\0';
 
-            makeDir(copy, 0, 1, 0);
+            makeDir(copy, 1, 1, 0);
             mkdir(dirName, S_IRWXU);
         }
 
