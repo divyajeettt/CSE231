@@ -212,7 +212,12 @@ int main() {
             }
 
             if (chdir(changeTo) == 0) {
-                strcpy(cwd, strrchr(getcwd(cwd, maxSize), '/') + 1);
+                if (strcmp(realpath(changeTo, NULL), getenv("HOME")) == 0) {
+                    strcpy(cwd, "~");
+                }
+                else {
+                    strcpy(cwd, strrchr(getcwd(cwd, maxSize), '/') + 1);
+                }
             }
             else {
                 printf("-bash: cd: %s: No such file or directory \n", args[1]);
