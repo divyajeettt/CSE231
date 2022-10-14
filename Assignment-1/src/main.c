@@ -100,50 +100,51 @@ char *escape(char *string) {
     char *escaped = (char *) malloc(256*sizeof(char));
     int processedLast = 0;
     int len = strlen(string) - 1;
+    int index = 0;
     printf("received stirngn = %s, len= %d \n", string, len);
     for (int i=0; i < len; i++) {
         if (string[i] == '\\') {
             printf("string[i] = %c, trying to Matcg character: %c \n", string[i], string[i+1]);
             if (string[i+1] == 'a') {
-                escaped[i] = '\a';
+                escaped[index++] = '\a';
             }
             else if (string[i+1] == 'b') {
-                escaped[i] = '\b';
+                escaped[index++] = '\b';
             }
             else if (string[i+1] == 'c') {
-                escaped[i] = '\0';
+                escaped[index++] = '\0';
                 return escaped;
             }
             else if (string[i+1] == 'e') {
-                escaped[i] = '\e';
+                escaped[index++] = '\e';
             }
             else if (string[i+1] == 'f') {
-                escaped[i] = '\f';
+                escaped[index++] = '\f';
             }
             else if (string[i+1] == 'n') {
-                escaped[i] = '\n';
+                escaped[index++] = '\n';
             }
             else if (string[i+1] == 'r') {
-                escaped[i] = '\r';
+                escaped[index++] = '\r';
             }
             else if (string[i+1] == 't') {
-                printf("setting escaped[%d] = bakcslash t \n", i);
-                escaped[i] = '\t';
+                printf("setting escaped[%d] = bakcslash t \n", index);
+                escaped[index++] = '\t';
             }
             else if (string[i+1] == 'v') {
-                escaped[i] = '\v';
+                escaped[index] = '\v';
             }
             else if (string[i+1] == '\\') {
-                escaped[i] = '\\';
+                escaped[index] = '\\';
             }
         }
         else if (string[i-1] != '\\') {
-            escaped[i] = string[i];
+            escaped[index] = string[i];
         }
     }
 
     if (string[len-1] != '\\') {
-        escaped[len] = string[len];
+        escaped[index++] = string[len];
     }
 
     return escaped;
