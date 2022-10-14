@@ -231,7 +231,7 @@ int main() {
             if (args[1][0] == '-') {
                 start = 2;
                 strcpy(check, args[1]);
-                if (args[2][0] == '-') {
+                if (args[2] != NULL && args[2][0] == '-') {
                     start = 3;
                     strcat(check, args[2]);
                 }
