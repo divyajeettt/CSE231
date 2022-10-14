@@ -96,15 +96,14 @@ char *join(char *argv[], int argc, char *bin) {
 }
 
 
-char *escape(char *string) {
+char *escape(char *string, int *forceStop) {
     char *escaped = (char *) malloc(256*sizeof(char));
     int processedLast = 0;
     int len = strlen(string) - 1;
     int index = 0;
-    printf("received stirngn = %s, len= %d \n", string, len);
+
     for (int i=0; i < len; i++) {
         if (string[i] == '\\') {
-            printf("string[i] = %c, trying to Matcg character: %c \n", string[i], string[i+1]);
             if (string[i+1] == 'a') {
                 escaped[index++] = '\a';
             }
@@ -113,6 +112,7 @@ char *escape(char *string) {
             }
             else if (string[i+1] == 'c') {
                 escaped[index++] = '\0';
+                *forceStop = 1;
                 return escaped;
             }
             else if (string[i+1] == 'e') {
@@ -128,7 +128,6 @@ char *escape(char *string) {
                 escaped[index++] = '\r';
             }
             else if (string[i+1] == 't') {
-                printf("setting escaped[%d] = bakcslash t \n", index);
                 escaped[index++] = '\t';
             }
             else if (string[i+1] == 'v') {
@@ -302,9 +301,13 @@ int main() {
             }
 
             char *output = (char *) malloc(maxSize*sizeof(char));
+            int killOutput = 0;
             for (int i=start; i < countArgs; i++) {
                 if (option_e) {
-                    strcat(output, escape(args[i]));
+                    strcat(output, escape(args[i], &killOutput));
+                    if (killOutput) {
+                        break;
+                    }
                 }
                 else {
                     strcat(output, args[i]);
