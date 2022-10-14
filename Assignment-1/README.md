@@ -6,7 +6,7 @@ oshell is an interactive [Shell](https://en.wikipedia.org/wiki/Shell_(computing)
 
 *<b>Note:</b> oshell can only run on Linux-based systems (developed on [Artix Linux](https://artixlinux.org/))*
 
-## Some Key Features 
+## Some Key Features
 
 ### Functionalities
 

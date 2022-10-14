@@ -12,7 +12,7 @@ int exists(char *dirName) {
 
 
 int makeDir(char *dirName, int option_v, int option_p, int showResult) {
-    if (exists(dirName) && showResult != 0) {
+    if (exists(dirName) && option_p == 0 && showResult != 0) {
         printf("mkdir: cannot create directory '%s': File exists \n", dirName);
         return 1;
     }
