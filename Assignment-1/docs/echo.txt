@@ -1,0 +1,17 @@
+echo
+
+NAME
+        echo - writes arguments to standard output
+
+SYNOPSIS
+        echo [OPTION(s)] [ARGUMENT(s)]
+
+DESCRIPTION
+        Displays the arguments on the terminal separated by spaces and followed by a newline (by default).
+
+SUPPORTED OPTIONS:
+        -n
+            does not append a newline
+
+        -e
+            enables interpretation of backslash-escapes

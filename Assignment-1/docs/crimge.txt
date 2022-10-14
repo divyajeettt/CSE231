@@ -1,0 +1,10 @@
+crimge
+
+NAME
+        crimge - an easter-egg command
+
+SYNOPSIS
+        crimge
+
+DESCRIPTION
+        Displays a very top-secret message written by the programmer dvgt himself. Ignores all arguments and options.

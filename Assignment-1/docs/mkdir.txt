@@ -1,0 +1,17 @@
+mkdir
+
+NAME
+        mkdir - make directories
+
+SYNOPSIS
+        mkdir [OPTION(s)] [DIRECTORY(ies)]
+
+DESCRIPTION
+        Creates the empty DIRECTORY(ies). By default, an error is raised if the directories exist.
+
+SUPPORTED OPTIONS:
+        -p (parents)
+            does not raise error if directory exists, creates parent directories recursively as required
+
+        -v (verbose)
+            print a message for each created directory

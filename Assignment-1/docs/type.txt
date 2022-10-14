@@ -1,0 +1,10 @@
+type
+
+NAME
+        type - display information about the command type
+
+SYNOPSIS
+        type [COMMAND(s)]
+
+DESCRIPTION
+        For each command name, indicate how it would be interpreted. Basically indicates whether a command is internal or external.

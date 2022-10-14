@@ -145,6 +145,8 @@ rm.c
 .  ..  Assignment-0  Assignment-1  .git  README.md
 ```
 
+*<b>Assumption:</b> The output order of ls is not sorted by default.*
+
 #### cat
 
 The `cat` command can be used in two ways. It can be used to read the contents of a file. Mentioning multiple files with `cat` will display the contents of each file. However, if no arguments are given, it reads from `stdin` and writes to `stdout` until `EOF` is found. It supports the following options:

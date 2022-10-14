@@ -1,13 +1,13 @@
 cat
 
 NAME
-        cat - concatenate files and print on the standard output.
+        cat - concatenate files and print on the standard output
 
 SYNOPSIS
-        cat [OPTION]... [FILE]...
+        cat [OPTION(s)] [FILE(s)]
 
 DESCRIPTION
-        Concatenates files to the standard output. When no file is specified, standard input is taken by default. When multiple files are given as arguments, displays the contents of all of them inn order.
+        Concatenates files to the standard output. When no file is specified, standard input is taken by default. When multiple files are given as arguments, displays the contents of all of them in order.
 
 SUPPORTED OPTIONS:
         -n (number)

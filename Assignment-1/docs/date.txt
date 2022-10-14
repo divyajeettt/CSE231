@@ -1,0 +1,20 @@
+date
+
+NAME
+        date - print the system date and time
+
+SYNOPSIS
+        date [FORMAT]
+
+DESCRIPTION
+        Prints the current system date and time. Fetches the time from the locale by default.
+
+SUPPORTED OPTIONS:
+        -I
+            output date in ISO-8601 format
+
+        -R
+            output date and time in RFC-5322 format
+
+        -u
+            output the Coordinated Universal Time (UTC)
