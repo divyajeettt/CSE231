@@ -167,8 +167,8 @@ int main() {
 
             if (args[1] == NULL) {
                 if (chdir(getenv("HOME")) == 0) {
-                    cwd = (char *) realloc(cwd, maxSize);
-                    cwd = "~";
+                    // cwd = (char *) realloc(cwd, maxSize);
+                    strcpy(cwd, "~");
                 // cwd = strrchr(getcwd(cwd, maxSize), '/') + 1;
                 }
                 else {
@@ -186,8 +186,8 @@ int main() {
             }
 
             if (chdir(args[1]) == 0) {
-                cwd = (char *) realloc(cwd, maxSize);
-                cwd = strrchr(getcwd(cwd, maxSize), '/') + 1;
+                // cwd = (char *) realloc(cwd, maxSize);
+                strcpy(cwd, strrchr(getcwd(cwd, maxSize), '/') + 1);
             }
             else {
                 printf("-bash: cd: %s: No such file or directory \n", args[1]);
