@@ -139,6 +139,11 @@ char *escape(char *string) {
             escaped[i] = string[i];
         }
     }
+
+    if (string[len-1] != '\\') {
+        escaped[len] = string[len];
+    }
+
     return escaped;
 }
 
