@@ -467,7 +467,7 @@ int main() {
                 FILE *doc_file = fopen(docs[doc], "r");
                 char character;
                 while ((character = fgetc(doc_file)) != EOF) {
-                    printf("%c", c);
+                    printf("%c", character);
                 }
                 fclose(doc_file);
             }
