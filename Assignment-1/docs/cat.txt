@@ -1,3 +1,5 @@
+
+
 cat
 
 NAME
@@ -9,9 +11,10 @@ SYNOPSIS
 DESCRIPTION
         Concatenates files to the standard output. When no file is specified, standard input is taken by default. When multiple files are given as arguments, displays the contents of all of them in order.
 
-SUPPORTED OPTIONS:
+SUPPORTED OPTIONS
         -n (number)
             enumerate all output lines
 
         -E (show-ends)
             display a $ symbol at the end of each line
+

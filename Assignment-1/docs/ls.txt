@@ -1,3 +1,5 @@
+
+
 ls
 
 NAME
@@ -9,9 +11,13 @@ SYNOPSIS
 DESCRIPTION
         Lists down the names of files and directories in a directory. By default, lists downs the items in the current directory. Unlike the Artix Shell, the list is not sorted by default.
 
-SUPPORTED OPTIONS:
+SUPPORTED OPTIONS
         -a (all)
             display all files and directories, i.e., do not ignore the items starting with .
 
         -1
             display only one file per line, i.e., display a newline-separated list of files and directories
+
+ASSUMPTIONS
+        The output list is not sorted by default.
+

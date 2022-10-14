@@ -1,3 +1,5 @@
+
+
 echo
 
 NAME
@@ -9,9 +11,13 @@ SYNOPSIS
 DESCRIPTION
         Displays the arguments on the terminal separated by spaces and followed by a newline (by default).
 
-SUPPORTED OPTIONS:
+SUPPORTED OPTIONS
         -n
             does not append a newline
 
         -e
             enables interpretation of backslash-escapes
+
+ASSUMPTIONS
+        Options given to this command, if any, must be given as the first arguemnt. All subsequent arguemnts are not considered to be options.
+

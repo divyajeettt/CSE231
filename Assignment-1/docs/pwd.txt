@@ -1,3 +1,5 @@
+
+
 pwd
 
 NAME
@@ -9,9 +11,10 @@ SYNOPSIS
 DESCRIPTION
         Displays the name of the current shell working directory on the standard output.
 
-SUPPORTED OPTIONS:
+SUPPORTED OPTIONS
         -P
             prints the value of $PWD if it names the current working directory
 
         -L
             prints the physical directory without any symbolic links
+

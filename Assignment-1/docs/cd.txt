@@ -1,3 +1,5 @@
+
+
 cd
 
 NAME
@@ -9,9 +11,10 @@ SYNOPSIS
 DESCRIPTION
         Changes the current working directory of the shell to DIR. When no arguments are given, it defaults to the HOME directory.
 
-SUPPORTED OPTIONS:
+SUPPORTED OPTIONS
         -L
             force symbolic links to be followed
 
         -P
             use the physical directory structure without following symbolic links
+

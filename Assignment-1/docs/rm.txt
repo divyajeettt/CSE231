@@ -1,3 +1,5 @@
+
+
 rm
 
 NAME
@@ -9,9 +11,10 @@ SYNOPSIS
 DESCRIPTION
         Removes file from the system. By default, it cannot remove directories.
 
-SUPPORTED OPTIONS:
+SUPPORTED OPTIONS
         -r (recursive)
             recursively remove directories and their contents
 
         -v (verbose)
             explain what is being done, i.e., print a message for each removed file/directory
+

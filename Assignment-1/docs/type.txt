@@ -1,3 +1,5 @@
+
+
 type
 
 NAME
@@ -8,3 +10,4 @@ SYNOPSIS
 
 DESCRIPTION
         For each command name, indicate how it would be interpreted. Basically indicates whether a command is internal or external.
+

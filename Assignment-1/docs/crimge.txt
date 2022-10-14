@@ -1,3 +1,5 @@
+
+
 crimge
 
 NAME
@@ -7,4 +9,6 @@ SYNOPSIS
         crimge
 
 DESCRIPTION
-        Displays a very top-secret message written by the programmer dvgt himself. Ignores all arguments and options.
+        Displays a very top-secret message written by the programmer dvgt himself. Want to know more? Ignores all arguments and options.
+
+

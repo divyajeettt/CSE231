@@ -1,3 +1,5 @@
+
+
 date
 
 NAME
@@ -9,7 +11,7 @@ SYNOPSIS
 DESCRIPTION
         Prints the current system date and time. Fetches the time from the locale by default.
 
-SUPPORTED OPTIONS:
+SUPPORTED OPTIONS
         -I
             output date in ISO-8601 format
 
@@ -18,3 +20,4 @@ SUPPORTED OPTIONS:
 
         -u
             output the Coordinated Universal Time (UTC)
+

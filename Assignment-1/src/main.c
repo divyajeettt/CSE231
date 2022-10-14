@@ -452,24 +452,22 @@ int main() {
 
             if (args[1] == NULL || strcmp(args[1], "") == 0) {
                 args[1] = "help";
+                countArgs = 2;
             }
 
-            if (args[2] != NULL) {
-                printf("-bash: help: too many arguments \n");
-                continue;
-            }
-
-            int doc = docPath(args[1]);
-            if (doc == -1) {
-                printf("-bash: help: no help topics match '%s' \n", args[1]);
-            }
-            else {
-                FILE *doc_file = fopen(docs[doc], "r");
-                char character;
-                while ((character = fgetc(doc_file)) != EOF) {
-                    printf("%c", character);
+            for (int i=1; i < countArgs; i++) {
+                int doc = docPath(args[i]);
+                if (doc == -1) {
+                    printf("-bash: help: no help topics match '%s' \n", args[i]);
                 }
-                fclose(doc_file);
+                else {
+                    FILE *doc_file = fopen(docs[doc], "r");
+                    char character;
+                    while ((character = fgetc(doc_file)) != EOF) {
+                        printf("%c", character);
+                    }
+                    fclose(doc_file);
+                }
             }
         }
 

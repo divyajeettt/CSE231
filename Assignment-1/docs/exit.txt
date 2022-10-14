@@ -1,3 +1,5 @@
+
+
 exit
 
 NAME
@@ -8,3 +10,4 @@ SYNOPSIS
 
 DESCRIPTION
         Exits the shell with a status of N. Does not quit when a non-numeric argument is passed. If n is ommited, then exit status of the last executed command is used.
+

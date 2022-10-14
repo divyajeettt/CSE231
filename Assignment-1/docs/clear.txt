@@ -1,3 +1,5 @@
+
+
 clear
 
 NAME
@@ -8,3 +10,4 @@ SYNOPSIS
 
 DESCRIPTION
         Clears the terminal screen.
+
