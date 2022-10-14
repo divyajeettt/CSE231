@@ -246,13 +246,26 @@ int main() {
                 }
             }
 
+            char *output = (char *) malloc(maxSize*sizeof(char));
             for (int i=start; i < countArgs; i++) {
-                printf("%s", args[i]);
+                if (option_e) {
+                    for (int j=0; j < strlen(args[i]); j++) {
+                        strncat(output, &args[i][j], 1);
+                    }
+                }
+                else {
+                    // printf("%s", args[i]);
+                    // if (i != countArgs-1) {
+                    //     printf(" ");
+                    // }
+                    strcat(output, args[i]);
+                }
                 if (i != countArgs-1) {
-                    printf(" ");
+                    strcat(output, " ");
                 }
             }
 
+            printf("%s", output);
             if (option_n == 0) {
                 printf("\n");
             }
