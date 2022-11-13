@@ -1,7 +1,7 @@
 all: compile
 
 compile:
-	gcc -pthread -o main main.c
+	gcc -pthread -o threadScheduling threadScheduling.c
 
 run:
-	sudo ./main
+	sudo ./threadScheduling
