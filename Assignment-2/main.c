@@ -11,24 +11,82 @@ typedef long long ll;
 
 void countA()
 {
-    for (ll count=1; count < 1+pow(2, 32); count++);
+    for (ll i=1; i < 1+pow(2, 32); i++);
 }
 
 void countB()
 {
-    for (ll count=1; count < 1+pow(2, 32); count++);
+    for (ll i=1; i < 1+pow(2, 32); i++);
 }
 
 void countC()
 {
-    for (ll count=1; count < 1+pow(2, 32); count++);
+    for (ll i=1; i < 1+pow(2, 32); i++);
 }
 
-void *count(void *arg)
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+void *Thr_A(void *arg)
 {
+    struct sched_param param;
+    param.sched_priority = 0;
+    pthread_setschedparam(pthread_self(), SCHED_OTHER, &param);
+
+    double time;
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_REALTIME, &start);
     countA();
     countB();
     countC();
+    clock_gettime(CLOCK_REALTIME, &end);
+
+    time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
+    printf("Thread A: %lf \n", time);
+
+    return NULL;
+}
+
+void *Thr_B(void *arg)
+{
+    struct sched_param param;
+    param.sched_priority = 1;
+    pthread_setschedparam(pthread_self(), SCHED_RR, &param);
+
+    double time;
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    countA();
+    countB();
+    countC();
+    clock_gettime(CLOCK_REALTIME, &end);
+
+    time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
+    printf("Thread B: %lf \n", time);
+
+    return NULL;
+}
+
+void *Thr_C(void *arg)
+{
+    struct sched_param param;
+    param.sched_priority = 1;
+    pthread_setschedparam(pthread_self(), SCHED_FIFO, &param);
+
+    double time;
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    countA();
+    countB();
+    countC();
+    clock_gettime(CLOCK_REALTIME, &end);
+
+    time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
+    printf("Thread C: %lf \n", time);
+
+    return NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,34 +95,13 @@ int main()
 {
     pthread_t threadA, threadB, threadC;
 
-    pthread_create(&threadA, NULL, &count, NULL);
-    // set threadA to run on CPU 0
-    cpu_set_t cpuset;
-    CPU_ZERO(&cpuset);
-    CPU_SET(0, &cpuset);
-    pthread_setaffinity_np(threadA, sizeof(cpu_set_t), &cpuset);
-
-    pthread_create(&threadB, NULL, &count, NULL);
-    // set threadB to run on CPU 1
-    CPU_ZERO(&cpuset);
-    CPU_SET(1, &cpuset);
-    pthread_setaffinity_np(threadB, sizeof(cpu_set_t), &cpuset);
-
-    pthread_create(&threadC, NULL, &count, NULL);
-    // set threadC to run on CPU 2
-    CPU_ZERO(&cpuset);
-    CPU_SET(2, &cpuset);
-    pthread_setaffinity_np(threadC, sizeof(cpu_set_t), &cpuset);
-
-    clock_t start = clock();
+    pthread_create(&threadA, NULL, &Thr_A, NULL);
+    pthread_create(&threadB, NULL, &Thr_B, NULL);
+    pthread_create(&threadC, NULL, &Thr_C, NULL);
 
     pthread_join(threadA, NULL);
     pthread_join(threadB, NULL);
     pthread_join(threadC, NULL);
-
-    clock_t end = clock();
-
-    printf("Time taken: %f seconds", (double)(end - start) / CLOCKS_PER_SEC);
 
     return 0;
 }
