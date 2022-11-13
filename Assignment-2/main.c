@@ -9,72 +9,62 @@ typedef long long ll;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void *countA(void *arg)
+void countA()
 {
     for (ll count=1; count < 1+pow(2, 32); count++);
 }
 
-void *countB(void *arg)
+void countB()
 {
     for (ll count=1; count < 1+pow(2, 32); count++);
 }
 
-void *countC(void *arg)
+void countC()
 {
     for (ll count=1; count < 1+pow(2, 32); count++);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-pthread_t *createThreads()
+void *count(void *arg)
 {
-    pthread_t *threads = (pthread_t *) malloc(3*sizeof(pthread_t));
-    pthread_create(&threads[0], NULL, &countA, NULL);
-    pthread_create(&threads[1], NULL, &countB, NULL);
-    pthread_create(&threads[2], NULL, &countC, NULL);
-    return threads;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-double scheduleThreads(int policy, pthread_t *threads, int n)
-{
-    for (int i=0; i < n; i++)
-    {
-        struct sched_param param;
-        param.sched_priority = 40 * i;
-        pthread_setschedparam(threads[i], policy, &param);
-    }
-
-    clock_t start = clock();
-
-    // alternate between threads for 1 second
-    for (int i=0; i < 1000; i++)
-    {
-        for (int j=0; j < n; j++)
-        {
-            pthread_kill(threads[j], SIGCONT);
-            usleep(1000);
-            pthread_kill(threads[j], SIGSTOP);
-        }
-    }
-
-    // for (int i=0; i < n; i++)
-    // {
-    //     pthread_join(threads[i], NULL);
-    // }
-    clock_t end = clock();
-
-    return (double)(end - start) / CLOCKS_PER_SEC;
+    countA();
+    countB();
+    countC();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    printf("SCHED_OTHER: %f seconds \n", scheduleThreads(SCHED_OTHER, createThreads(), 3));
-    printf("SCHED_RR: %f seconds \n", scheduleThreads(SCHED_RR, createThreads(), 3));
-    printf("SCHED_FIFO: %f seconds \n", scheduleThreads(SCHED_FIFO, createThreads(), 3));
+    pthread_t threadA, threadB, threadC;
+
+    pthread_create(&threadA, NULL, &count, NULL);
+    // set threadA to run on CPU 0
+    cpu_set_t cpuset;
+    CPU_ZERO(&cpuset);
+    CPU_SET(0, &cpuset);
+    pthread_setaffinity_np(threadA, sizeof(cpu_set_t), &cpuset);
+
+    pthread_create(&threadB, NULL, &count, NULL);
+    // set threadB to run on CPU 1
+    CPU_ZERO(&cpuset);
+    CPU_SET(1, &cpuset);
+    pthread_setaffinity_np(threadB, sizeof(cpu_set_t), &cpuset);
+
+    pthread_create(&threadC, NULL, &count, NULL);
+    // set threadC to run on CPU 2
+    CPU_ZERO(&cpuset);
+    CPU_SET(2, &cpuset);
+    pthread_setaffinity_np(threadC, sizeof(cpu_set_t), &cpuset);
+
+    clock_t start = clock();
+
+    pthread_join(threadA, NULL);
+    pthread_join(threadB, NULL);
+    pthread_join(threadC, NULL);
+
+    clock_t end = clock();
+
+    printf("Time taken: %f seconds", (double)(end - start) / CLOCKS_PER_SEC);
 
     return 0;
 }
