@@ -1,13 +1,13 @@
-all: 1.1, 1.2
+all: a, b
 
-1.1:
+a:
 	gcc -pthread -o ./1/1.1/main ./1/1.1/main.c
 
-1.2:
+b:
 	gcc -o ./1/1.2/main ./1/1.2/main.c
 
-run1.1:
+run_a:
 	sudo ./1/1.1/main
 
-run1.2:
+run_b:
 	sudo ./1/1.2/main
