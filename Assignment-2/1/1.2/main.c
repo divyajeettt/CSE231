@@ -7,63 +7,59 @@
 
 int main()
 {
+    struct timespec start, end;
+    double time;
+
+    clock_gettime(CLOCK_REALTIME, &start);
     int pid1 = fork();
     if (pid1 == 0)
     {
         // Child process
-        if (execv("bash", {"./1/1.2/build.sh"}) == -1)
+        if (execl("bash", "./1/1.2/build.sh", NULL) == -1)
         {
             perror("execl");
+            return 1;
         }
+        return 0;
     }
-    else
+    waitpid(pid1, NULL, 0);
+    clock_gettime(CLOCK_REALTIME, &end);
+    time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
+    printf("Time taken by 1st Process: %f seconds \n", time);
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    int pid2 = fork();
+    if (pid2 == 0)
     {
-        // Parent process
-        int pid2 = fork();
-        if (pid2 == 0)
+        // Child process
+        if (execl("bash", "./1/1.2/build.sh", NULL) == -1)
         {
-            // Child process
-            if (execv("bash", {"./1/1.2/build.sh"}) == -1)
-            {
-                perror("execl");
-            }
+            perror("execl");
+            return 1;
         }
-        else
-        {
-            // Parent process
-            int pid3 = fork();
-            if (pid3 == 0)
-            {
-                // Child process
-                if (execv("bash", {"./1/1.2/build.sh"}) == -1)
-                {
-                    perror("execl");
-                }
-            }
-            else {
-                struct timespec start, end;
-                clock_gettime(CLOCK_REALTIME, &start);
-                wait(NULL);
-                clock_gettime(CLOCK_REALTIME, &end);
-                double time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
-                printf("Time taken by 3rd Process: %f seconds \n", time);
-            }
-
-            struct timespec start, end;
-            clock_gettime(CLOCK_REALTIME, &start);
-            wait(NULL);
-            clock_gettime(CLOCK_REALTIME, &end);
-            double time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
-            printf("Time taken by 2nd Process: %f seconds \n", time);
-        }
-
-        struct timespec start, end;
-        clock_gettime(CLOCK_REALTIME, &start);
-        wait(NULL);
-        clock_gettime(CLOCK_REALTIME, &end);
-        double time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
-        printf("Time taken by 1st Process: %f seconds \n", time);
+        return 0;
     }
+    waitpid(pid2, NULL, 0);
+    clock_gettime(CLOCK_REALTIME, &end);
+    time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
+    printf("Time taken by 2nd Process: %f seconds \n", time);
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    int pid3 = fork();
+    if (pid3 == 0)
+    {
+        // Child process
+        if (execl("bash", "./1/1.2/build.sh", NULL) == -1)
+        {
+            perror("execl");
+            return 1;
+        }
+        return 0;
+    }
+    waitpid(pid3, NULL, 0);
+    clock_gettime(CLOCK_REALTIME, &end);
+    time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
+    printf("Time taken by 3rd Process: %f seconds \n", time);
 
     return 0;
 }
