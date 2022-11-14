@@ -15,7 +15,7 @@ int main()
     if (pid1 == 0)
     {
         // Child process
-        if (execl("bash", "./1/1.2/build.sh", NULL) == -1)
+        if (execl("bash ./1/1.2/build.sh", NULL) == -1)
         {
             perror("execl");
             return 1;
@@ -32,7 +32,7 @@ int main()
     if (pid2 == 0)
     {
         // Child process
-        if (execl("bash", "./1/1.2/build.sh", NULL) == -1)
+        if (execl("bash ./1/1.2/build.sh", NULL) == -1)
         {
             perror("execl");
             return 1;
@@ -49,7 +49,7 @@ int main()
     if (pid3 == 0)
     {
         // Child process
-        if (execl("bash", "./1/1.2/build.sh", NULL) == -1)
+        if (execl("bash ./1/1.2/build.sh", NULL) == -1)
         {
             perror("execl");
             return 1;
