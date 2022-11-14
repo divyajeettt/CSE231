@@ -7,16 +7,11 @@
 
 int main()
 {
-    // print current working directory
-    char cwd[1024];
-    getcwd(cwd, sizeof(cwd));
-    printf("Current working dir: %s \n", cwd);
-
     int pid1 = fork();
     if (pid1 == 0)
     {
         // Child process
-        if (execl("bash", "./1/1.2/build.sh", NULL) == -1)
+        if (execl("bash", "./1/1.2/build.sh") == -1)
         {
             perror("execl");
         }
@@ -28,7 +23,7 @@ int main()
         if (pid2 == 0)
         {
             // Child process
-            if (execl("bash", "./1/1.2/build.sh", NULL) == -1)
+            if (execl("bash", "./1/1.2/build.sh") == -1)
             {
                 perror("execl");
             }
@@ -40,7 +35,7 @@ int main()
             if (pid3 == 0)
             {
                 // Child process
-                if (execl("bash", "./1/1.2/build.sh", NULL) == -1)
+                if (execl("bash", "./1/1.2/build.sh") == -1)
                 {
                     perror("execl");
                 }
