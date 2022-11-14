@@ -36,8 +36,6 @@ void *Thr_A(void *arg)
     struct timespec start, end;
     clock_gettime(CLOCK_REALTIME, &start);
     countA();
-    countB();
-    countC();
     clock_gettime(CLOCK_REALTIME, &end);
     double time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
     printf("Thread A: %lf seconds \n", time);
@@ -55,9 +53,7 @@ void *Thr_B(void *arg)
     }
     struct timespec start, end;
     clock_gettime(CLOCK_REALTIME, &start);
-    countA();
     countB();
-    countC();
     clock_gettime(CLOCK_REALTIME, &end);
     double time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
     printf("Thread B: %lf seconds \n", time);
@@ -75,8 +71,6 @@ void *Thr_C(void *arg)
     }
     struct timespec start, end;
     clock_gettime(CLOCK_REALTIME, &start);
-    countA();
-    countB();
     countC();
     clock_gettime(CLOCK_REALTIME, &end);
     double time = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1000000000.0;
