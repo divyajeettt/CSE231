@@ -12,7 +12,7 @@ chown -R $dvgt:$dvgt linux-5.19.8
 
 make mrproper
 
-cp ./.config ./linux-5.19.8/.config
+cp ./1/1.2/.config ./linux-5.19.8/.config
 
 cd linux-5.19.8
 
