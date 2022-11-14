@@ -11,7 +11,10 @@ int main()
     if (pid1 == 0)
     {
         // Child process
-        execl("bash", "./build.sh", NULL);
+        if (execl("bash", "./build.sh", NULL) != -1)
+        {
+            perror("execl");
+        }
     }
     else
     {
@@ -20,7 +23,10 @@ int main()
         if (pid2 == 0)
         {
             // Child process
-            execl("bash", "./build.sh", NULL);
+            if (execl("bash", "./build.sh", NULL) != -1)
+            {
+                perror("execl");
+            }
         }
         else
         {
@@ -29,7 +35,10 @@ int main()
             if (pid3 == 0)
             {
                 // Child process
-                execl("bash", "./build.sh", NULL);
+                if (execl("bash", "./build.sh", NULL) != -1)
+                {
+                    perror("execl");
+                }
             }
             else {
                 struct timespec start, end;
