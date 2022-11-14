@@ -10,10 +10,10 @@ tar -xvf linux-5.19.8.tar
 
 chown -R $dvgt:$dvgt linux-5.19.8
 
+cd linux-5.19.8
+
 make mrproper
 
-cp ./1/1.2/.config ./linux-5.19.8/.config
-
-cd linux-5.19.8
+cp ./../../1/1.2/.config .config
 
 make -j$(nproc)
