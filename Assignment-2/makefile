@@ -10,4 +10,16 @@ run1.1:
 	sudo ./1/1.1/main
 
 run1.2:
+	mkdir -p ./kernelbuildA
+	mkdir -p ./kernelbuildB
+	mkdir -p ./kernelbuildC
 	sudo ./1/1.2/main
+
+clean1.2:
+	sudo rm -rf ./kernelbuildA
+	sudo rm -rf ./kernelbuildB
+	sudo rm -rf ./kernelbuildC
+
+cleanbin:
+	rm -f ./1/1.1/main
+	rm -f ./1/1.2/main
