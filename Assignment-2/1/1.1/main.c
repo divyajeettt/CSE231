@@ -30,7 +30,7 @@ void *Thr_A(void *arg)
     param.sched_priority = 0;
     if (pthread_setschedparam(pthread_self(), SCHED_OTHER, &param) != 0)
     {
-        perror("pthread_setschedparam");
+        perror("pthread_setschedparam (Thr-A)");
         pthread_exit(NULL);
     }
     struct timespec start, end;
@@ -48,7 +48,7 @@ void *Thr_B(void *arg)
     param.sched_priority = 1;
     if (pthread_setschedparam(pthread_self(), SCHED_RR, &param) != 0)
     {
-        perror("pthread_setschedparam");
+        perror("pthread_setschedparam (Thr-B)");
         pthread_exit(NULL);
     }
     struct timespec start, end;
@@ -66,7 +66,7 @@ void *Thr_C(void *arg)
     param.sched_priority = 1;
     if (pthread_setschedparam(pthread_self(), SCHED_FIFO, &param) != 0)
     {
-        perror("pthread_setschedparam");
+        perror("pthread_setschedparam (Thr-C)");
         pthread_exit(NULL);
     }
     struct timespec start, end;
