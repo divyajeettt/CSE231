@@ -21,6 +21,9 @@ run1.2:
 test2:
 	./2/test
 
+diff:
+	diff ./2/sys/sys_default.c ./2/sys/sys_modified.c
+
 clean1.2:
 	sudo rm -rf ./kernelbuildA
 	sudo rm -rf ./kernelbuildB
