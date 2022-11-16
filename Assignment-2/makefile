@@ -6,6 +6,9 @@ all: 1.1 1.2
 1.2:
 	gcc -o ./1/1.2/main ./1/1.2/main.c
 
+2:
+	gcc -o ./2/test ./2/test.c
+
 run1.1:
 	sudo ./1/1.1/main
 
@@ -15,6 +18,9 @@ run1.2:
 	mkdir -p ./kernelbuildC
 	sudo ./1/1.2/main
 
+test2:
+	sudo ./2/test
+
 clean1.2:
 	sudo rm -rf ./kernelbuildA
 	sudo rm -rf ./kernelbuildB
@@ -23,3 +29,4 @@ clean1.2:
 cleanbin:
 	rm -f ./1/1.1/main
 	rm -f ./1/1.2/main
+	rm -f ./2/test
