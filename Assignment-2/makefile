@@ -1,4 +1,4 @@
-all: 1.1 1.2
+all: 1.1 1.2 test
 
 1.1:
 	gcc -pthread -o ./1/1.1/main ./1/1.1/main.c
@@ -6,7 +6,7 @@ all: 1.1 1.2
 1.2:
 	gcc -o ./1/1.2/main ./1/1.2/main.c
 
-2:
+test:
 	gcc -o ./2/test ./2/test.c
 
 run1.1:
@@ -19,7 +19,7 @@ run1.2:
 	sudo ./1/1.2/main
 
 test2:
-	sudo ./2/test
+	./2/test
 
 clean1.2:
 	sudo rm -rf ./kernelbuildA
