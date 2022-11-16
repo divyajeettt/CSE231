@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/syscall.h>
 
@@ -22,17 +23,27 @@ void printMatrix(float **matrix, int m, int n)
 
 int main()
 {
-    float matrix1[3][4] = {
-        {1.24, 5.95, 2.41, 7.80},
-        {3.14, 6.28, 9.81, 2.72},
-        {4.13, 7.00, 8.19, 1.41}
-    };
+    int n = 5;
+    int m = 5;
 
-    float matrix2[3][4] = {
-        {3.09, 2.71, 6.14, 9.66},
-        {6.28, 3.14, 9.72, 1.81},
-        {7.01, 5.53, 1.61, 8.19}
-    };
+    float **matrix1 = (float **)malloc(n * sizeof(float *));
+    float **matrix2 = (float **)malloc(n * sizeof(float *));
+
+    for (int i=0; i < n; i++)
+    {
+        matrix1[i] = (float *)malloc(m * sizeof(float));
+        matrix2[i] = (float *)malloc(m * sizeof(float));
+    }
+
+    float counter = 1.0;
+    for (int i=0; i < n; i++)
+    {
+        for (int j=0; j < m; j++)
+        {
+            matrix1[i][j] = counter++;
+            matrix2[i][j] = 0.0;
+        }
+    }
 
     printf("Matrix 2 before copying: \n");
     printMatrix(matrix2, 3, 4);
