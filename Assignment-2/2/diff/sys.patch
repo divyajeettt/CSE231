@@ -1,0 +1,29 @@
+--- ./../../linux-5.19.8/kernel/sys.c	2022-09-08 14:54:08.000000000 +0530
++++ ./linux-5.19.8/kernel/sys.c	2022-11-16 19:55:44.810001703 +0530
+@@ -342,6 +342,26 @@
+ 	return retval;
+ }
+ 
++
++// MY SYSTEM CALL :)
++SYSCALL_DEFINE4(kernel_2d_memcpy, float **, source, float **, dest, int, row, int, col)
++{
++	while (row--)
++	{
++		float buffer[col];
++		if (__copy_from_user(&buffer, &source[row], col*sizeof(float)))
++		{
++			return -EFAULT;
++		}
++		if (__copy_to_user(&dest[row], &buffer, col*sizeof(float)))
++		{
++			return -EFAULT;
++		}
++	}
++	return 0;
++}
++
++
+ /*
+  * Unprivileged users may change the real gid to the effective gid
+  * or vice versa.  (BSD-style)
