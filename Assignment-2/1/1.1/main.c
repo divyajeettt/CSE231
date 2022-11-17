@@ -113,7 +113,7 @@ void *Thr_C(void *arg)
 
 int main()
 {
-    FILE *file = fopen("./1/1.1/benchmark.csv", "a");
+    FILE *file = fopen("./1/1.1/Benchmarks/benchmark.csv", "a");
 
     pthread_t threadA, threadB, threadC;
 
