@@ -35,7 +35,7 @@ int main()
         matrix2[i] = (float *)malloc(m * sizeof(float));
     }
 
-    float counter = 1.0;
+    float counter = 10.0;
     for (int i=0; i < n; i++)
     {
         for (int j=0; j < m; j++)
