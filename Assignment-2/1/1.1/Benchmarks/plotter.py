@@ -31,9 +31,9 @@ def plot() -> None:
     plt.plot(range(1, len(benchmarks)+1), Thr_B, marker=".", label="Thr-B", color="#001787")
     plt.plot(range(1, len(benchmarks)+1), Thr_C, marker=".", label="Thr-C", color="#007B07")
 
-    plt.axhline(y=sum(Thr_A)/len(Thr_A), label="avg(Thr-A)", linestyle="--", color="#FF2E00")
-    plt.axhline(y=sum(Thr_B)/len(Thr_B), label="avg(Thr-B)", linestyle="--", color="#002BFF")
-    plt.axhline(y=sum(Thr_C)/len(Thr_C), label="avg(Thr-C)", linestyle="--", color="#00FF0F")
+    plt.axhline(y=sum(Thr_A)/len(Thr_A), linestyle="--", color="#FF2E00")
+    plt.axhline(y=sum(Thr_B)/len(Thr_B), linestyle="--", color="#002BFF")
+    plt.axhline(y=sum(Thr_C)/len(Thr_C), linestyle="--", color="#00FF0F")
 
     plt.xlabel("Number of trials")
     plt.xticks(range(1, len(benchmarks)+1))
