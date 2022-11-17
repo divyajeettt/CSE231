@@ -30,10 +30,11 @@ def plot() -> None:
     plt.plot(range(1, len(benchmarks)+1), Thr_C, label="C")
 
     plt.xlabel("Number of trials")
-    plt.ylabel("Time of execution (in seconds)")
-
     plt.xticks(range(1, len(benchmarks)+1))
+    plt.ylabel("Time of execution (in seconds)")
     plt.yticks(range(1, 11))
+
+    plt.title("Benchmark with priorities: A=0, B=1, C=1")
     plt.grid(True)
     plt.legend()
     plt.show()
