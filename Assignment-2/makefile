@@ -23,7 +23,7 @@ test2:
 	./2/test
 
 clean1.2:
-	sudo rm -rf .1/1.2/kernelbuild
+	sudo rm -rf ./1/1.2/kernelbuild
 
 cleanbin:
 	rm -f ./1/1.1/main
