@@ -1,4 +1,5 @@
 all: 1.1 1.2 test
+clean: clean1.2 cleanbin
 
 1.1:
 	gcc -pthread -o ./1/1.1/main ./1/1.1/main.c
