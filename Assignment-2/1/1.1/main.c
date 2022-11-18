@@ -117,9 +117,9 @@ int main()
 
     pthread_t threadA, threadB, threadC;
 
-    pthread_create(&threadA, NULL, &Thr_A, file);
-    pthread_create(&threadB, NULL, &Thr_B, file);
-    pthread_create(&threadC, NULL, &Thr_C, file);
+    pthread_create(&threadA, NULL, &Thr_A, (void *) file);
+    pthread_create(&threadB, NULL, &Thr_B, (void *) file);
+    pthread_create(&threadC, NULL, &Thr_C, (void *) file);
 
     pthread_join(threadA, NULL);
     pthread_join(threadB, NULL);
