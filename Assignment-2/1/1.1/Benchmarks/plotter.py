@@ -24,7 +24,7 @@ def plot() -> None:
     Thr_C = [benchmarks[i]["C"] for i in range(len(benchmarks))]
 
     A_priorities = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    B_priorities = [1, 10, 10 ,80, 60, 40, 40, 40, 80, 99]
+    B_priorities = [1, 10, 10, 80, 60, 40, 40, 40, 80, 99]
     C_priorities = [1, 1, 20, 40, 40, 40, 60, 80, 80, 80]
 
     plt.figure(figsize=(10, 5))
