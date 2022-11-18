@@ -5,7 +5,7 @@ import csv
 
 def plot() -> None:
     with open(r"./1/1.1/Benchmarks/benchmark.csv") as file:
-        reader = csv.reader(file, delimiter=",")
+        reader = csv.reader(file, delimiter="\t")
         data = list(reader)
 
     benchmarks = []
@@ -23,9 +23,9 @@ def plot() -> None:
     Thr_B = [benchmarks[i]["B"] for i in range(len(benchmarks))]
     Thr_C = [benchmarks[i]["C"] for i in range(len(benchmarks))]
 
-    A_priorities = [0, 0, 0, 0, 0, 0, ]
-    B_priorities = [10, 1, 1 ,20, 2, 19, ]
-    C_priorities = [1, 1, 19, 19, 2, 2, ]
+    A_priorities = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    B_priorities = [1, 10, 10 ,80, 60, 40, 40, 40, 80, 99]
+    C_priorities = [1, 1, 20, 40, 40, 40, 60, 80, 80, 80]
 
     plt.figure(figsize=(10, 5))
 
@@ -55,10 +55,10 @@ def plot() -> None:
     plt.xlabel("Number of trials")
     plt.xticks(range(1, len(benchmarks)+1))
     plt.ylabel("Time of execution (in seconds)")
-    plt.yticks(range(0, 36, 5))
-    plt.ylim(-1, 35)
+    plt.yticks(range(1, 5))
+    plt.ylim(-1, 5)
 
-    plt.title("Number of CPU Cores=2")
+    plt.title("Number of CPU Cores=4")
     plt.grid(True, zorder=0)
     plt.legend()
     plt.show()
