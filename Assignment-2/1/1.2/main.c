@@ -17,7 +17,7 @@ int main()
         // Child process
         if (execlp("bash", "bash", "./1/1.2/buildA.sh", (char *) NULL) == -1)
         {
-            perror("execl");
+            perror("execlp");
             return 1;
         }
         return 0;
@@ -34,7 +34,7 @@ int main()
         // Child process
         if (execlp("bash", "bash", "./1/1.2/buildB.sh", (char *) NULL) == -1)
         {
-            perror("execl");
+            perror("execlp");
             return 1;
         }
         return 0;
@@ -51,7 +51,7 @@ int main()
         // Child process
         if (execlp("bash", "bash", "./1/1.2/buildC.sh", (char *) NULL) == -1)
         {
-            perror("execl");
+            perror("execlp");
             return 1;
         }
         return 0;
