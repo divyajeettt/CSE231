@@ -24,8 +24,8 @@ def plot() -> None:
     Thr_C = [benchmarks[i]["C"] for i in range(len(benchmarks))]
 
     A_priorities = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    B_priorities = [1, 10, 1 ,1, 1, 1, 1, 1, 1, 1]
-    C_priorities = [1, 1, 20, 1, 1, 1, 1, 1, 1, 1]
+    B_priorities = [1, 10, 10 ,80, 60, 40, 40, 40, 80, 99]
+    C_priorities = [1, 1, 20, 40, 40, 40, 60, 80, 80, 80]
 
     plt.figure(figsize=(10, 5))
 
@@ -36,21 +36,21 @@ def plot() -> None:
     plt.bar(np.arange(1, len(benchmarks)+1, 1), Thr_B, width=0.2, label="Thr-B", color="#001787", zorder=2)
     plt.bar(np.arange(1+0.2, len(benchmarks)+1+0.2, 1), Thr_C, width=0.2, label="Thr-C", color="#007B07", zorder=2)
 
-    # # write A priorities on top of bars
-    # for i in range(len(A_priorities)):
-    #     plt.text(i+1-0.2, 0.25, A_priorities[i], ha="center", va="bottom", color="white", size=9, zorder=4)
+    # write A priorities on top of bars
+    for i in range(len(A_priorities)):
+        plt.text(i+1-0.2, 0.25, A_priorities[i], ha="center", va="bottom", color="white", size=7, zorder=4)
 
-    # # write B priorities on top of bars
-    # for i in range(len(B_priorities)):
-    #     plt.text(i+1, 0.25, B_priorities[i], ha="center", va="bottom", color="white", size=9, zorder=4)
+    # write B priorities on top of bars
+    for i in range(len(B_priorities)):
+        plt.text(i+1, 0.25, B_priorities[i], ha="center", va="bottom", color="white", size=7, zorder=4)
 
-    # # write C priorities on top of bars
-    # for i in range(len(C_priorities)):
-    #     plt.text(i+1+0.2, 0.25, C_priorities[i], ha="center", va="bottom", color="white", size=9, zorder=4)
+    # write C priorities on top of bars
+    for i in range(len(C_priorities)):
+        plt.text(i+1+0.2, 0.25, C_priorities[i], ha="center", va="bottom", color="white", size=7, zorder=4)
 
-    plt.axhline(y=sum(Thr_A)/len(Thr_A), linestyle="--", color="#FF2E00")
-    plt.axhline(y=sum(Thr_B)/len(Thr_B), linestyle="--", color="#002BFF")
-    plt.axhline(y=sum(Thr_C)/len(Thr_C), linestyle="--", color="#00FF0F")
+    # plt.axhline(y=sum(Thr_A)/len(Thr_A), linestyle="--", color="#FF2E00")
+    # plt.axhline(y=sum(Thr_B)/len(Thr_B), linestyle="--", color="#002BFF")
+    # plt.axhline(y=sum(Thr_C)/len(Thr_C), linestyle="--", color="#00FF0F")
 
     plt.xlabel("Number of trials")
     plt.xticks(range(1, len(benchmarks)+1))
@@ -58,7 +58,7 @@ def plot() -> None:
     plt.yticks(range(1, 11))
     plt.ylim(-1, 11)
 
-    plt.title("Thread Priorities: A=0, B=1, C=1\nNumber of CPU Cores=1")
+    plt.title("Number of CPU Cores=1")
     plt.grid(True, zorder=0)
     plt.legend()
     plt.show()
