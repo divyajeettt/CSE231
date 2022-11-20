@@ -34,7 +34,7 @@ def set_figure() -> None:
     plt.axvline(x=0, color="black", linewidth=2, zorder=3)
 
 
-def plot1() -> None:
+def plot() -> None:
     """Plot the benchmarks for 3 processs on fixed priorities for n trials"""
 
     Pr_A, Pr_B, Pr_C = get_process_times(get_benchmarks())
