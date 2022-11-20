@@ -124,7 +124,7 @@ def plot3() -> None:
             [Thr_C[i], C_priorities[i], "Thr-C", "#007B07"],
         ], key=(lambda x: x[0])
         )
-gi
+
         for i, (time, priority, label, color) in enumerate(arranged):
             plt.bar(priority, time, width=0.1*(max(priorities)-min(priorities)), label=label, color=color, zorder=5-i)
 
@@ -133,7 +133,7 @@ gi
         plt.ylabel("Time of execution (in seconds)")
         plt.ylim(-1, max(Thr_A[i], Thr_B[i], Thr_C[i])+1)
 
-        plt.title("Number of CPU Cores=1")
+        plt.title("Number of CPU Cores=2")
         plt.grid(True, zorder=0)
         plt.legend()
         plt.show()
