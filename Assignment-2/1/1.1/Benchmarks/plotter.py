@@ -37,7 +37,8 @@ def set_figure() -> None:
 def plot1() -> None:
     """Plot the benchmarks for 3 threads on fixed priorities for n trials"""
 
-    Thr_A, Thr_B, Thr_C = get_thread_times(get_benchmarks())
+    benchmarks = get_benchmarks()
+    Thr_A, Thr_B, Thr_C = get_thread_times(benchmarks)
 
     set_figure()
 
@@ -64,7 +65,8 @@ def plot1() -> None:
 def plot2() -> None:
     """Plot the benchmarks for 3 threads on variable priorities"""
 
-    Thr_A, Thr_B, Thr_C = get_thread_times(get_benchmarks())
+    benchmarks = get_benchmarks()
+    Thr_A, Thr_B, Thr_C = get_thread_times(benchmarks)
 
     A_priorities = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     B_priorities = [1, 10, 10, 80, 60, 40, 40, 40, 80, 99]

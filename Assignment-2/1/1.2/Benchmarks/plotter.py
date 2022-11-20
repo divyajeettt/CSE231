@@ -37,7 +37,8 @@ def set_figure() -> None:
 def plot() -> None:
     """Plot the benchmarks for 3 processs on fixed priorities for n trials"""
 
-    Pr_A, Pr_B, Pr_C = get_process_times(get_benchmarks())
+    benchmarks = get_benchmarks()
+    Pr_A, Pr_B, Pr_C = get_process_times(benchmarks)
 
     set_figure()
 
