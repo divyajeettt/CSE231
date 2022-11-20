@@ -50,7 +50,7 @@ int main()
     }
     else
     {
-        param.sched_priority = 5;
+        param.sched_priority = 30;
         sched_setscheduler(pid1, SCHED_OTHER, &param);
 
         clock_gettime(CLOCK_REALTIME, &startB);
@@ -74,7 +74,7 @@ int main()
         }
         else
         {
-            param.sched_priority = 20;
+            param.sched_priority = 99;
             sched_setscheduler(pid1, SCHED_RR, &param);
 
             clock_gettime(CLOCK_REALTIME, &startC);
@@ -98,7 +98,7 @@ int main()
                 }
             }
             else {
-                param.sched_priority = 30;
+                param.sched_priority = 10;
                 sched_setscheduler(pid1, SCHED_FIFO, &param);
                 wait(NULL);
                 clock_gettime(CLOCK_REALTIME, &endC);
