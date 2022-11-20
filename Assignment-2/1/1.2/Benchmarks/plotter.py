@@ -41,9 +41,9 @@ def plot() -> None:
 
     set_figure()
 
-    plt.line(np.arange(1-0.2, len(benchmarks)+1-0.2, 1), Pr_A, width=0.2, label="Pr-A", color="#971B00", zorder=2)
-    plt.line(np.arange(1, len(benchmarks)+1, 1), Pr_B, width=0.2, label="Pr-B", color="#001787", zorder=2)
-    plt.line(np.arange(1+0.2, len(benchmarks)+1+0.2, 1), Pr_C, width=0.2, label="Pr-C", color="#007B07", zorder=2)
+    plt.plot(np.arange(1-0.2, len(benchmarks)+1-0.2, 1), Pr_A, width=0.2, label="Pr-A", color="#971B00", zorder=2)
+    plt.plot(np.arange(1, len(benchmarks)+1, 1), Pr_B, width=0.2, label="Pr-B", color="#001787", zorder=2)
+    plt.plot(np.arange(1+0.2, len(benchmarks)+1+0.2, 1), Pr_C, width=0.2, label="Pr-C", color="#007B07", zorder=2)
 
     plt.axhline(y=sum(Pr_A)/len(Pr_A), linestyle="--", color="#FF2E00")
     plt.axhline(y=sum(Pr_B)/len(Pr_B), linestyle="--", color="#002BFF")
