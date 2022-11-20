@@ -102,6 +102,42 @@ def plot2() -> None:
     plt.show()
 
 
+def plot3() -> None:
+    """Create 10 plots for 3 threads on variable priorities
+    X-AXIS: Thread Priority
+    Y-AXIS: Time of execution (in seconds)"""
+
+    benchmarks = get_benchmarks()
+    Thr_A, Thr_B, Thr_C = get_thread_times(benchmarks)
+
+    A_priorities = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    B_priorities = [1, 10, 10, 80, 60, 40, 40, 40, 80, 99]
+    C_priorities = [1, 1, 20, 40, 40, 40, 60, 80, 80, 80]
+
+    for i in range(len(benchmarks)):
+        set_figure()
+
+        priorities = [A_priorities[i], B_priorities[i], C_priorities[i]]
+        arranged = sorted([
+            [Thr_A[i], A_priorities[i], "Thr-A", "#971B00"],
+            [Thr_B[i], B_priorities[i], "Thr-B", "#001787"],
+            [Thr_C[i], C_priorities[i], "Thr-C", "#007B07"],
+        ], key=(lambda x: x[0])
+        )
+
+        for i, (time, priority, label, color) in enumerate(arranged):
+            plt.bar(priority, time, width=0.1*(max(priorities)-min(priorities)), label=label, color=color, zorder=5-i)
+
+        plt.xlabel("Thread Priority")
+
+        plt.ylabel("Time of execution (in seconds)")
+        plt.ylim(-1, max(Thr_A[i], Thr_B[i], Thr_C[i])+1)
+
+        plt.title("Number of CPU Cores=1")
+        plt.grid(True, zorder=0)
+        plt.legend()
+        plt.show()
+
+
 if __name__ == "__main__":
-    plot1()
-    plot2()
+    plot3()
