@@ -42,9 +42,9 @@ def plot() -> None:
 
     set_figure()
 
-    plt.plot(np.arange(1-0.2, len(benchmarks)+1-0.2, 1), Pr_A, label="Pr-A", color="#971B00", zorder=2)
-    plt.plot(np.arange(1, len(benchmarks)+1, 1), Pr_B, label="Pr-B", color="#001787", zorder=2)
-    plt.plot(np.arange(1+0.2, len(benchmarks)+1+0.2, 1), Pr_C, label="Pr-C", color="#007B07", zorder=2)
+    plt.plot(np.arange(1-0.2, len(benchmarks)+1-0.2, 1), Pr_A, marker=".", label="Pr-A", color="#971B00", zorder=2)
+    plt.plot(np.arange(1, len(benchmarks)+1, 1), Pr_B, marker=".", label="Pr-B", color="#001787", zorder=2)
+    plt.plot(np.arange(1+0.2, len(benchmarks)+1+0.2, 1), Pr_C, marker=".", label="Pr-C", color="#007B07", zorder=2)
 
     plt.axhline(y=sum(Pr_A)/len(Pr_A), linestyle="--", color="#FF2E00")
     plt.axhline(y=sum(Pr_B)/len(Pr_B), linestyle="--", color="#002BFF")
@@ -52,6 +52,8 @@ def plot() -> None:
 
     plt.xlabel("Number of Trials")
     plt.xticks(range(1, len(benchmarks)+1))
+
+    # plt.ylim(3, 4.5)
     plt.ylabel("Time of execution (in seconds)")
 
     plt.title("Priorities: Pr-A=5, Pr-B=20, Pr-C=30\nNumber of cores = 4")
