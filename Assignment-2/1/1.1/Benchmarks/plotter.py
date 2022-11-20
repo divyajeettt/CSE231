@@ -56,7 +56,7 @@ def plot1() -> None:
     plt.yticks(range(1, 5))
     plt.ylim(-1, 5)
 
-    plt.title("Number of CPU Cores=4")
+    plt.title("Priorities: Thr-A=A, Thr-B=B, Thr-C=C\nNumber of CPU Cores=4")
     plt.grid(True, zorder=0)
     plt.legend()
     plt.show()
@@ -84,7 +84,7 @@ def plot2() -> None:
 
     # write B priorities on top of bars
     for i in range(len(B_priorities)):
-        plt.text(i+1, 0.25, B_priorities[i], ha="ce   nter", va="bottom", color="white", size=7, zorder=4)
+        plt.text(i+1, 0.25, B_priorities[i], ha="center", va="bottom", color="white", size=7, zorder=4)
 
     # write C priorities on top of bars
     for i in range(len(C_priorities)):
@@ -103,4 +103,5 @@ def plot2() -> None:
 
 
 if __name__ == "__main__":
-    plot()
+    plot1()
+    plot2()
