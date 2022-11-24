@@ -80,9 +80,9 @@ def plot3() -> None:
     benchmarks = get_benchmarks()
     Pr_A, Pr_B, Pr_C = get_process_times(benchmarks)
 
-    A_priorities = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    B_priorities = [1, 10, 10, 80, 60, 40, 40, 40, 80, 99]
-    C_priorities = [1, 1, 20, 40, 40, 40, 60, 80, 80, 80]
+    A_priorities = [0, 0, 0, 0, 0, 0]
+    B_priorities = [90, 50, 10, 40, 99, 10]
+    C_priorities = [20, 20, 60, 40, 10, 99]
 
     for i in range(len(benchmarks)):
         set_figure()
