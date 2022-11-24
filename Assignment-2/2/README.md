@@ -2,7 +2,7 @@
 
 ## Management of syscalls
 
-To implement system calls, the OS stores (*see footnotes*):
+To implement system calls, the kernel has (*see footnotes*):
 
 - A file containing the definitions of all syscalls (`linux-5.19.8/kernel/sys.c`)
 - A list of these syscalls in a syscall table, along with their numbers (`linux-5.19.8/arch/x86/entry/syscalls/syscall_6.tbl`)
@@ -34,7 +34,7 @@ SYSCALL_DEFINE4(kernel_2d_memcpy, float **, source, float **, dest, int, row, in
 }
 ```
 
-2. Add the syscall to the syscall table in `linux-5.19.8/arch/x86/entry/syscalls/syscall_6.tbl`. The syscall number is 469.
+2. Add the syscall to the syscall table in `linux-5.19.8/arch/x86/entry/syscalls/syscall_6.tbl`. The syscall number is set to `469`. The following entry is added to the table:
 
 ```
 469	common  kernel_2d_memcpy	sys_kernel_2d_memcpy
