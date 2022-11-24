@@ -1,5 +1,4 @@
 all: 1.1 1.2 test
-clean: clean1.2 cleanbin
 
 1.1:
 	gcc -pthread -o ./1/1.1/main ./1/1.1/main.c
@@ -24,10 +23,7 @@ run1.2:
 test2:
 	./2/test
 
-clean1.2:
-	sudo rm -rf ./1/1.2/kernelbuild
-
-cleanbin:
+clean:
 	rm -f ./1/1.1/main
 	rm -f ./1/1.2/main
 	rm -f ./2/test
