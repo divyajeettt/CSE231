@@ -18,19 +18,19 @@ The following step-wise approach was followed to solve the problem:
 ```c
 SYSCALL_DEFINE4(kernel_2d_memcpy, float **, source, float **, dest, int, row, int, col)
 {
-	while (row--)
-	{
-		float buffer[col];
-		if (__copy_from_user(&buffer, &source[row], col*sizeof(float)))
-		{
-			return -EFAULT;
-		}
-		if (__copy_to_user(&dest[row], &buffer, col*sizeof(float)))
-		{
-			return -EFAULT;
-		}
-	}
-	return 0;
+    while (row--)
+    {
+        float buffer[col];
+        if (__copy_from_user(&buffer, &source[row], col*sizeof(float)))
+        {
+            return -EFAULT;
+        }
+        if (__copy_to_user(&dest[row], &buffer, col*sizeof(float)))
+        {
+            return -EFAULT;
+        }
+    }
+    return 0;
 }
 ```
 
