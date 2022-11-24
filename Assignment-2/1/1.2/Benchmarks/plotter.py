@@ -66,7 +66,7 @@ def plot2() -> None:
     plt.xticks(range(1, len(benchmarks)+1))
     plt.ylabel("Time of execution (in seconds)")
 
-    plt.title("Number of CPU Cores=4")
+    plt.title("Number of CPU Cores=2")
     plt.grid(True, zorder=0)
     plt.legend()
     plt.show()
@@ -103,7 +103,7 @@ def plot3() -> None:
         plt.ylabel("Time of execution (in seconds)")
         plt.ylim(-1, max(Pr_A[i], Pr_B[i], Pr_C[i])+1)
 
-        plt.title("Number of CPU Cores=4")
+        plt.title("Number of CPU Cores=2")
         plt.grid(True, zorder=0)
         plt.legend()
         plt.show()
