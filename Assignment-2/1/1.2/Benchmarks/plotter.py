@@ -110,4 +110,4 @@ def plot3() -> None:
 
 
 if __name__ == "__main__":
-    plot3()
+    plot2()
