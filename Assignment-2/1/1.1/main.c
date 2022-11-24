@@ -1,6 +1,7 @@
 #include <math.h>
 #include <time.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <pthread.h>
 
 typedef long long ll;
@@ -48,6 +49,7 @@ void *Thr_A(void *arg)
         perror("pthread_setschedparam (Thr-A)");
         pthread_exit(NULL);
     }
+    nice(-1);
 
     struct timespec start, end;
     clock_gettime(CLOCK_REALTIME, &start);
