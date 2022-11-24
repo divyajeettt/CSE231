@@ -40,7 +40,7 @@ SYSCALL_DEFINE4(kernel_2d_memcpy, float **, source, float **, dest, int, row, in
 469	common  kernel_2d_memcpy	sys_kernel_2d_memcpy
 ```
 
-3. Compile the new kernel, and add it using `grub` with the name `linux-AB`.
+3. Compile the new kernel, and add it with the name `linux-AB`.
 4. Store the `diff` between the old and new kernels in `./2/diff.patch`.
 5. Create and run a testing program `test.c` that calls the syscall `kernel_2d_memcpy()`.
 
