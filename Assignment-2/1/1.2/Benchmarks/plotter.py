@@ -103,12 +103,11 @@ def plot3() -> None:
         plt.ylabel("Time of execution (in seconds)")
         plt.ylim(-1, max(Pr_A[i], Pr_B[i], Pr_C[i])+1)
 
-        plt.title("Number of CPU Cores=2")
+        plt.title("Number of CPU Cores=4")
         plt.grid(True, zorder=0)
         plt.legend()
         plt.show()
 
 
-
 if __name__ == "__main__":
-    plot2()
+    plot3()
