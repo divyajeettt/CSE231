@@ -68,9 +68,9 @@ def plot2() -> None:
     benchmarks = get_benchmarks()
     Thr_A, Thr_B, Thr_C = get_thread_times(benchmarks)
 
-    A_priorities = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    B_priorities = [1, 10, 10, 80, 60, 40, 40, 40, 80, 99]
-    C_priorities = [1, 1, 20, 40, 40, 40, 60, 80, 80, 80]
+    A_priorities = [0, 0, 0, 0, 0, 0, 0]
+    B_priorities = [5, 99, 15, 10, 20, 40]
+    C_priorities = [1, 14, 20, 10, 40, 20]
 
     set_figure()
 
@@ -93,8 +93,6 @@ def plot2() -> None:
     plt.xlabel("Number of Trials")
     plt.xticks(range(1, len(benchmarks)+1))
     plt.ylabel("Time of execution (in seconds)")
-    plt.yticks(range(1, 5))
-    plt.ylim(-1, 5)
 
     plt.title("Number of CPU Cores=4")
     plt.grid(True, zorder=0)
@@ -140,4 +138,4 @@ def plot3() -> None:
 
 
 if __name__ == "__main__":
-    plot3()
+    plot2()

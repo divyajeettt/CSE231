@@ -41,8 +41,8 @@ def plot2() -> None:
     Pr_A, Pr_B, Pr_C = get_process_times(benchmarks)
 
     A_priorities = [0, 0, 0, 0, 0, 0]
-    B_priorities = [90, 50, 10, 40, 99, 10]
-    C_priorities = [20, 20, 60, 40, 10, 99]
+    B_priorities = [56, 43, 13, 47, 19, 99]
+    C_priorities = [98, 21, 72, 19, 99, 82]
 
     set_figure()
 
