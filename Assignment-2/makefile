@@ -15,9 +15,6 @@ run1.1:
 
 run1.2:
 	mkdir -p ./1/1.2/Benchmarks
-	mkdir -p ./1/1.2/kernelbuild/A
-	mkdir -p ./1/1.2/kernelbuild/B
-	mkdir -p ./1/1.2/kernelbuild/C
 	sudo ./1/1.2/main
 
 test2:
