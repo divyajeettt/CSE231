@@ -15,14 +15,17 @@ clean: clean1 clean2 clean3
 	gcc -pthread -o 1/b/2 1/b/2.c
 
 fifo:
+	gcc -o 2/run 2/run.c
 	gcc -o 2/fifo/client 2/fifo/client.c
 	gcc -o 2/fifo/server 2/fifo/server.c
 
 shared-memory:
+	gcc -o 2/run 2/run.c
 	gcc -o 2/shared-memory/client 2/shared-memory/client.c
 	gcc -o 2/shared-memory/server 2/shared-memory/server.c
 
 sockets:
+	gcc -o 2/run 2/run.c
 	gcc -o 2/sockets/client 2/sockets/client.c
 	gcc -o 2/sockets/server 2/sockets/server.c
 
