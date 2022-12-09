@@ -48,8 +48,8 @@ run2sockets:
 	./2/run sockets
 
 clean1:
-	rm -f 1/a/1 1/a/2
-	rm -f 1/b/1 1/b/2
+	rm -f 1/a/mutex 1/a/semaphore
+	rm -f 1/b/mutex 1/b/semaphore
 
 clean2:
 	rm -f 2/run
