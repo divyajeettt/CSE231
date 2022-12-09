@@ -39,20 +39,21 @@ run1b2:
 	./1/b/2
 
 run2fifo:
-	./2/fifo/run
+	./2/run fifo
 run2shared-memory:
-	./2/shared-memory/run
+	./2/run shared-memory
 run2sockets:
-	./2/sockets/run
+	./2/run sockets
 
 clean1:
 	rm -f 1/a/1 1/a/2
 	rm -f 1/b/1 1/b/2
 
 clean2:
-	rm -f 2/fifo/client 2/fifo/server 2/fifo/run
-	rm -f 2/shared-memory/client 2/shared-memory/server 2/shared-memory/run
-	rm -f 2/sockets/client 2/sockets/server 2/sockets/run
+	rm -f 2/run
+	rm -f 2/fifo/client 2/fifo/server
+	rm -f 2/shared-memory/client 2/shared-memory/server
+	rm -f 2/sockets/client 2/sockets/server
 
 clean3:
 	rm -f 3/main
