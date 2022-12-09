@@ -8,11 +8,11 @@ clean: clean1 clean2 clean3
 
 1a:
 	gcc -pthread -o 1/a/mutex 1/a/mutex.c
-	gcc -pthread -o 1/a/sempahore 1/a/sempahore.c
+	gcc -pthread -o 1/a/semaphore 1/a/semaphore.c
 
 1b:
 	gcc -pthread -o 1/b/mutex 1/b/mutex.c
-	gcc -pthread -o 1/b/sempahore 1/b/sempahore.c
+	gcc -pthread -o 1/b/semaphore 1/b/semaphore.c
 
 fifo:
 	gcc -o 2/run 2/run.c
@@ -31,14 +31,14 @@ sockets:
 
 # thing:
 
-run1a1:
-	./1/a/1
-run1a2:
-	./1/a/2
-run1b1:
-	./1/b/1
-run1b2:
-	./1/b/2
+run1amutex:
+	./1/a/mutex
+run1asemaphore:
+	./1/a/semaphore
+run1bmutex:
+	./1/b/mutex
+run1bsemaphore:
+	./1/b/semaphore
 
 run2fifo:
 	./2/run fifo
