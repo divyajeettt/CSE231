@@ -13,7 +13,7 @@ int main(int argc, int *argv[])
     int link;
     if ((link = socket(AF_UNIX, SOCK_SEQPACKET, 0)) < 0)
     {
-        perror("socket creation failure");
+        perror("[server] socket creation failure");
         exit(EXIT_FAILURE);
     }
 
@@ -24,19 +24,19 @@ int main(int argc, int *argv[])
 
     if (bind(link, (struct sockaddr *) &socketAddr, SUN_LEN(&socketAddr)) == -1)
     {
-        perror("couldn't bind to socket");
+        perror("[server] couldn't bind to socket");
         exit(EXIT_FAILURE);
     }
 
     if (listen(link, 3) == -1)
     {
-        perror("server listening error");
+        perror("[server] listening error");
         exit(EXIT_FAILURE);
     }
 
     if ((link = accept(link, NULL, NULL)) == -1)
     {
-        perror("server accepting error");
+        perror("[server] accepting error");
         exit(EXIT_FAILURE);
     }
 
@@ -51,26 +51,26 @@ int main(int argc, int *argv[])
         {
             if (write(link, strings[index++], LENGTH+1) == -1)
             {
-                perror("server unable to write to socket");
+                perror("[server] couldn't write to socket");
                 exit(EXIT_FAILURE);
             }
         }
 
         if (write(link, toString(index-1), sizeof(int)+1) == -1)
         {
-            perror("server unable to write end-index to socket");
+            perror("[server] couldn't write end-index to socket");
             exit(EXIT_FAILURE);
         }
 
         char *buffer = (char *) malloc(LENGTH * sizeof(char));
         if (read(link, buffer, sizeof(buffer)) == -1)
         {
-            perror("server unable to read-back from socket");
+            perror("[server] couldn't read-back from socket");
             exit(EXIT_FAILURE);
         }
         else if (toInt(buffer) != index-1)
         {
-            printf("CRITICAL ERROR: received ID %d; expected ID %d \n", toInt(buffer), index-1);
+            printf("ID ERROR: received ID %d; expected ID %d \n", toInt(buffer), index-1);
             exit(EXIT_FAILURE);
         }
         else
@@ -84,13 +84,13 @@ int main(int argc, int *argv[])
 
     if (close(link) == -1)
     {
-        perror("server unable to close socket");
+        perror("[server] couldn't close socket");
         exit(EXIT_FAILURE);
     }
 
     if (unlink(SOCKET) == -1)
     {
-        perror("client unable to unlink socket");
+        perror("client couldn't unlink socket");
         exit(EXIT_FAILURE);
     }
 
