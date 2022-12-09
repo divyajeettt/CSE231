@@ -3,6 +3,7 @@
 #define LENGTH 10
 #define SOCKET "./crimge.socket"
 #define FIFO "./crimge-fifo"
+#define SHM "./crimge-shm"
 
 
 char **generateStrings()
