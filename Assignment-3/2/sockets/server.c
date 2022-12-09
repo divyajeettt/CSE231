@@ -62,7 +62,7 @@ int main(int argc, int *argv[])
             exit(EXIT_FAILURE);
         }
 
-        char *buffer = (char *) malloc(LENGTH*sizeof(char));
+        char *buffer = (char *) malloc(LENGTH * sizeof(char));
         if (read(link, buffer, sizeof(buffer)) == -1)
         {
             perror("[server] couldn't read-back from socket");
@@ -90,7 +90,7 @@ int main(int argc, int *argv[])
 
     if (unlink(SOCKET) == -1)
     {
-        perror("client couldn't unlink socket");
+        perror("[server] couldn't unlink socket");
         exit(EXIT_FAILURE);
     }
 
