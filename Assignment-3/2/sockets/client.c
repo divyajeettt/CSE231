@@ -12,7 +12,7 @@ int main(int argc, int *argv[])
     int link;
     if ((link = socket(AF_UNIX, SOCK_SEQPACKET, 0)) < 0)
     {
-        perror("socket creation failure");
+        perror("socket opening failure");
         exit(EXIT_FAILURE);
     }
 
