@@ -11,14 +11,8 @@
 
 int main(int argc, char *argv[])
 {
-    mkfifo(FIFO, 0666);
-
     int link;
-    if ((link = open(FIFO, O_RDWR)) == -1)
-    {
-        perror("[server] fifo opening failure");
-        exit(EXIT_FAILURE);
-    }
+    mkfifo(FIFO, 0666);
 
     char **strings = generateStrings();
     clock_t start = clock();
@@ -26,6 +20,12 @@ int main(int argc, char *argv[])
     int index = 0;
     while (index < N)
     {
+        if ((link = open(FIFO, O_WRONLY)) == -1)
+        {
+            perror("[server] fifo (write-only) opening failure");
+            exit(EXIT_FAILURE);
+        }
+
         for (int i=0; i < CHUNK; i++)
         {
             if (write(link, strings[index++], LENGTH+1) == -1)
@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
                 perror("[server] couldn't write to fifo");
                 exit(EXIT_FAILURE);
             }
+            sleep(1);
         }
 
         if (write(link, toString(index-1), sizeof(int)+1) == -1)
@@ -41,11 +42,49 @@ int main(int argc, char *argv[])
             exit(EXIT_FAILURE);
         }
 
-        char *buffer = (char *) malloc(2*sizeof(char));
-        if (read(link, buffer, 2) == -1)
+        if (close(link) == -1)
         {
-            perror("[server] couldn't read from fifo");
+            perror("[server] couldn't close fifo (write-only)");
+            exit(EXIT_FAILURE);
+        }
+
+        if ((link = open(FIFO, O_RDONLY)) == -1)
+        {
+            perror("[server] fifo (read-only) opening failure");
+            exit(EXIT_FAILURE);
+        }
+
+        char *buffer = (char *) malloc(LENGTH*sizeof(char));
+        if (read(link, buffer, LENGTH) == -1)
+        {
+            perror("[server] couldn't read-back from fifo (read-only)");
+            exit(EXIT_FAILURE);
+        }
+        else if (toInt(buffer) != index-1)
+        {
+            printf("ID ERROR: received ID %d; expected ID %d \n", toInt(buffer), index-1);
+            exit(EXIT_FAILURE);
+        }
+        else
+        {
+            printf("Highest ID received at client: %d \n", toInt(buffer));
+        }
+
+        if (close(link) == -1)
+        {
+            perror("[server] couldn't close fifo (read-only)");
             exit(EXIT_FAILURE);
         }
     }
+
+    clock_t end = clock();
+    printf("Time taken: %f seconds \n", ((double) (end-start) / CLOCKS_PER_SEC));
+
+    if (unlink(FIFO) == -1)
+    {
+        perror("[server] couldn't unlink fifo");
+        exit(EXIT_FAILURE);
+    }
+
+    return EXIT_SUCCESS;
 }
