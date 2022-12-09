@@ -26,7 +26,6 @@ char *getClient(char *path)
 int main(int argc, char *argv[])
 {
     pid_t process_id = fork();
-
     if (process_id > 0)
     {
         if (execl(getServer(argv[1]), (char *) NULL) == -1)
