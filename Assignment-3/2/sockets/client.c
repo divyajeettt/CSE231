@@ -27,9 +27,9 @@ int main(int argc, int *argv[])
         exit(EXIT_FAILURE);
     }
 
-    int strings = 0;
-    int count = 0;
-    while (strings <= N)
+    int countStrings = 0;
+    int countIters = 0;
+    while (countStrings <= N)
     {
         char *buffer = (char *) malloc(LENGTH*sizeof(char));
         if (read(link, buffer, LENGTH) == -1)
@@ -37,19 +37,19 @@ int main(int argc, int *argv[])
             perror("client unable to read from socket");
             exit(EXIT_FAILURE);
         }
-        count++;
+        countIters++;
 
-        if (count%6 == 0)
+        if (countIters%6 == 0)
         {
             if (write(link, buffer, 2) == -1)
             {
                 perror("client unable to write-back to socket");
                 exit(EXIT_FAILURE);
             }
-            if (strings != N) printf("\n");
+            if (countStrings != N) printf("\n");
         }
-        else if (strings == N) break;
-        else printf("%d: %s \n", strings++, buffer);
+        else if (countStrings == N) break;
+        else printf("%d: %s \n", countStrings++, buffer);
     }
 
     if (close(link) == -1)

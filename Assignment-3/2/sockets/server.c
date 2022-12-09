@@ -40,9 +40,10 @@ int main(int argc, int *argv[])
         exit(EXIT_FAILURE);
     }
 
-    clock_t start = clock();
 
     char **strings = generateStrings();
+    clock_t start = clock();
+
     int index = 0;
     while (index < N)
     {
