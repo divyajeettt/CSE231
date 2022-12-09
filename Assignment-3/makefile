@@ -23,7 +23,6 @@ shared-memory:
 	gcc -o 2/shared-memory/server 2/shared-memory/server.c
 
 sockets:
-	gcc -o 2/sockets/run 2/sockets/run.c
 	gcc -o 2/sockets/client 2/sockets/client.c
 	gcc -o 2/sockets/server 2/sockets/server.c
 
