@@ -2,6 +2,7 @@
 #define CHUNK 5
 #define LENGTH 10
 #define SOCKET "./crimge.socket"
+#define FIFO "./crimge-fifo"
 
 
 char **generateStrings()
