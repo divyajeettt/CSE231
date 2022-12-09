@@ -1,7 +1,7 @@
 all: make1 make2 make3
 
 make1: 1a 1b
-make2: fifo shared-memory sockets
+make2: fifo shm sockets
 make3: thing
 
 clean: clean1 clean2 clean3
@@ -19,7 +19,7 @@ fifo:
 	gcc -o 2/fifo/client 2/fifo/client.c
 	gcc -o 2/fifo/server 2/fifo/server.c
 
-shared-memory:
+shm:
 	gcc -o 2/run 2/run.c
 	gcc -o 2/shared-memory/client 2/shared-memory/client.c
 	gcc -o 2/shared-memory/server 2/shared-memory/server.c
@@ -42,7 +42,7 @@ run1b2:
 
 run2fifo:
 	./2/run fifo
-run2shared-memory:
+run2shm:
 	./2/run shared-memory
 run2sockets:
 	./2/run sockets
