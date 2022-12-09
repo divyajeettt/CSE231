@@ -7,12 +7,12 @@ make3: thing
 clean: clean1 clean2 clean3
 
 1a:
-	gcc -pthread -o 1/a/1 1/a/1.c
-	gcc -pthread -o 1/a/2 1/a/2.c
+	gcc -pthread -o 1/a/mutex 1/a/mutex.c
+	gcc -pthread -o 1/a/sempahore 1/a/sempahore.c
 
 1b:
-	gcc -pthread -o 1/b/1 1/b/1.c
-	gcc -pthread -o 1/b/2 1/b/2.c
+	gcc -pthread -o 1/b/mutex 1/b/mutex.c
+	gcc -pthread -o 1/b/sempahore 1/b/sempahore.c
 
 fifo:
 	gcc -o 2/run 2/run.c

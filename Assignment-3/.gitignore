@@ -1,7 +1,7 @@
-1/a/1
-1/a/2
-1/b/1
-1/b/2
+1/a/mutex
+1/a/semaphore
+1/b/mutex
+1/b/semaphore
 
 2/run
 2/fifo/client
