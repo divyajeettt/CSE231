@@ -23,7 +23,7 @@ int main(int argc, int *argv[])
 
     if (connect(link, (struct sockaddr *) &socketAddr, sizeof(socketAddr)) == -1)
     {
-        perror("[client] unable to connect to socket");
+        perror("[client] couldn't connect to socket");
         exit(EXIT_FAILURE);
     }
 
@@ -34,7 +34,7 @@ int main(int argc, int *argv[])
         char *buffer = (char *) malloc(LENGTH*sizeof(char));
         if (read(link, buffer, LENGTH) == -1)
         {
-            perror("[client] unable to read from socket");
+            perror("[client] couldn't read from socket");
             exit(EXIT_FAILURE);
         }
         countIters++;
@@ -43,7 +43,7 @@ int main(int argc, int *argv[])
         {
             if (write(link, buffer, 2) == -1)
             {
-                perror("[client] unable to write-back to socket");
+                perror("[client] couldn't write-back to socket");
                 exit(EXIT_FAILURE);
             }
             if (countStrings != N) printf("\n");
@@ -54,7 +54,7 @@ int main(int argc, int *argv[])
 
     if (close(link) == -1)
     {
-        perror("[client] unable to close socket");
+        perror("[client] couldn't close socket");
         exit(EXIT_FAILURE);
     }
 
