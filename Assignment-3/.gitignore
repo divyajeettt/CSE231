@@ -3,14 +3,12 @@
 1/b/1
 1/b/2
 
+2/run
 2/fifo/client
 2/fifo/server
-2/fifo/run
 2/shared-memory/client
 2/shared-memory/server
-2/shared-memory/run
 2/sockets/client
 2/sockets/server
-2/sockets/run
 
 3/main
