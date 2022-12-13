@@ -13,24 +13,27 @@ struct Fork forks[N];
 void *eat(void *arg)
 {
     int i = *((int *) arg);
-    // printf("Philosopher %d: Thinking \n", i);
 
-    sem_wait(&forks[LEFT].semaphore);
-    sem_wait(&forks[RIGHT].semaphore);
+    int first, second;
+    if (i%2 == 0) {
+        first = LEFT; second = RIGHT;
+    } else {
+        first = RIGHT; second = LEFT;
+    }
 
-    // printf("Philosopher %d: Eating \n", i);
+    sem_wait(&forks[first].semaphore);
+    sem_wait(&forks[second].semaphore);
+
     philosophers[i].eaten++;
 
-    sem_post(&forks[LEFT].semaphore);
-    sem_post(&forks[RIGHT].semaphore);
+    sem_post(&forks[first].semaphore);
+    sem_post(&forks[second].semaphore);
 }
 
 
 int main()
 {
-    int i;
-
-    for (i = 0; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
         forks[i] = makeFork();
         philosophers[i] = makePhilosopher();
@@ -38,21 +41,23 @@ int main()
 
     for (long long j = 0; j < 10000; j++)
     {
-        for (i = 0; i < N; i++)
+        for (int i = 0; i < N; i++)
         {
-            pthread_create(&philosophers[i].thread, NULL, eat, (void *) &i);
+            int *arg = (int *) malloc(sizeof(int));
+            *arg = i;
+            pthread_create(&philosophers[i].thread, NULL, eat, (void *) arg);
         }
-        for (i = 0; i < N; i++)
+        for (int i = 0; i < N; i++)
         {
             pthread_join(philosophers[i].thread, NULL);
         }
     }
 
-    for (i = 0; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
         if (sem_destroy(&forks[i].semaphore) != 0)
         {
-            printf("Semaphore destroy failed \n");
+            perror("sem_destroy");
             exit(EXIT_FAILURE);
         }
         printf("Philosopher %d: Eaten %lld times \n", i, philosophers[i].eaten);

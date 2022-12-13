@@ -13,24 +13,27 @@ struct Fork forks[N];
 void *eat(void *arg)
 {
     int i = *((int *) arg);
-    // printf("Philosopher %d: Thinking \n", i);
 
-    pthread_mutex_lock(&forks[LEFT].lock);
-    pthread_mutex_lock(&forks[RIGHT].lock);
+    int first, second;
+    if (i%2 == 0) {
+        first = LEFT; second = RIGHT;
+    } else {
+        first = RIGHT; second = LEFT;
+    }
 
-    // printf("Philosopher %d: Eating \n", i);
+    pthread_mutex_lock(&forks[first].lock);
+    pthread_mutex_lock(&forks[second].lock);
+
     philosophers[i].eaten++;
 
-    pthread_mutex_unlock(&forks[LEFT].lock);
-    pthread_mutex_unlock(&forks[RIGHT].lock);
+    pthread_mutex_unlock(&forks[first].lock);
+    pthread_mutex_unlock(&forks[second].lock);
 }
 
 
 int main()
 {
-    int i;
-
-    for (i = 0; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
         forks[i] = makeFork();
         philosophers[i] = makePhilosopher();
@@ -38,21 +41,23 @@ int main()
 
     for (long long j = 0; j < 10000; j++)
     {
-        for (i = 0; i < N; i++)
+        for (int i = 0; i < N; i++)
         {
-            pthread_create(&philosophers[i].thread, NULL, eat, (void *) &i);
+            int *arg = (int *) malloc(sizeof(int));
+            *arg = i;
+            pthread_create(&philosophers[i].thread, NULL, eat, (void *) arg);
         }
-        for (i = 0; i < N; i++)
+        for (int i = 0; i < N; i++)
         {
             pthread_join(philosophers[i].thread, NULL);
         }
     }
 
-    for (i = 0; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
         if (pthread_mutex_destroy(&forks[i].lock) != 0)
         {
-            printf("Mutex destroy failed \n");
+            perror("pthread_mutex_destroy");
             exit(EXIT_FAILURE);
         }
         printf("Philosopher %d: Eaten %lld times \n", i, philosophers[i].eaten);
