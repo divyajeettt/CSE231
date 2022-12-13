@@ -14,20 +14,13 @@ void *eat(void *arg)
 {
     int i = *((int *) arg);
 
-    int first, second;
-    if (i%2 == 0) {
-        first = LEFT; second = RIGHT;
-    } else {
-        first = RIGHT; second = LEFT;
-    }
-
-    sem_wait(&forks[first].semaphore);
-    sem_wait(&forks[second].semaphore);
+    sem_wait(&forks[FIRST].semaphore);
+    sem_wait(&forks[SECOND].semaphore);
 
     philosophers[i].eaten++;
 
-    sem_post(&forks[first].semaphore);
-    sem_post(&forks[second].semaphore);
+    sem_post(&forks[FIRST].semaphore);
+    sem_post(&forks[SECOND].semaphore);
 }
 
 

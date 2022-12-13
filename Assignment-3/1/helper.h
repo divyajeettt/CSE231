@@ -6,13 +6,14 @@
 #define N 5
 #define LEFT i
 #define RIGHT (i+1) % N
+#define FIRST (i%2 == 0) ? LEFT : RIGHT
+#define SECOND (i%2 == 0) ? RIGHT : LEFT
 
 
 struct Philospher
 {
     long long eaten;
     pthread_t thread;
-    pthread_cond_t cond;
 };
 
 
@@ -20,28 +21,20 @@ struct Fork
 {
     sem_t semaphore;
     pthread_mutex_t lock;
-    struct Philospher *owner;
 };
 
 
 struct SauceBowl
 {
+    sem_t semaphore;
     pthread_mutex_t lock;
-    struct Philospher *owner;
 };
 
 
 struct Philospher makePhilosopher()
 {
     pthread_t tid;
-    pthread_cond_t cond;
-    if (pthread_cond_init(&cond, NULL) != 0)
-    {
-        printf("Cond init failed \n");
-        exit(EXIT_FAILURE);
-    }
-
-    struct Philospher philosopher = { 0ll, tid, cond };
+    struct Philospher philosopher = { 0ll, tid };
     return philosopher;
 }
 
@@ -62,7 +55,7 @@ struct Fork makeFork()
         exit(EXIT_FAILURE);
     }
 
-    struct Fork fork = { semaphore, lock, NULL };
+    struct Fork fork = { semaphore, lock };
     return fork;
 }
 
@@ -76,6 +69,13 @@ struct SauceBowl makeSauceBowl()
         exit(EXIT_FAILURE);
     }
 
-    struct SauceBowl sauceBowl = { lock, NULL };
+    sem_t semaphore;
+    if (sem_init(&semaphore, 0, 1) != 0)
+    {
+        printf("Semaphore init failed \n");
+        exit(EXIT_FAILURE);
+    }
+
+    struct SauceBowl sauceBowl = { semaphore, lock };
     return sauceBowl;
 }

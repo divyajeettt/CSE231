@@ -14,20 +14,13 @@ void *eat(void *arg)
 {
     int i = *((int *) arg);
 
-    int first, second;
-    if (i%2 == 0) {
-        first = LEFT; second = RIGHT;
-    } else {
-        first = RIGHT; second = LEFT;
-    }
-
-    pthread_mutex_lock(&forks[first].lock);
-    pthread_mutex_lock(&forks[second].lock);
+    pthread_mutex_lock(&forks[FIRST].lock);
+    pthread_mutex_lock(&forks[SECOND].lock);
 
     philosophers[i].eaten++;
 
-    pthread_mutex_unlock(&forks[first].lock);
-    pthread_mutex_unlock(&forks[second].lock);
+    pthread_mutex_unlock(&forks[FIRST].lock);
+    pthread_mutex_unlock(&forks[SECOND].lock);
 }
 
 
