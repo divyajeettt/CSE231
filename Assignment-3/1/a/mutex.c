@@ -6,7 +6,7 @@
 #include "../helper.h"
 
 
-struct Philospher philosophers[N];
+struct Philosopher philosophers[N];
 struct Fork forks[N];
 
 
