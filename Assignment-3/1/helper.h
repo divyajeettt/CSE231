@@ -8,9 +8,10 @@
 #define RIGHT (i+1) % N
 #define FIRST (i%2 == 0) ? LEFT : RIGHT
 #define SECOND (i%2 == 0) ? RIGHT : LEFT
+#define CHOSEN (bowls[0].owner == NULL) ? 0 : 1
 
 
-struct Philospher
+struct Philosopher
 {
     long long eaten;
     pthread_t thread;
@@ -28,13 +29,14 @@ struct SauceBowl
 {
     sem_t semaphore;
     pthread_mutex_t lock;
+    struct Philosopher *owner;
 };
 
 
-struct Philospher makePhilosopher()
+struct Philosopher makePhilosopher()
 {
     pthread_t tid;
-    struct Philospher philosopher = { 0ll, tid };
+    struct Philosopher philosopher = { 0ll, tid };
     return philosopher;
 }
 
@@ -76,6 +78,6 @@ struct SauceBowl makeSauceBowl()
         exit(EXIT_FAILURE);
     }
 
-    struct SauceBowl sauceBowl = { semaphore, lock };
+    struct SauceBowl sauceBowl = { semaphore, lock, NULL };
     return sauceBowl;
 }
