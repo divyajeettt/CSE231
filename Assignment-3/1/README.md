@@ -34,14 +34,6 @@ This ensures that a circular wait (which leads to a deadlock) cannot occur. This
 #define SECOND (i%2 == 0) ? RIGHT : LEFT
 ```
 
-### Solution using mutex locks
-
-We use the POSIX `pthread_t`s to simulate Philosophers, and `pthread_mutex_t` (as provided by the `pthread` library) for forks.
-
-### Solution using semaphores
-
-We use the POSIX `pthread_t`s as Philosophers, and `sem_t` (as provided by the `semaphore` library) for forks.
-
 ## Modified Problem
 
 The modified problem follows a similar set up. However, the philosophers now eat spaghetti with sauce.
@@ -71,10 +63,25 @@ int think(struct Philosopher *philosopher)
 
 This works because each philosopher randomly decides which bowl to use. Even if all philosophers choose the same bowl, as at least one philosopher will be able to eat due to the order of picking up the forks.
 
-### Solution using mutex locks
+##  Implementations/Variants of the Solution
 
-We use the POSIX `pthread_t`s to simulate Philosophers, and `pthread_mutex_t` (as provided by the `pthread` library) for forks and sauce bowls.
+In implementation, the Philosophers are simulated using POSIX threads (`pthread_t` as provided by the `pthread` library).
 
-### Solution using semaphores
+- Variant 1: Using Mutex locks (`pthread_mutex_t`) for Forks and Sauce Bowls
+- Variant 2: Using Semaphores (`sem_t`) for Forks and Sauce Bowls
 
-We use the POSIX `pthread_t`s to simulate Philosophers, and `sem_t` (as provided by the `semaphore` library) for forks and sauce bowls.
+## Run
+
+To compile the programs, use the following command:
+
+```bash
+make 1a 1b
+```
+
+To run a program, use the following command:
+
+```bash
+make run1<variant><method>
+```
+
+where `<variant>` is either `a` or `b` and `<method>` is either `m` or `s`.
