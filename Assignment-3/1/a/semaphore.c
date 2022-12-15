@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
-#include <semaphore.h>
 #include "../helper.h"
 
 
