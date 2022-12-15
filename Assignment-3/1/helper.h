@@ -79,10 +79,11 @@ struct SauceBowl makeSauceBowl()
 }
 
 
-void think(struct Philosopher *philosopher)
+int think(struct Philosopher *philosopher)
 {
     printf("Philosopher %d: THINKING \n", philosopher->id);
     usleep(1e6);
+    return (rand() % 2);
 }
 
 
