@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
-
 #include "../helper.h"
 
 
@@ -11,56 +10,51 @@ struct SauceBowl bowls[2];
 struct Fork forks[N];
 
 
-void *eat(void *arg)
+void *philosophize(void *arg)
 {
     int i = *((int *) arg);
+    while (1)
+    {
+        think(&philosophers[i]);
 
-    pthread_mutex_lock(&bowls[CHOSEN].lock);
-    bowls[CHOSEN].owner = &philosophers[i];
+        int CHOSEN = rand() % 2;
 
-    pthread_mutex_lock(&forks[FIRST].lock);
-    pthread_mutex_lock(&forks[SECOND].lock);
+        pthread_mutex_lock(&bowls[CHOSEN].lock);
+        pthread_mutex_lock(&forks[FIRST].lock);
+        pthread_mutex_lock(&forks[SECOND].lock);
 
-    philosophers[i].eaten++;
+        eat(&philosophers[i]);
 
-    bowls[CHOSEN].owner = NULL;
-    pthread_mutex_unlock(&bowls[CHOSEN].lock);
-
-    pthread_mutex_unlock(&forks[FIRST].lock);
-    pthread_mutex_unlock(&forks[SECOND].lock);
+        pthread_mutex_unlock(&bowls[CHOSEN].lock);
+        pthread_mutex_unlock(&forks[FIRST].lock);
+        pthread_mutex_unlock(&forks[SECOND].lock);
+    }
 }
 
 
 int main()
 {
+    for (int i = 0; i < 2; i++)
+    {
+        bowls[i] = makeSauceBowl();
+    }
+
     for (int i = 0; i < N; i++)
     {
         forks[i] = makeFork();
-        philosophers[i] = makePhilosopher();
-    }
-
-    for (long long j = 0; j < 10000; j++)
-    {
-        for (int i = 0; i < N; i++)
-        {
-            int *arg = (int *) malloc(sizeof(int));
-            *arg = i;
-            pthread_create(&philosophers[i].thread, NULL, eat, (void *) arg);
-        }
-        for (int i = 0; i < N; i++)
-        {
-            pthread_join(philosophers[i].thread, NULL);
-        }
+        philosophers[i] = makePhilosopher(i);
     }
 
     for (int i = 0; i < N; i++)
     {
-        if (pthread_mutex_destroy(&forks[i].lock) != 0)
-        {
-            perror("pthread_mutex_destroy");
-            exit(EXIT_FAILURE);
-        }
-        printf("Philosopher %d: Eaten %lld times \n", i, philosophers[i].eaten);
+        int *arg = (int *) malloc(sizeof(int));
+        *arg = i;
+        pthread_create(&philosophers[i].thread, NULL, philosophize, (void *) arg);
+    }
+
+    for (int i = 0; i < N; i++)
+    {
+        pthread_join(philosophers[i].thread, NULL);
     }
 
     return 0;

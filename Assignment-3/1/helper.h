@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
 #include <semaphore.h>
 
 #define N 5
@@ -8,7 +5,6 @@
 #define RIGHT (i+1) % N
 #define FIRST (i%2 == 0) ? LEFT : RIGHT
 #define SECOND (i%2 == 0) ? RIGHT : LEFT
-#define CHOSEN (bowls[0].owner == NULL) ? 0 : 1
 
 
 struct Philosopher
@@ -30,7 +26,6 @@ struct SauceBowl
 {
     sem_t semaphore;
     pthread_mutex_t lock;
-    struct Philosopher *owner;
 };
 
 
@@ -79,7 +74,7 @@ struct SauceBowl makeSauceBowl()
         exit(EXIT_FAILURE);
     }
 
-    struct SauceBowl sauceBowl = { semaphore, lock, NULL };
+    struct SauceBowl sauceBowl = { semaphore, lock };
     return sauceBowl;
 }
 
