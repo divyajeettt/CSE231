@@ -15,9 +15,7 @@ void *philosophize(void *arg)
     int i = *((int *) arg);
     while (1)
     {
-        think(&philosophers[i]);
-
-        int CHOSEN = rand() % 2;
+        int CHOSEN = think(&philosophers[i]);
 
         sem_wait(&bowls[CHOSEN].semaphore);
         sem_wait(&forks[FIRST].semaphore);

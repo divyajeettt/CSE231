@@ -15,9 +15,7 @@ void *philosophize(void *arg)
     int i = *((int *) arg);
     while (1)
     {
-        think(&philosophers[i]);
-
-        int CHOSEN = rand() % 2;
+        int CHOSEN = think(&philosophers[i]);
 
         pthread_mutex_lock(&bowls[CHOSEN].lock);
         pthread_mutex_lock(&forks[FIRST].lock);
