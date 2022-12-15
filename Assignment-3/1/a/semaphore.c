@@ -10,17 +10,21 @@ struct Philosopher philosophers[N];
 struct Fork forks[N];
 
 
-void *eat(void *arg)
+void *philosophize(void *arg)
 {
     int i = *((int *) arg);
+    while (1)
+    {
+        think(&philosophers[i]);
 
-    sem_wait(&forks[FIRST].semaphore);
-    sem_wait(&forks[SECOND].semaphore);
+        sem_wait(&forks[FIRST].semaphore);
+        sem_wait(&forks[SECOND].semaphore);
 
-    philosophers[i].eaten++;
+        eat(&philosophers[i]);
 
-    sem_post(&forks[FIRST].semaphore);
-    sem_post(&forks[SECOND].semaphore);
+        sem_post(&forks[FIRST].semaphore);
+        sem_post(&forks[SECOND].semaphore);
+    }
 }
 
 
@@ -29,31 +33,19 @@ int main()
     for (int i = 0; i < N; i++)
     {
         forks[i] = makeFork();
-        philosophers[i] = makePhilosopher();
-    }
-
-    for (long long j = 0; j < 10000; j++)
-    {
-        for (int i = 0; i < N; i++)
-        {
-            int *arg = (int *) malloc(sizeof(int));
-            *arg = i;
-            pthread_create(&philosophers[i].thread, NULL, eat, (void *) arg);
-        }
-        for (int i = 0; i < N; i++)
-        {
-            pthread_join(philosophers[i].thread, NULL);
-        }
+        philosophers[i] = makePhilosopher(i);
     }
 
     for (int i = 0; i < N; i++)
     {
-        if (sem_destroy(&forks[i].semaphore) != 0)
-        {
-            perror("sem_destroy");
-            exit(EXIT_FAILURE);
-        }
-        printf("Philosopher %d: Eaten %lld times \n", i, philosophers[i].eaten);
+        int *arg = (int *) malloc(sizeof(int));
+        *arg = i;
+        pthread_create(&philosophers[i].thread, NULL, philosophize, (void *) arg);
+    }
+
+    for (int i = 0; i < N; i++)
+    {
+        pthread_join(philosophers[i].thread, NULL);
     }
 
     return 0;

@@ -13,6 +13,7 @@
 
 struct Philosopher
 {
+    int id;
     long long eaten;
     pthread_t thread;
 };
@@ -33,10 +34,10 @@ struct SauceBowl
 };
 
 
-struct Philosopher makePhilosopher()
+struct Philosopher makePhilosopher(int id)
 {
     pthread_t tid;
-    struct Philosopher philosopher = { 0ll, tid };
+    struct Philosopher philosopher = { id, 0ll, tid };
     return philosopher;
 }
 
@@ -80,4 +81,18 @@ struct SauceBowl makeSauceBowl()
 
     struct SauceBowl sauceBowl = { semaphore, lock, NULL };
     return sauceBowl;
+}
+
+
+void think(struct Philosopher *philosopher)
+{
+    printf("Philosopher %d: THINKING \n", philosopher->id);
+    usleep(1e6);
+}
+
+
+void eat(struct Philosopher *philosopher)
+{
+    printf("Philosopher %d: EATING [total: %lld times] \n", philosopher->id, ++philosopher->eaten);
+    usleep(1e6);
 }
