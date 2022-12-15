@@ -31,13 +31,13 @@ sockets:
 
 # thing:
 
-run1amutex:
+run1am:
 	./1/a/mutex
-run1asemaphore:
+run1as:
 	./1/a/semaphore
-run1bmutex:
+run1bm:
 	./1/b/mutex
-run1bsemaphore:
+run1bs:
 	./1/b/semaphore
 
 run2fifo:
