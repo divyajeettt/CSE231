@@ -40,11 +40,11 @@ This ensures that a circular wait (which leads to a deadlock) cannot occur.
 
 ### Solution using mutex locks
 
-We use the POSIX `pthread_t`s as Philosophers, and the `pthread_mutex_t` (as provided by the `pthread` library) as forks.
+We use the POSIX `pthread_t`s to simulate Philosophers, and `pthread_mutex_t` (as provided by the `pthread` library) for forks.
 
 ### Solution using semaphores
 
-We use the POSIX `pthread_t`s as Philosophers, and the `sem_t` (as provided by the `semaphore` library) as forks.
+We use the POSIX `pthread_t`s as Philosophers, and `sem_t` (as provided by the `semaphore` library) for forks.
 
 ## Modified Problem
 
@@ -69,3 +69,11 @@ int CHOSEN = rand() % 2;
 ```
 
 This works because each philosopher randomly decided which bowl to use. If all 5 philosophers choose the same bowl, as at least one philosopher will be able to eat due to the order of picking up the forks.
+
+### Solution using mutex locks
+
+We use the POSIX `pthread_t`s to simulate Philosophers, and `pthread_mutex_t` (as provided by the `pthread` library) for forks and sauce bowls.
+
+### Solution using semaphores
+
+We use the POSIX `pthread_t`s to simulate Philosophers, and `sem_t` (as provided by the `semaphore` library) for forks and sauce bowls.
