@@ -13,9 +13,7 @@ The challenge is to design a program such that no philosopher starves.
 
 ## Classic Problem
 
-The classic problem follows the set up as described above.
-
-Note that if each philosopher picks up the forks in the same order, then a deadlock can occur. This is because each philosopher may wait for the fork to their left, which is being held by the philosopher to their left; a case of circular wait.
+The classic problem follows the set up as described above. Note that if each philosopher picks up the forks in the same order, then a deadlock can occur. This is because each philosopher may wait for the fork to their left, which is being held by the philosopher to their left; a case of circular wait.
 
 ### Solution
 
