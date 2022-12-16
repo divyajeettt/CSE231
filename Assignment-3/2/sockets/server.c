@@ -40,7 +40,6 @@ int main(int argc, int *argv[])
         exit(EXIT_FAILURE);
     }
 
-
     char **strings = generateStrings();
     clock_t start = clock();
 
@@ -73,10 +72,7 @@ int main(int argc, int *argv[])
             printf("ID ERROR: received ID %d; expected ID %d \n", toInt(buffer), index-1);
             exit(EXIT_FAILURE);
         }
-        else
-        {
-            printf("Highest ID received at client: %d \n", toInt(buffer));
-        }
+        else printf("Highest ID received at client: %d \n", toInt(buffer));
     }
 
     clock_t end = clock();
