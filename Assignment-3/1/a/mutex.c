@@ -15,12 +15,10 @@ void *philosophize(void *arg)
     while (1)
     {
         think(&philosophers[i]);
-
         pthread_mutex_lock(&forks[FIRST].lock);
         pthread_mutex_lock(&forks[SECOND].lock);
 
         eat(&philosophers[i]);
-
         pthread_mutex_unlock(&forks[FIRST].lock);
         pthread_mutex_unlock(&forks[SECOND].lock);
     }
@@ -35,17 +33,8 @@ int main()
         philosophers[i] = makePhilosopher(i);
     }
 
-    for (int i = 0; i < N; i++)
-    {
-        int *arg = (int *) malloc(sizeof(int));
-        *arg = i;
-        pthread_create(&philosophers[i].thread, NULL, philosophize, (void *) arg);
-    }
-
-    for (int i = 0; i < N; i++)
-    {
-        pthread_join(philosophers[i].thread, NULL);
-    }
+    for (int i = 0; i < N; i++) pthread_create(&philosophers[i].thread, NULL, philosophize, (void *) &philosophers[i].id);
+    for (int i = 0; i < N; i++) pthread_join(philosophers[i].thread, NULL);
 
     return 0;
 }

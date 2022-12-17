@@ -15,12 +15,10 @@ void *philosophize(void *arg)
     while (1)
     {
         think(&philosophers[i]);
-
         sem_wait(&forks[FIRST].semaphore);
         sem_wait(&forks[SECOND].semaphore);
 
         eat(&philosophers[i]);
-
         sem_post(&forks[FIRST].semaphore);
         sem_post(&forks[SECOND].semaphore);
     }
@@ -35,17 +33,8 @@ int main()
         philosophers[i] = makePhilosopher(i);
     }
 
-    for (int i = 0; i < N; i++)
-    {
-        int *arg = (int *) malloc(sizeof(int));
-        *arg = i;
-        pthread_create(&philosophers[i].thread, NULL, philosophize, (void *) arg);
-    }
-
-    for (int i = 0; i < N; i++)
-    {
-        pthread_join(philosophers[i].thread, NULL);
-    }
+    for (int i = 0; i < N; i++) pthread_create(&philosophers[i].thread, NULL, philosophize, (void *) &philosophers[i].id);
+    for (int i = 0; i < N; i++) pthread_join(philosophers[i].thread, NULL);
 
     return 0;
 }
