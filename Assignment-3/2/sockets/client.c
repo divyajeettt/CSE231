@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 
         if (countIters%6 == 0)
         {
-            if (write(link, buffer, 2) == -1)
+            if (write(link, buffer, sizeof(buffer)) == -1)
             {
                 perror("[client] couldn't write-back to socket");
                 exit(EXIT_FAILURE);
