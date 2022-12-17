@@ -15,17 +15,24 @@ The only difference between the three sub-problems is the IPC mechanism used to 
 - `*/server.c` corresponds to the process `P1`
 - `*/client.c` corresponds to the process `P2`
 
-## FIFOs
 
-Solutions are in the `fifo` directory.
+## Sockets
+
+Solutions are in the `sockets` directory. The UNIX Domain sockets use `SOCK_STREAM` as the socket type.
 
 ## Shared Memory
 
 Solutions are in the `shm` directory.
 
-## Sockets
+## FIFOs
 
-Solutions are in the `sockets` directory.
+Solutions are in the `fifo` directory. I have made use of two FIFOs, one for each direction of communication. To ensure that the FIFOs don't close prematurely, `P1` makes use of halt commands as follows
+
+```c
+usleep(1e3);
+```
+
+for each message sent.
 
 ## Run
 
