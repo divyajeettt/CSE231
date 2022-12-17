@@ -2,7 +2,8 @@
 #define CHUNK 5
 #define LENGTH 10
 #define SOCKET "./crimge.socket"
-#define FIFO "./crimge-fifo"
+#define FIFO_S2C "./crimge-s2c.fifo"
+#define FIFO_C2S "./crimge-c2s.fifo"
 #define SHM "./crimge-shm"
 
 
