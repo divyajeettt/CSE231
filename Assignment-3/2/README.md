@@ -4,9 +4,9 @@ The sub-problems in this problem require us to set up an IPC between two process
 
 - `P1` should generate an array of 50 random strings, each of a fixed length
 - `P1` should send a collection of 5 strings to `P2` at a time using the selected IPC mechanism, along with the highest ID of the strings
-- `P2` should receive the strings, print them to the terminal
-- `P2` should send back to `P1` the highest ID of the strings it received
-- `P1` should acknowledge the receipt of the highest ID, and continue sending the strings till the array is exhausted
+- `P2` should receive the strings and print them to the terminal
+- `P2` must send back to `P1` the highest ID of the strings it received
+- `P1` must acknowledge the receipt of the highest ID and continue sending the strings till the array is exhausted
 
 The only difference between the three sub-problems is the IPC mechanism used to send the strings. By convention:
 
@@ -61,4 +61,4 @@ To run the programs on two separate terminals, use the following two commands on
 
 where `<variant>` is either `fifo`, `shm`, or `sockets`.
 
-***NOTE**: The client program must be executed **AFTER** the server program.*
+***NOTE**: The client program must be executed **AFTER** the server program, as the server initiates the communication.*
