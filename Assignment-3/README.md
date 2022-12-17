@@ -2,11 +2,39 @@
 
 ## Problem 1
 
-Problem 1 has two sub-problems, each being a version of the famous Dining Philosophers Problem. The solutions to each are in directories `1/a` and `1/b` respectively.
+Problem 1 has two sub-problems, each being a version of the famous Dining Philosophers Problem. The solutions to each are in directories `1/a` and `1/b` respectively. Following is the structure of the directory `./1`:
+
+```bash
+1
+├── a
+│   ├── mutex.c
+│   └── sem.c
+├── b
+│   ├── mutex.c
+│   └── sem.c
+├── helper.h
+└── README.md
+```
 
 ## Problem 2
 
-Problem 2 has three sub-problems that require the implementation of inter-process communication. The solutions to each are in directories `2/fifo`, `2/shm`, and `2/sockets` respectively.
+Problem 2 has three sub-problems that require the implementation of inter-process communication. The solutions to each are in directories `2/fifo`, `2/shm`, and `2/sockets` respectively. Following is the structure of the directory `./2`:
+
+```bash
+2
+├── fifo
+│   ├── client.c
+│   └── server.c
+├── shm
+│   ├── client.c
+│   └── server.c
+├── sockets
+│   ├── client.c
+│   └── server.c
+├── helper.h
+├── run.c
+└── README.md
+```
 
 ## Problem 3
 
