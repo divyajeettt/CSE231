@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     while (countStrings <= N)
     {
         char *buffer = (char *) malloc(LENGTH*sizeof(char));
-        if (read(link, buffer, LENGTH) == -1)
+        if (read(link, buffer, sizeof(buffer)) == -1)
         {
             perror("[client] couldn't read from socket");
             exit(EXIT_FAILURE);
