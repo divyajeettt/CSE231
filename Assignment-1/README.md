@@ -4,7 +4,7 @@
 
 oshell is an interactive [Shell](https://en.wikipedia.org/wiki/Shell_(computing)) created to mimic some functionalities of the Artix [Linux](https://en.wikipedia.org/wiki/Linux) Shell.
 
-*<b>Note:</b> oshell can only run on Linux-based systems (developed on [Artix Linux](https://artixlinux.org/))*
+***Note:** oshell can only run on Linux-based systems (developed on [Artix Linux](https://artixlinux.org/))*
 
 ## Some Key Features
 
@@ -87,7 +87,7 @@ all hail oshell[dvgt@oshell Assignment-1]$ echo
 ABC    XYZ
 ```
 
-*<b>Assumption:</b> The options given to the `echo` command (if any) will ONLY be given as the first argument. All subsequent options will be treated as text literals.*
+***Assumption:** The options given to the `echo` command (if any) will ONLY be given as the first argument. All subsequent options will be treated as text literals.*
 
 #### pwd
 
@@ -145,7 +145,7 @@ rm.c
 .  ..  Assignment-0  Assignment-1  .git  README.md
 ```
 
-*<b>Assumption:</b> The output order of ls is not sorted by default.*
+***Assumption:** The output order of `ls` is not sorted by default.*
 
 #### cat
 
@@ -258,7 +258,7 @@ date is /home/dvgt/CSE231/Assignment-1/bin/date
 mkdir is hashed (/home/dvgt/CSE231/Assignment-1/bin/mkdir)
 ```
 
-*<b>Assumption:</b> Some external commands like `mkdir` and `rm` are displayed as 'hashed' to more accurately "mimic" the Linux Shell's behaviour. In reality, these files are simple executables located in the `./bin` directory.*
+***Assumption:** Some external commands like `mkdir` and `rm` are displayed as 'hashed' to more accurately "mimic" the Linux Shell's behaviour. In reality, these files are simple executables located in the `./bin` directory.*
 
 #### exit
 
@@ -301,7 +301,7 @@ Finally, to start the Shell, execute:
 
 ## References
 
-- [<b>CSE231</b> Lecture Slides: *Dr Sambuddho Chakravarty*](https://drive.google.com/file/d/15927VKp8q1xwLvs28I4lgDyLF0XGcrXk/view)
+- [**CSE231** Lecture Slides: *Dr Sambuddho Chakravarty*](https://drive.google.com/file/d/15927VKp8q1xwLvs28I4lgDyLF0XGcrXk/view)
 - [Manual Page: `fork()`](https://man7.org/linux/man-pages/man2/fork.2.html)
 - [Manual Page: `exec()`](https://man7.org/linux/man-pages/man3/exec.3.html)
 - [Manual Page: `wait()`](https://man7.org/linux/man-pages/man2/waitpid.2.html)
