@@ -41,7 +41,9 @@ int main(int argc, char *argv[])
     }
 
     char **strings = generateStrings();
-    clock_t start = clock();
+
+    struct timespec start, end;
+    clock_gettime(CLOCK_REALTIME, &start);
 
     int index = 0;
     while (index < N)
@@ -75,8 +77,8 @@ int main(int argc, char *argv[])
         else printf("Highest ID received at client: %d \n", toInt(buffer));
     }
 
-    clock_t end = clock();
-    printf("Time taken: %f seconds \n", ((double) (end-start) / CLOCKS_PER_SEC));
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Time taken: %f seconds \n", (end.tv_sec-start.tv_sec) + (end.tv_nsec-start.tv_nsec)/1e9);
 
     if (close(link) == -1)
     {
