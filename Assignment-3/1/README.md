@@ -19,8 +19,8 @@ The classic problem follows the set up as described above. Note that if each phi
 
 One solution is to order the fork-picking "request" of the philosophers. Assign each philosopher an index. If the philosopher's index is:
 
-- EVEN: pick up the forks in the order LEFT-RIGHT
-- ODD: pick up the forks in the order RIGHT-LEFT
+- EVEN: pick up the forks in the order first LEFT, then RIGHT
+- ODD: pick up the forks in the order first RIGHT, then LEFT
 
 This ensures that a circular wait (which leads to a deadlock) cannot occur. This is seen in code in `helper.h` as follows:
 
@@ -30,6 +30,12 @@ This ensures that a circular wait (which leads to a deadlock) cannot occur. This
 #define RIGHT (i+1) % N
 #define FIRST (i%2 == 0) ? LEFT : RIGHT
 #define SECOND (i%2 == 0) ? RIGHT : LEFT
+```
+
+Here, `i` is the index of the philospher, which is:
+
+```c
+int i = *((int *) ((void *) &philosopher->id));
 ```
 
 ## Modified Problem
@@ -43,30 +49,34 @@ The modified problem follows a similar set up. However, the philosophers now eat
 
 ### Solution
 
-One solution is as follows. Assume the (already indexed) philosopher thinks of a binary digit while thinking. Follow:
+One solution is to check which sauce bowl is unoccupied (if any) before trying to use it. Note that the philosophers pick up the forks in the same order as in the classic problem.
 
-- If the digit is 0, use the first sauce bowl
-- If the digit is 1, use the second sauce bowl
-
-Note that the philosophers pick up the forks in the same order as in the classic problem. This is seen in code in `helper.h` as follows:
+This is seen in code in `b/mutex.c` and `b/semaphore.c` as follows:
 
 ```c
-int think(struct Philosopher *philosopher)
+int chooseBowl()
 {
-    printf("Philosopher %d: THINKING \n", philosopher->id);
-    usleep(1e6);
-    return (rand() % 2);
+    if (try_access(&bowls[0].type) == 0) return 0;
+    else {
+        access(&bowls[1].lock);
+        return 1;
+    }
 }
 ```
 
-This works because each philosopher randomly decides which bowl to use. Even if all philosophers choose the same bowl, as at least one philosopher will be able to eat due to the order of picking up the forks.
+Depending on the implementation, the `access` and `try_access` functions can be:
+
+- `access`: `pthread_mutex_lock` or `sem_wait`
+- `try_access`: `pthread_mutex_trylock` or `sem_trywait`
+
+This way, no bowl will remain unoccupied, hence maximizing efficiency. In the worst case, each bowl can have two philosophers waiting to use it.
 
 ##  Implementations/Variants of the Solution
 
-In implementation, the Philosophers are simulated using POSIX threads (`pthread_t` as provided by the `pthread` library).
+In implementation, the Philosophers are simulated using POSIX threads `pthread_t`.
 
-- Variant 1: Using Mutex locks (`pthread_mutex_t`) for Forks and Sauce Bowls
-- Variant 2: Using Semaphores (`sem_t`) for Forks and Sauce Bowls
+- Variant 1: Using Mutex locks `pthread_mutex_t` for Forks and Sauce Bowls
+- Variant 2: Using Semaphores `sem_t` for Forks and Sauce Bowls
 
 ## Run
 
