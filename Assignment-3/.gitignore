@@ -1,13 +1,13 @@
 1/a/mutex
-1/a/semaphore
+1/a/sem
 1/b/mutex
-1/b/semaphore
+1/b/sem
 
 2/run
 2/fifo/client
 2/fifo/server
-2/shared-memory/client
-2/shared-memory/server
+2/shm/client
+2/shm/server
 2/sockets/client
 2/sockets/server
 
