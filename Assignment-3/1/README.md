@@ -11,7 +11,7 @@ The Dining Philosophers Problem is a classic problem in concurrency theory. Foll
 
 The challenge is to design a program such that no philosopher starves.
 
-## Classic Problem
+## (a) Classic Problem
 
 The classic problem follows the set up as described above. Note that if each philosopher picks up the forks in the same order, then a deadlock can occur. This is because each philosopher may wait for the fork to their left, which is being held by the philosopher to their left; a case of circular wait.
 
@@ -38,7 +38,9 @@ Here, `i` is the index of the philospher, which is:
 int i = *((int *) ((void *) &philosopher->id));
 ```
 
-## Modified Problem
+In the two variants of the code, the philosophers are simulated using POSIX threads `pthread_t`. `a/mutex.c` and `a/sem` use mutex locks `pthread_mutex_t` and semaphores `sem_t` for the forks respectively.
+
+## (b) Modified Problem
 
 The modified problem follows a similar set up. However, the philosophers now eat spaghetti with sauce.
 
@@ -51,7 +53,7 @@ The modified problem follows a similar set up. However, the philosophers now eat
 
 One solution is to check which sauce bowl is unoccupied (if any) before trying to use it. Note that the philosophers pick up the forks in the same order as in the classic problem.
 
-This is seen in code in `b/mutex.c` and `b/semaphore.c` as follows:
+This is seen in code in `b/mutex.c` and `b/sem.c` as follows:
 
 ```c
 int chooseBowl()
@@ -71,12 +73,7 @@ Depending on the implementation, the `access` and `try_access` functions can be:
 
 This way, no bowl will remain unoccupied, hence maximizing efficiency. In the worst case, each bowl can have two philosophers waiting to use it.
 
-##  Implementations/Variants of the Solution
-
-In implementation, the Philosophers are simulated using POSIX threads `pthread_t`.
-
-- Variant 1: Using Mutex locks `pthread_mutex_t` for Forks and Sauce Bowls
-- Variant 2: Using Semaphores `sem_t` for Forks and Sauce Bowls
+In the two variants of the code, the philosophers are simulated using POSIX threads `pthread_t`. `a/mutex.c` and `a/sem` use mutex locks `pthread_mutex_t` and semaphores `sem_t` for the forks and sauce bowls respectively.
 
 ## Run
 
