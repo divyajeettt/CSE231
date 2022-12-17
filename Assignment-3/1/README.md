@@ -80,7 +80,7 @@ In the two variants of the code, the philosophers are simulated using POSIX thre
 To compile the programs, use the following command:
 
 ```bash
-make 1a 1b
+make 1<variant>
 ```
 
 To run a program, use the following command:
