@@ -1,8 +1,6 @@
 # Inter-process Communication
 
-The sub-problems in this problem require us to set up an IPC between two processes, `P1` and `P2`, using three different mechanisms.
-
-The processes should perform the following tasks without failure:
+The sub-problems in this problem require us to set up an IPC between two processes, `P1` and `P2`, using three different mechanisms. The processes should perform the following tasks without failure:
 
 - `P1` should generate an array of 50 random strings, each of a fixed length
 - `P1` should send a collection of 5 strings to `P2` at a time using the selected IPC mechanism, along with the highest ID of the strings
