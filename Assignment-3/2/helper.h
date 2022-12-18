@@ -5,6 +5,7 @@
 #define FIFO_S2C "./crimge-s2c.fifo"
 #define FIFO_C2S "./crimge-c2s.fifo"
 #define SHM "./crimge-shm"
+#define SHM_SIZE LENGTH * (CHUNK+2) * sizeof(char)
 
 
 char **generateStrings()
@@ -13,10 +14,7 @@ char **generateStrings()
     for (int i = 0; i < N; i++)
     {
         strings[i] = (char *) malloc(LENGTH*sizeof(char));
-        for (int j = 0; j < LENGTH; j++)
-        {
-            strings[i][j] = 'a' + rand() % 26;
-        }
+        for (int j = 0; j < LENGTH; j++) strings[i][j] = 'a' + rand() % 26;
     }
     return strings;
 }
@@ -44,4 +42,18 @@ char *toString(int num)
     }
 
     return buffer;
+}
+
+
+char **parseMessage(char *buffer)
+{
+    int index = 0;
+    char **strings = (char **) malloc((CHUNK+1)*sizeof(char *));
+
+    for (int i=0; i < CHUNK+1; i++) {
+        strings[i] = (char *) malloc(LENGTH*sizeof(char));
+        for (int j=0; j < LENGTH; j++) strings[i][j] = buffer[index++];
+    }
+
+    return strings;
 }
