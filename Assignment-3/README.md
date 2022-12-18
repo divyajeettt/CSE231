@@ -69,6 +69,10 @@ Problem 2 has three sub-problems that require the implementation of inter-proces
 - [Manual Page: `mkfifo()`](https://man7.org/linux/man-pages/man3/mkfifo.3.html)
 
 #### shm
-- []()
+- [Manual Page: `ftok()`](https://man7.org/linux/man-pages/man3/ftok.3.html)
+- [Manual Page: `shmget()`](https://man7.org/linux/man-pages/man2/shmget.2.html)
+- [Manual Page: `shmat()`](https://man7.org/linux/man-pages/man3/shmat.3p.html)
+- [Manual Page: `shmdt()`](https://man7.org/linux/man-pages/man3/shmdt.3p.html)
+- [Manual Page: `shmctl()`](https://man7.org/linux/man-pages/man2/shmctl.2.html)
 
 ### Problem 3
