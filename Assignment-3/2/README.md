@@ -20,11 +20,23 @@ Solutions are in the `sockets` directory. The UNIX Domain sockets use `SOCK_STRE
 
 ## Shared Memory
 
-Solutions are in the `shm` directory.
+Solutions are in the `shm` directory. To ensure that the `P2` writes the highest ID it received into the memory before `P1` reads it, `P1` busy waits as follows
+
+```c
+while (strlen(buffer) != LENGTH);
+```
+
+while `P2` busy waits as follows to ensure that the next batch of strings is written into the memory before it reads them again
+
+```c
+while (strlen(shm) == LENGTH);
+```
+
+Note
 
 ## FIFOs
 
-Solutions are in the `fifo` directory. I have made use of two FIFOs, one for each direction of communication. To ensure that the FIFOs don't close prematurely, `P1` makes use of halt commands as follows
+Solutions are in the `fifo` directory. The solutin uses two FIFOs, one for each direction of communication. To ensure that `P1` doesn't close the FIFOs prematurely, it makes use of halt commands as follows
 
 ```c
 usleep(1e3);
