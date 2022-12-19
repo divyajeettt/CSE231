@@ -2,17 +2,16 @@ all: make1 make2 make3
 
 make1: 1a 1b
 make2: fifo shm sockets
-make3: thing
+make3: module
 
 clean: clean1 clean2 clean3
 
 1a:
-	gcc -pthread -o 1/a/mutex 1/a/mutex.c
+	gcc -pthread -o 1/a/order 1/a/order.c
 	gcc -pthread -o 1/a/sem 1/a/sem.c
 
 1b:
-	gcc -pthread -o 1/b/mutex 1/b/mutex.c
-	gcc -pthread -o 1/b/sem 1/b/sem.c
+	gcc -pthread -o 1/b/main 1/b/main.c
 
 fifo:
 	gcc -o 2/run 2/run.c
@@ -29,16 +28,15 @@ sockets:
 	gcc -o 2/sockets/client 2/sockets/client.c
 	gcc -o 2/sockets/server 2/sockets/server.c
 
-# thing:
+module:
+	gcc -o 3/module 3/module.c -I /lib/modules/5.19.8/build/include
 
-run1am:
-	./1/a/mutex
-run1as:
+run1order:
+	./1/a/order
+run1sem:
 	./1/a/sem
-run1bm:
-	./1/b/mutex
-run1bs:
-	./1/b/sem
+run1mod:
+	./1/b/main
 
 run2fifo:
 	./2/run fifo
@@ -48,8 +46,8 @@ run2sockets:
 	./2/run sockets
 
 clean1:
-	rm -f 1/a/mutex 1/a/sem
-	rm -f 1/b/mutex 1/b/sem
+	rm -f 1/a/order 1/a/sem
+	rm -f 1/b/main
 
 clean2:
 	rm -f 2/run

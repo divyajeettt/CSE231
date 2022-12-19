@@ -1,7 +1,6 @@
-1/a/mutex
+1/a/order
 1/a/sem
-1/b/mutex
-1/b/sem
+1/b/main
 
 2/run
 2/fifo/client
