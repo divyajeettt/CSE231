@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     key_t key = ftok(SHM, 1);
 
     int shmid;
-    if ((shmid = shmget(key, SHM_SIZE, 0666|IPC_CREAT)) == -1)
+    if ((shmid = shmget(key, BATCH_SIZE, 0666|IPC_CREAT)) == -1)
     {
         perror("[server] couldn't access shared memory");
         exit(EXIT_FAILURE);
@@ -27,24 +27,44 @@ int main(int argc, char *argv[])
     int index = 0;
     while (index < N)
     {
-        char *batch = (char *) malloc((LENGTH+1)*CHUNK*sizeof(char));
-        for (int i=0; i < CHUNK; i++) strcat(batch, strings[index++]);
-        strcat(batch, toString(index-1));
+        char *batch = makeBatch(strings, index);
 
-        char *shm = (char *) shmat(shmid, NULL, 0);
+        char *shm;
+        if ((shm = (char *) shmat(shmid, NULL, 0)) == ((void *) -1))
+        {
+            perror("[server] couldn't attach to O_WRONLY shared memory");
+            exit(EXIT_FAILURE);
+        }
         strcpy(shm, batch);
-        shmdt(shm);
 
-        char *buffer = (char *) shmat(shmid, NULL, 0);
-        while (strlen(buffer) != LENGTH);
+        if (shmdt(shm) == -1)
+        {
+            perror("[server] couldn't detach from O_WRONLY shared memory");
+            exit(EXIT_FAILURE);
+        }
 
-        if (toInt(buffer) != index-1)
+        char *buffer;
+        if ((buffer = (char *) shmat(shmid, NULL, 0)) == ((void *) -1))
+        {
+            perror("[server] couldn't attach to O_RDONLY shared memory");
+            exit(EXIT_FAILURE);
+        }
+        while (strcmp(buffer, batch) == 0);
+
+        if (toInt(buffer) != index+4)
         {
             printf("ID ERROR: received ID %d; expected ID %d \n", toInt(buffer), index-1);
             exit(EXIT_FAILURE);
         }
         else printf("Highest ID received at client: %d \n", toInt(buffer));
-        shmdt(buffer);
+
+        if (shmdt(buffer) == -1)
+        {
+            perror("[server] couldn't detach from O_RDONLY shared memory");
+            exit(EXIT_FAILURE);
+        }
+
+        index += 5;
     }
 
     clock_gettime(CLOCK_REALTIME, &end);
