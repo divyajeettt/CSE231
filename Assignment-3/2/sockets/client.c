@@ -28,28 +28,30 @@ int main(int argc, char *argv[])
     }
 
     int countStrings = 0;
-    int countIters = 0;
-    while (countStrings <= N)
+    while (countStrings < N)
     {
-        char *buffer = (char *) malloc(LENGTH*sizeof(char));
-        if (read(link, buffer, sizeof(buffer)+2) == -1)
+        char *buffer = (char *) malloc(BATCH_SIZE);
+        if (read(link, buffer, BATCH_SIZE) == -1)
         {
             perror("[client] couldn't read from socket");
             exit(EXIT_FAILURE);
         }
-        countIters++;
 
-        if (countIters%6 == 0)
+        char **strings = splitBatch(buffer);
+        char **indexed;
+        for (int i=0; i < CHUNK; i++)
         {
-            if (write(link, buffer, sizeof(buffer)+1) == -1)
-            {
-                perror("[client] couldn't write-back to socket");
-                exit(EXIT_FAILURE);
-            }
-            if (countStrings != N) printf("\n");
+            indexed = splitIndex(strings[i]);
+            printf("%d: %s\n", toInt(indexed[0]), indexed[1]);
+            countStrings++;
         }
-        else if (countStrings == N) break;
-        else printf("%d: %s \n", countStrings++, buffer);
+
+        if (write(link, indexed[0], 2*sizeof(char)) == -1)
+        {
+            perror("[client] couldn't write-back to socket");
+            exit(EXIT_FAILURE);
+        }
+        else printf("\n");
     }
 
     if (close(link) == -1)

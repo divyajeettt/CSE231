@@ -48,33 +48,27 @@ int main(int argc, char *argv[])
     int index = 0;
     while (index < N)
     {
-        for (int i=0; i < CHUNK; i++)
+        char *batch = makeBatch(strings, index);
+        if (write(link, batch, BATCH_SIZE) == -1)
         {
-            if (write(link, strings[index++], LENGTH+1) == -1)
-            {
-                perror("[server] couldn't write to socket");
-                exit(EXIT_FAILURE);
-            }
-        }
-
-        if (write(link, toString(index-1), sizeof(int)+1) == -1)
-        {
-            perror("[server] couldn't write end-index to socket");
+            perror("[server] couldn't write to socket");
             exit(EXIT_FAILURE);
         }
 
-        char *buffer = (char *) malloc(LENGTH*sizeof(char));
-        if (read(link, buffer, sizeof(buffer)) == -1)
+        char *buffer = (char *) malloc(2*sizeof(char));
+        if (read(link, buffer, 2*sizeof(char)) == -1)
         {
             perror("[server] couldn't read-back from socket");
             exit(EXIT_FAILURE);
         }
-        else if (toInt(buffer) != index-1)
+        else if (toInt(buffer) != index+4)
         {
             printf("ID ERROR: received ID %d; expected ID %d \n", toInt(buffer), index-1);
             exit(EXIT_FAILURE);
         }
         else printf("Highest ID received at client: %d \n", toInt(buffer));
+
+        index += 5;
     }
 
     clock_gettime(CLOCK_REALTIME, &end);
