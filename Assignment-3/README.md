@@ -7,11 +7,10 @@ Problem 1 has two sub-problems, each being a version of the famous Dining Philos
 ```bash
 1
 ├── a
-│   ├── mutex.c
+│   ├── order.c
 │   └── sem.c
 ├── b
-│   ├── mutex.c
-│   └── sem.c
+│   └── main.c
 ├── helper.h
 └── README.md
 ```
@@ -44,13 +43,10 @@ Problem 2 has three sub-problems that require the implementation of inter-proces
 
 #### a
 
-- [Manual Page: `pthread_mutex_lock()`](https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html)
-- [Manual Page: `pthread_mutex_unlock()`](https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html)
 - [Manual Page: `sem_wait()`](https://man7.org/linux/man-pages/man3/sem_timedwait.3.html)
 - [Manual Page: `sem_post()`](https://man7.org/linux/man-pages/man3/sem_post.3.html)
 
 #### b
-- [Manual Page: `pthread_mutex_trylock()`](https://man7.org/linux/man-pages/man3/pthread_mutex_lock.3p.html)
 - [Manual Page: `sem_trywait()`](https://man7.org/linux/man-pages/man3/sem_timedwait.3.html)
 
 ### Problem 2
