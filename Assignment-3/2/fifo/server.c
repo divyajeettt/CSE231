@@ -23,48 +23,37 @@ int main(int argc, char *argv[])
     int index = 0;
     while (index < N)
     {
+        char *batch = makeBatch(strings, index);
         if ((linkWriter = open(FIFO_S2C, O_WRONLY)) == -1)
         {
-            perror("[server] fifo (write-only) opening failure");
+            perror("[server] FIFO_S2C opening failure");
             exit(EXIT_FAILURE);
         }
-
-        for (int i=0; i < CHUNK; i++)
+        if (write(linkWriter, batch, BATCH_SIZE) == -1)
         {
-            if (write(linkWriter, strings[index++], LENGTH) == -1)
-            {
-                perror("[server] couldn't write to fifo (write-only)");
-                exit(EXIT_FAILURE);
-            }
-            usleep(1e3);
-        }
-
-        if (write(linkWriter, toString(index-1), sizeof(int)) == -1)
-        {
-            perror("[server] couldn't write end-index to fifo (write-only)");
+            perror("[server] couldn't write to FIFO_S2C");
             exit(EXIT_FAILURE);
         }
-        usleep(1e3);
 
         if (close(linkWriter) == -1)
         {
-            perror("[server] couldn't close fifo (write-only)");
+            perror("[server] couldn't close FIFO_S2C");
             exit(EXIT_FAILURE);
         }
 
         if ((linkReader = open(FIFO_C2S, O_RDONLY)) == -1)
         {
-            perror("[server] fifo (read-only) opening failure");
+            perror("[server] FIFO_C2S opening failure");
             exit(EXIT_FAILURE);
         }
 
-        char *buffer = (char *) malloc(LENGTH*sizeof(char));
-        if (read(linkReader, buffer, sizeof(buffer)) == -1)
+        char *buffer = (char *) malloc(2*sizeof(char));
+        if (read(linkReader, buffer, 2*sizeof(char)) == -1)
         {
-            perror("[server] couldn't read-back from fifo (read-only)");
+            perror("[server] couldn't read-back from FIFO_C2S");
             exit(EXIT_FAILURE);
         }
-        else if (toInt(buffer) != index-1)
+        else if (toInt(buffer) != index+4)
         {
             printf("ID ERROR: received ID %d; expected ID %d \n", toInt(buffer), index-1);
             exit(EXIT_FAILURE);
@@ -73,23 +62,19 @@ int main(int argc, char *argv[])
 
         if (close(linkReader) == -1)
         {
-            perror("[server] couldn't close fifo (read-only)");
+            perror("[server] couldn't close FIFO_C2S");
             exit(EXIT_FAILURE);
         }
+
+        index += 5;
     }
 
     clock_gettime(CLOCK_REALTIME, &end);
     printf("Time taken: %f seconds \n", (end.tv_sec-start.tv_sec) + (end.tv_nsec-start.tv_nsec)/1e9);
 
-    if (unlink(FIFO_C2S) == -1)
-    {
-        perror("[server] couldn't unlink fifo (read-only)");
-        exit(EXIT_FAILURE);
-    }
-
     if (unlink(FIFO_S2C) == -1)
     {
-        perror("[server] couldn't unlink fifo (write-only)");
+        perror("[server] couldn't unlink FIFO_S2C");
         exit(EXIT_FAILURE);
     }
 
