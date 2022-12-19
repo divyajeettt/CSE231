@@ -15,12 +15,26 @@ The challenge is to design a program such that no philosopher starves.
 
 The classic problem follows the set up as described above. Note that if each philosopher picks up the forks in the same order, then a deadlock can occur. This is because each philosopher may wait for the fork to their left, which is being held by the philosopher to their left; a case of circular wait.
 
-### Solution
+### Solution 1 (Strict Alternation of Resource Requests)
 
-One solution is to order the fork-picking "request" of the philosophers. Assign each philosopher an index. If the philosopher's index is:
+One solution is to enforce a strict alternation of resource requests. This ensures that only one philosopher can gain access to resources and eat at a time.
 
-- EVEN: pick up the forks in the order first LEFT, then RIGHT
-- ODD: pick up the forks in the order first RIGHT, then LEFT
+A queue of requests is maintained during the program runtime. A philosopher who wishes to eat adds their request to the queue and waits for their turn. A philosopher who has eaten removes their request from the queue.
+
+This prevents a deadlock because no matter what order the requests are in, only one philosopher will be able to eat at a time. This is achieved as a philosopher busy waits for their turn. This is seen in code in `a/order.c` as follows
+
+```c
+while (requests.head != &request);
+```
+
+This approach is not as efficient, because only one philosopher will be able to eat at a time. There is also a lot of overhead involved in alternation. This method is as good as using a [turn variable](https://www.gatevidyalay.com/tag/turn-variable-in-os/) that alternated between 0, 1, 2, ..., N-1.
+
+### Solution 2 (Utilizing Semaphores)
+
+Another solution is to order the way in which philosophers pick up their forks. Assign each philosopher an index. If the philosopher's index is:
+
+- **EVEN**: pick up the forks in the order first LEFT, then RIGHT
+- **ODD**: pick up the forks in the order first RIGHT, then LEFT
 
 This ensures that a circular wait (which leads to a deadlock) cannot occur. This is seen in code in `helper.h` as follows:
 
@@ -38,7 +52,7 @@ Here, `i` is the index of the philospher, which is:
 int i = *((int *) ((void *) &philosopher->id));
 ```
 
-In the two variants of the code, the philosophers are simulated using POSIX threads `pthread_t`. `a/mutex.c` and `a/sem` use mutex locks `pthread_mutex_t` and semaphores `sem_t` for the forks respectively.
+Here, forks are simulated using semaphores `sem_t`. In both variants of the code, the philosophers are simulated using POSIX threads `pthread_t`.
 
 ## (b) Modified Problem
 
@@ -53,40 +67,36 @@ The modified problem follows a similar set up. However, the philosophers now eat
 
 One solution is to check which sauce bowl is unoccupied (if any) before trying to use it. Note that the philosophers pick up the forks in the same order as in the classic problem.
 
-This is seen in code in `b/mutex.c` and `b/sem.c` as follows:
+This is seen in code in `b/main.c` as follows:
 
 ```c
 int chooseBowl()
 {
-    if (try_access(&bowls[0].type) == 0) return 0;
+    if (sem_trywait(&bowls[0].semaphore) == 0) return 0;
     else {
-        access(&bowls[1].lock);
+        sem_wait(&bowls[1].semaphore);
         return 1;
     }
 }
 ```
 
-Depending on the implementation, the `access` and `try_access` functions can be:
-
-- `access`: `pthread_mutex_lock` or `sem_wait`
-- `try_access`: `pthread_mutex_trylock` or `sem_trywait`
-
 This way, no bowl will remain unoccupied, hence maximizing efficiency. In the worst case, each bowl can have two philosophers waiting to use it.
 
-In the two variants of the code, the philosophers are simulated using POSIX threads `pthread_t`. `a/mutex.c` and `a/sem` use mutex locks `pthread_mutex_t` and semaphores `sem_t` for the forks and sauce bowls respectively.
+Here, the sauce bowls are simulated using semaphores `sem_t`.
+
 
 ## Run
 
 To compile the programs, use the following command:
 
 ```bash
-make 1<variant>
+make make1
 ```
 
 To run a program, use the following command:
 
 ```bash
-make run1<variant><method>
+make run1<variant>
 ```
 
-where `<variant>` is either `a` or `b` and `<method>` is either `m` or `s`.
+and `<variant>` is either `order`, `sem`, or `mod`, to run `a/order`, `a/sem`, or `b/main` respectively.
