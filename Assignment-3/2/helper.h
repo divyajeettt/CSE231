@@ -1,3 +1,5 @@
+#include <time.h>
+
 #define N 50
 #define CHUNK 5
 #define LENGTH 10
@@ -11,6 +13,8 @@
 
 char **generateStrings()
 {
+    time_t currTime;
+    srand((unsigned) time(&currTime));
     char **strings = (char **) malloc(N*sizeof(char *));
     for (int i = 0; i < N; i++)
     {
