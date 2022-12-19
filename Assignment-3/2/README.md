@@ -3,10 +3,10 @@
 The sub-problems in this problem require us to set up an IPC between two processes, `P1` and `P2`, using three different mechanisms. The processes should perform the following tasks without failure:
 
 - `P1` should generate an array of 50 random strings, each of a fixed length
-- `P1` should send a collection of 5 strings to `P2` at a time using the selected IPC mechanism, along with the highest ID of the strings
-- `P2` should receive the strings and print them to the terminal
+- `P1` should send a packet of 5 strings to `P2` at a time using the selected IPC mechanism, along with the IDs of the strings
+- `P2` should receive the packet, parse it, and print the IDs and strings to the terminal
 - `P2` must send back to `P1` the highest ID of the strings it received
-- `P1` must acknowledge the receipt of the highest ID and continue sending the strings till the array is exhausted
+- `P1` must acknowledge the receipt of the highest ID and continue sending packets till the array is exhausted
 
 The only difference between the three sub-problems is the IPC mechanism used to send the strings. By convention:
 
@@ -16,33 +16,29 @@ The only difference between the three sub-problems is the IPC mechanism used to 
 
 ## Sockets
 
-Solutions are in the `sockets` directory. The UNIX Domain sockets use `SOCK_STREAM` as the socket type.
+Solutions are in the `sockets` directory. The UNIX Domain sockets use `SOCK_SEQPACKET` as the socket type.
 
 ## Shared Memory
 
 Solutions are in the `shm` directory. To ensure that the `P2` writes the highest ID it received into the memory before `P1` reads it, `P1` busy waits as follows
 
 ```c
-while (strlen(buffer) != LENGTH);
+while (strcmp(buffer, batch) == 0);
+// This loop waits till the shared-memory contains the batch P1 wrote into it
 ```
 
 while `P2` busy waits as follows to ensure that the next batch of strings is written into the memory before it reads them again
 
 ```c
-while (strlen(shm) == LENGTH);
+if (countStrings != N) while (strcmp(shm, indexed[0]) == 0);
+// This loop waits till the shared-memory contains the highest ID P2 wrote into it
 ```
 
 Note
 
 ## FIFOs
 
-Solutions are in the `fifo` directory. The solutin uses two FIFOs, one for each direction of communication. To ensure that `P1` doesn't close the FIFOs prematurely, it makes use of halt commands as follows
-
-```c
-usleep(1e3);
-```
-
-for each message sent.
+Solutions are in the `fifo` directory. The solution uses two FIFOs, one for each direction of communication.
 
 ## Run
 
