@@ -6,34 +6,34 @@
 
 
 struct Philosopher philosophers[N];
-struct Fork forks[N];
+struct Queue requests;
 
 
 void *philosophize(void *arg)
 {
     int i = *((int *) arg);
+    struct Request request = makeRequest(&philosophers[i]);
     while (1)
     {
+        enqueue(&requests, &request);
         think(&philosophers[i]);
-        pthread_mutex_lock(&forks[FIRST].lock);
-        pthread_mutex_lock(&forks[SECOND].lock);
 
+        while (requests.head != &request);
         eat(&philosophers[i]);
-        pthread_mutex_unlock(&forks[FIRST].lock);
-        pthread_mutex_unlock(&forks[SECOND].lock);
+        dequeue(&requests);
     }
 }
 
 
 int main()
 {
+    requests = makeQueue();
     for (int i = 0; i < N; i++)
     {
-        forks[i] = makeFork();
         philosophers[i] = makePhilosopher(i);
+        pthread_create(&philosophers[i].thread, NULL, philosophize, (void *) &philosophers[i].id);
     }
 
-    for (int i = 0; i < N; i++) pthread_create(&philosophers[i].thread, NULL, philosophize, (void *) &philosophers[i].id);
     for (int i = 0; i < N; i++) pthread_join(philosophers[i].thread, NULL);
 
     return 0;

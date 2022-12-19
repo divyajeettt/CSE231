@@ -7,6 +7,19 @@
 #define SECOND (i%2 == 0) ? RIGHT : LEFT
 
 
+struct Request
+{
+    struct Philosopher *philosopher;
+    struct Request *next;
+};
+
+struct Queue
+{
+    int length;
+    struct Request *head;
+    struct Request *tail;
+};
+
 struct Philosopher
 {
     int id;
@@ -14,19 +27,39 @@ struct Philosopher
     pthread_t thread;
 };
 
+struct Fork { sem_t semaphore; };
 
-struct Fork
+struct SauceBowl { sem_t semaphore; };
+
+
+struct Request makeRequest(struct Philosopher *philosopher)
 {
-    sem_t semaphore;
-    pthread_mutex_t lock;
-};
+    struct Request request = { philosopher, NULL };
+    return request;
+}
 
 
-struct SauceBowl
+struct Queue makeQueue()
 {
-    sem_t semaphore;
-    pthread_mutex_t lock;
-};
+    struct Queue queue = { 0, NULL, NULL };
+    return queue;
+}
+
+
+void enqueue(struct Queue *queue, struct Request *request)
+{
+    if (queue->length == 0) queue->head = request;
+    else queue->tail->next = request;
+    queue->tail = request;
+    queue->length++;
+}
+
+
+ void dequeue(struct Queue *queue)
+{
+    queue->head = queue->head->next;
+    queue->length--;
+}
 
 
 struct Philosopher makePhilosopher(int id)
@@ -39,42 +72,28 @@ struct Philosopher makePhilosopher(int id)
 
 struct Fork makeFork()
 {
-    pthread_mutex_t lock;
-    if (pthread_mutex_init(&lock, NULL) != 0)
-    {
-        printf("Mutex init failed \n");
-        exit(EXIT_FAILURE);
-    }
-
     sem_t semaphore;
     if (sem_init(&semaphore, 0, 1) != 0)
     {
-        printf("Semaphore init failed \n");
+        perror("makeFork() sem_init");
         exit(EXIT_FAILURE);
     }
 
-    struct Fork fork = { semaphore, lock };
+    struct Fork fork = { semaphore };
     return fork;
 }
 
 
 struct SauceBowl makeSauceBowl()
 {
-    pthread_mutex_t lock;
-    if (pthread_mutex_init(&lock, NULL) != 0)
-    {
-        printf("Mutex init failed \n");
-        exit(EXIT_FAILURE);
-    }
-
     sem_t semaphore;
     if (sem_init(&semaphore, 0, 1) != 0)
     {
-        printf("Semaphore init failed \n");
+        perror("makeSauceBowl() sem_init");
         exit(EXIT_FAILURE);
     }
 
-    struct SauceBowl sauceBowl = { semaphore, lock };
+    struct SauceBowl sauceBowl = { semaphore };
     return sauceBowl;
 }
 
