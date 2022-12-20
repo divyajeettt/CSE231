@@ -65,7 +65,7 @@ The modified problem follows a similar set up. However, the philosophers now eat
 
 ### Solution 1 (Strict Alternation of Resource Requests)
 
-This is the exact same solution as (a) 1 above. In this case as well, the exact same solution works because only one philosopher can eat at a time. This means that one bowl will always remain free, while only two forks will be occupied at a time.
+This is the exact same solution as (a) 1 above. In this case as well, the exact same solution works because only one philosopher can eat at a time. The philosophers choose which bowl to take sauce from randomly (since both are available to them at once). This also means that one bowl will always remain free, while only two forks will be occupied at a time.
 
 ### Solution 2 (Utilizing Semaphores)
 
