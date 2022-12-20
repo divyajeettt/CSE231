@@ -24,7 +24,7 @@ void sys_read_task_struct(void)
 
 static int __init sys_read_task_struct_init(void)
 {
-    printk(KERN_ALERT "init invoked [run: param_pid = %d] \n", param_pid);
+    printk(KERN_INFO "init invoked [run: param_pid = %d] \n", param_pid);
     sys_read_task_struct();
     return 0;
 }
@@ -32,7 +32,7 @@ static int __init sys_read_task_struct_init(void)
 
 static void __exit sys_read_task_struct_exit(void)
 {
-    printk(KERN_ALERT "exit invoked \n");
+    printk(KERN_INFO "exit invoked \n");
 }
 
 
