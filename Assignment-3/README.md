@@ -10,7 +10,8 @@ Problem 1 has two sub-problems, each being a version of the famous Dining Philos
 │   ├── order.c
 │   └── sem.c
 ├── b
-│   └── main.c
+│   ├── order.c
+│   └── sem.c
 ├── helper.h
 └── README.md
 ```
@@ -36,6 +37,15 @@ Problem 2 has three sub-problems that require the implementation of inter-proces
 ```
 
 ## Problem 3
+
+Problem 3 required us to write a system call as a kernel module meeting certain requirements. The solution is in the directory `./3`. Following is the structure of the directory `./3`:
+
+```bash
+3
+├── main.c
+├── Makefile
+└── README.md
+```
 
 ## Resources and References
 
@@ -72,3 +82,6 @@ Problem 2 has three sub-problems that require the implementation of inter-proces
 - [Manual Page: `shmctl()`](https://man7.org/linux/man-pages/man2/shmctl.2.html)
 
 ### Problem 3
+
+- [Linux Kernel Module Programming (YouTube)](https://youtu.be/4z-nSTxUAIA)
+- [Linux Kernel Module Programming (GeeksForGeeks)](https://www.geeksforgeeks.org/linux-kernel-module-programming-hello-world-program/)
