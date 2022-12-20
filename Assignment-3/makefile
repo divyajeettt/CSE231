@@ -29,7 +29,7 @@ sockets:
 	gcc -o 2/sockets/server 2/sockets/server.c
 
 module:
-	gcc -o 3/module 3/module.c -I /lib/modules/5.19.8/build/include
+	cd 3 && make
 
 run1order:
 	./1/a/order
@@ -57,3 +57,4 @@ clean2:
 
 clean3:
 	rm -f 3/main
+	cd 3 && make clean
