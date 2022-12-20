@@ -11,7 +11,8 @@ clean: clean1 clean2 clean3
 	gcc -pthread -o 1/a/sem 1/a/sem.c
 
 1b:
-	gcc -pthread -o 1/b/main 1/b/main.c
+	gcc -pthread -o 1/b/order 1/b/order.c
+	gcc -pthread -o 1/b/sem 1/b/sem.c
 
 fifo:
 	gcc -o 2/run 2/run.c
@@ -31,12 +32,14 @@ sockets:
 module:
 	cd 3 && make
 
-run1order:
+run1ao:
 	./1/a/order
-run1sem:
+run1as:
 	./1/a/sem
-run1mod:
-	./1/b/main
+run1bo:
+	./1/b/order
+run1bs:
+	./1/b/sem
 
 run2fifo:
 	./2/run fifo
@@ -47,7 +50,7 @@ run2sockets:
 
 clean1:
 	rm -f 1/a/order 1/a/sem
-	rm -f 1/b/main
+	rm -f 1/b/order 1/b/sem
 
 clean2:
 	rm -f 2/run
