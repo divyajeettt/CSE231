@@ -34,13 +34,13 @@ MODULE_DESCRIPTION("Kernel Module implemented for CSE231 Assignment-3");
 
 ## Run
 
-Note that problem 3 has a custom `Makefile` to compile the module. To compile the module, run the following command:
+Note that problem 3 has a custom `Makefile` to compile the module. To compile the module, run the following command in this `./` directory:
 
 ```bash
 make
 ```
 
-The module can also be compiled using `makefile` in the parent directory by running:
+The module can also be compiled using `makefile` in the parent directory `./..` by running:
 
 ```bash
 make module
