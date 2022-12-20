@@ -27,9 +27,15 @@ struct Philosopher
     pthread_t thread;
 };
 
-struct Fork { sem_t semaphore; };
+struct Fork {
+    int id;
+    sem_t semaphore;
+};
 
-struct SauceBowl { sem_t semaphore; };
+struct SauceBowl {
+    int id;
+    sem_t semaphore;
+};
 
 
 struct Request makeRequest(struct Philosopher *philosopher)
@@ -70,7 +76,7 @@ struct Philosopher makePhilosopher(int id)
 }
 
 
-struct Fork makeFork()
+struct Fork makeFork(int id)
 {
     sem_t semaphore;
     if (sem_init(&semaphore, 0, 1) != 0)
@@ -79,12 +85,12 @@ struct Fork makeFork()
         exit(EXIT_FAILURE);
     }
 
-    struct Fork fork = { semaphore };
+    struct Fork fork = { id, semaphore };
     return fork;
 }
 
 
-struct SauceBowl makeSauceBowl()
+struct SauceBowl makeSauceBowl(int id)
 {
     sem_t semaphore;
     if (sem_init(&semaphore, 0, 1) != 0)
@@ -93,7 +99,7 @@ struct SauceBowl makeSauceBowl()
         exit(EXIT_FAILURE);
     }
 
-    struct SauceBowl sauceBowl = { semaphore };
+    struct SauceBowl sauceBowl = { id, semaphore };
     return sauceBowl;
 }
 
@@ -105,8 +111,13 @@ void think(struct Philosopher *philosopher)
 }
 
 
-void eat(struct Philosopher *philosopher)
+void eat(struct Philosopher *philosopher, struct Fork fork1, struct Fork fork2, struct SauceBowl *bowl)
 {
-    printf("Philosopher %d: EATING [total: %lld times] \n", philosopher->id, ++philosopher->eaten);
+    if (bowl == NULL) printf(
+        "Philosopher %d: EATING [forks: %d & %d; total: %lld times] \n", philosopher->id, fork1.id, fork2.id, ++philosopher->eaten
+    );
+    else printf(
+        "Philosopher %d: EATING [forks: %d & %d; bowl: %d; total: %lld times] \n", philosopher->id, fork1.id, fork2.id, bowl->id, ++philosopher->eaten
+    );
     usleep(1e6);
 }
