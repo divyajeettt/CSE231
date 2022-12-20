@@ -20,14 +20,14 @@ Solutions are in the `sockets` directory. The UNIX Domain sockets use `SOCK_SEQP
 
 ## Shared Memory
 
-Solutions are in the `shm` directory. To ensure that the `P2` writes the highest ID it received into the memory before `P1` reads it, `P1` busy waits as follows
+Solutions are in the `shm` directory. To ensure that the `P2` writes the highest ID it received into the memory before `P1` reads it, `P1` busy waits as follows:
 
 ```c
 while (strcmp(buffer, batch) == 0);
 // This loop waits till the shared-memory contains the batch P1 wrote into it
 ```
 
-while `P2` busy waits as follows to ensure that the next batch of strings is written into the memory before it reads them again
+while `P2` busy waits as follows to ensure that the next batch of strings is written into the memory before it reads them again:
 
 ```c
 if (countStrings != N) while (strcmp(shm, indexed[0]) == 0);
@@ -48,16 +48,11 @@ To compile the programs, use the following command:
 make <variant>
 ```
 
-To run the programs on a common terminal, use either one of the following command:
+To run the programs on a common terminal, use either one of the following commands:
 
 ```bash
-make run2<variant>
-```
-
-OR
-
-```bash
-./2/run <variant>
+./2/run <variant>     # Manually call the run process
+make run2<variant>    # Use the makefile to call the run process
 ```
 
 To run the programs on two separate terminals, use the following two commands on two separate terminals:
