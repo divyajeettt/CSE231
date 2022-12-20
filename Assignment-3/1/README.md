@@ -63,11 +63,15 @@ The modified problem follows a similar set up. However, the philosophers now eat
 - A philosopher can use any sauce bowl at any point of time
 - A sauce bowl can be used by only one philosopher at a time
 
-### Solution
+### Solution 1 (Strict Alternation of Resource Requests)
 
-One solution is to check which sauce bowl is unoccupied (if any) before trying to use it. Note that the philosophers pick up the forks in the same order as in the classic problem.
+This is the exact same solution as (a) 1 above. In this case as well, the exact same solution works because only one philosopher can eat at a time. This means that one bowl will always remain free, while only two forks will be occupied at a time.
 
-This is seen in code in `b/main.c` as follows:
+### Solution 2 (Utilizing Semaphores)
+
+Another solution is to check which sauce bowl is unoccupied (if any) before trying to use it. Note that the philosophers pick up the forks in the same order as in the classic problem.
+
+This is seen in code in `b/sem.c` as follows:
 
 ```c
 int chooseBowl()
@@ -84,7 +88,6 @@ This way, no bowl will remain unoccupied, hence maximizing efficiency. In the wo
 
 Here, the sauce bowls are simulated using semaphores `sem_t`.
 
-
 ## Run
 
 To compile the programs, use the following command:
@@ -96,7 +99,7 @@ make make1
 To run a program, use the following command:
 
 ```bash
-make run1<variant>
+make run1<sub><variant>
 ```
 
-and `<variant>` is either `order`, `sem`, or `mod`, to run `a/order`, `a/sem`, or `b/main` respectively.
+where `sub` is either `a` or `b` and `variant` is either `o` or `s`.
