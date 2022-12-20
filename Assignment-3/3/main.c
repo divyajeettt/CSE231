@@ -7,14 +7,13 @@
 #include <linux/moduleparam.h>
 
 
-int param_pid = 0;
+static int param_pid = 0;
 module_param(param_pid, int, S_IRUSR|S_IWUSR);
 
 
 void sys_read_task_struct(void)
 {
     struct task_struct *task = pid_task(find_vpid(param_pid), PIDTYPE_PID);
-
     printk("pid: %d \n", task->pid);
     printk("user_id: %d\n", task->cred->uid);
     printk("process group id: %d \n", task->tgid);
