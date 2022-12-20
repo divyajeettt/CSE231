@@ -17,7 +17,7 @@ void sys_read_task_struct(void)
     printk("pid: %d \n", task->pid);
     printk("user_id: %d\n", task->cred->uid);
     printk("process group id: %d \n", task->tgid);
-    printk("community path: %s \n", task->comm);
+    printk("command path: %s \n", task->comm);
 }
 
 
