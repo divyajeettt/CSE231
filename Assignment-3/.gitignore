@@ -1,6 +1,5 @@
-1/a/order
-1/a/sem
-1/b/main
+1/*/order
+1/*/sem
 
 2/run
 2/fifo/client
