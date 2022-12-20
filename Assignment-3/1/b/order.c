@@ -6,7 +6,9 @@
 
 
 struct Philosopher philosophers[N];
+struct SauceBowl bowls[2];
 struct Queue requests;
+struct Fork forks[N];
 
 
 void *philosophize(void *arg)
@@ -19,7 +21,7 @@ void *philosophize(void *arg)
         think(&philosophers[i]);
 
         while (requests.head != &request);
-        eat(&philosophers[i]);
+        eat(&philosophers[i], forks[LEFT], forks[RIGHT], &bowls[rand()%2]);
         dequeue(&requests);
     }
 }
@@ -28,6 +30,8 @@ void *philosophize(void *arg)
 int main()
 {
     requests = makeQueue();
+    for (int i = 0; i < 2; i++) bowls[i] = makeSauceBowl(i);
+    for (int i = 0; i < N; i++) forks[i] = makeFork(i);
     for (int i = 0; i < N; i++)
     {
         philosophers[i] = makePhilosopher(i);

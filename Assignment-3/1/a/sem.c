@@ -18,7 +18,7 @@ void *philosophize(void *arg)
         sem_wait(&forks[FIRST].semaphore);
         sem_wait(&forks[SECOND].semaphore);
 
-        eat(&philosophers[i]);
+        eat(&philosophers[i], forks[FIRST], forks[SECOND], NULL);
         sem_post(&forks[FIRST].semaphore);
         sem_post(&forks[SECOND].semaphore);
     }
@@ -29,7 +29,7 @@ int main()
 {
     for (int i = 0; i < N; i++)
     {
-        forks[i] = makeFork();
+        forks[i] = makeFork(i);
         philosophers[i] = makePhilosopher(i);
     }
 

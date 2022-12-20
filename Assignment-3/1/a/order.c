@@ -7,6 +7,7 @@
 
 struct Philosopher philosophers[N];
 struct Queue requests;
+struct Fork forks[N];
 
 
 void *philosophize(void *arg)
@@ -19,7 +20,7 @@ void *philosophize(void *arg)
         think(&philosophers[i]);
 
         while (requests.head != &request);
-        eat(&philosophers[i]);
+        eat(&philosophers[i], forks[LEFT], forks[RIGHT], NULL);
         dequeue(&requests);
     }
 }
@@ -28,6 +29,7 @@ void *philosophize(void *arg)
 int main()
 {
     requests = makeQueue();
+    for (int i = 0; i < N; i++) forks[i] = makeFork(i);
     for (int i = 0; i < N; i++)
     {
         philosophers[i] = makePhilosopher(i);

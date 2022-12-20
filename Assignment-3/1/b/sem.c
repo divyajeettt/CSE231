@@ -30,7 +30,7 @@ void *philosophize(void *arg)
 
         sem_wait(&forks[FIRST].semaphore);
         sem_wait(&forks[SECOND].semaphore);
-        eat(&philosophers[i]);
+        eat(&philosophers[i], forks[FIRST], forks[SECOND], &bowls[CHOSEN]);
 
         sem_post(&bowls[CHOSEN].semaphore);
         sem_post(&forks[FIRST].semaphore);
@@ -41,11 +41,10 @@ void *philosophize(void *arg)
 
 int main()
 {
-    for (int i = 0; i < 2; i++) bowls[i] = makeSauceBowl();
-
+    for (int i = 0; i < 2; i++) bowls[i] = makeSauceBowl(i);
     for (int i = 0; i < N; i++)
     {
-        forks[i] = makeFork();
+        forks[i] = makeFork(i);
         philosophers[i] = makePhilosopher(i);
     }
 
