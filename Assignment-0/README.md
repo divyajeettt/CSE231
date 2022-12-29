@@ -2,7 +2,9 @@
 
 ## Introduction
 
-This is a guide to install and setup Artix Linux on Oracle VM VirtualBox. This guide is based on the [Artix Linux Installation Guide](https://artixlinux.org/wiki/Installation_Guide) and the [Artix Linux Handbook](https://artixlinux.org/wiki/Handbook:Contents).
+This is a guide to install and setup Artix Linux on Oracle VM VirtualBox. This guide is based on the [Artix Linux Installation Guide](https://artixlinux.org/wiki/Installation_Guide) and the [Artix Linux Handbook](https://artixlinux.org/wiki/Handbook:Contents). 
+
+Courtesy to [Mehul Arora](https://github.com/sociallyencrypted).
 
 ## Foreword
 
