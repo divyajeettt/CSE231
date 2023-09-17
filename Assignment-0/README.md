@@ -107,7 +107,7 @@ There should be some new changes in the structure.
 Use the following commands to compile the custom Artix Linux.
 
 ```bash
-basestrap /mnt base base-devel elongind-runit linux linux-firmware vim
+basestrap /mnt base base-devel elogind-runit linux linux-firmware vim
 fstabgen -U /mnt >> /mnt/etc/fstab
 
 ls /mnt             # To check the mounted directories
@@ -130,8 +130,8 @@ vim /etc/fstab
 ```
 
 ```bash
-ln -sf /ur/share/zoneifo/Asia/Kolkata /etc/localtime
-hwclock - - systohc
+ln -sf /ur/share/zoneinfo/Asia/Kolkata /etc/localtime
+hwclock --systohc
 ```
 
 ```bash
@@ -155,7 +155,7 @@ LANG=en_US.UTF-8
 ```bash
 vim /etc/hostname
 # Insert the following line of text in the file:
-dvgt (or whatever you want)
+dvgt # or whatever you want
 # Save and Exit
 ```
 
@@ -169,7 +169,7 @@ vim /etc/hosts
 ```
 
 ```bash
-# Install packages using pacAGE manAGER
+# Install packages using the pacman package manager
 pacman -S grub efibootmgr networkmanager networkmanager-runit network-manager-applet
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
@@ -180,9 +180,9 @@ ls run
 ls run/runit
 ls /etc/runit/sv
 
-dvgtPassword         # set root password (should be replaced with your password)
+passwd         # set root password (should be replaced with your password)
 useradd -mG wheel -s /bin/bash dvgt
-dvgtPassword dvgt    # set dvgt password
+passwd dvgt    # set dvgt password
 
 EDITOR=vim visudo
 # uncomment the line with
